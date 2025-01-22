@@ -13,14 +13,19 @@ export default {
     adminOrders: '訂單管理',
     home: '首頁',
     product: '商品',
+    about: '關於我們',
+    info: '喵的資訊',
+    adopt: '認養貓咪',
+    account: '會員專區',
+    // theme: ' ',
   },
   register: {
     submit: '建立帳號',
-    success: '註冊成功'
+    success: '註冊成功',
   },
   login: {
     submit: '登入',
-    success: '登入成功'
+    success: '登入成功',
   },
   logout: {
     success: '登出成功',
@@ -29,7 +34,7 @@ export default {
     account: '帳號',
     email: '信箱',
     password: '密碼',
-    passwordConfirm: '確認密碼'
+    passwordConfirm: '確認密碼',
   },
   cart: {
     checkout: '結帳',
@@ -38,10 +43,10 @@ export default {
     createdAt: '訂單時間',
     cart: '商品',
     price: '訂單金額',
-    account: '帳號'
+    account: '帳號',
   },
   admin: {
-    index: '選擇管理項目'
+    index: '選擇管理項目',
   },
   adminProduct: {
     new: '新增商品',
@@ -70,7 +75,7 @@ export default {
     food: '食品',
     drink: '飲料',
     music: '音樂',
-    phone: '手機'
+    phone: '手機',
   },
   fileAgent: {
     helpText: '點擊或拖曳檔案至此',
@@ -120,4 +125,3 @@ export default {
     uploadFailed: '上傳失敗',
   },
 }
-
