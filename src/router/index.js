@@ -13,14 +13,15 @@ import { useUserStore } from '@/stores/user'
 import i18n from '@/i18n'
 import adminHome from '@/pages/home.vue'
 import adminLayout from '@/layouts/adminLayout.vue'
-// import about from '@/pages/about.vue'
 import AboutUs from '@/pages/about-us.vue'
 import Faq from '@/pages/faq.vue'
+import Kitten from '@/pages/kitten.vue'
+import Adult from '@/pages/adult.vue'
 
 const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
   routes: setupLayouts([
-    ...routes, // 自动生成的路由
+    ...routes,
     {
       path: '/admin',
       component: adminLayout,
@@ -44,6 +45,8 @@ const router = createRouter({
     },
 
     { path: '/about-us', name: 'about-us', component: AboutUs },
+    { path: '/kitten', name: 'kitten', component: Kitten },
+    { path: '/adult', name: 'adult', component: Adult },
     { path: '/faq', name: 'faq', component: Faq },
     // console.log(routes),
   ]),

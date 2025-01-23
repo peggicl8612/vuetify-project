@@ -13,6 +13,10 @@ export default {
     adminOrders: 'Order Management',
     home: 'Home',
     product: 'goods',
+    about: 'About us',
+    info: 'Information',
+    adopt: 'Adoption',
+    account: 'Account',
   },
   register: {
     submit: 'Create account',

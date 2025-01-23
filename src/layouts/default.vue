@@ -10,7 +10,6 @@
       <v-spacer />
 
       <template v-for="nav of navs" :key="nav.to">
-        <!-- 如果是“关于我们”，绑定v-menu，其他按钮正常显示 -->
         <v-menu v-if="nav.isMenu" offset-y :close-on-content-click="true">
           <template #activator="{ props }">
             <v-btn v-bind="props">
@@ -28,11 +27,50 @@
           </v-list>
         </v-menu>
 
-        <v-btn v-if="!nav.isMenu" :to="nav.to" :prepend-icon="nav.icon">
+        <v-menu v-if="nav.isInfo" offset-y :close-on-content-click="true">
+          <template #activator="{ props }">
+            <v-btn v-bind="props">
+              <v-icon icon="mdi-note-search-outline"></v-icon>
+              {{ nav.text }}</v-btn
+            >
+          </template>
+          <v-list>
+            <!-- 第一層 -->
+            <v-list-item link>
+              <v-list-item-title>飲食知識</v-list-item-title>
+              <template #append>
+                <v-icon icon="mdi-menu-right" size="x-small"></v-icon>
+              </template>
+
+              <!-- 第二層 -->
+              <v-menu :open-on-focus="false" activator="parent" open-on-hover submenu>
+                <v-list>
+                  <v-list-item @click="goTo('kitten')">
+                    <v-list-item-title>幼貓飼養</v-list-item-title>
+                  </v-list-item>
+                  <v-list-item @click="goTo('adult')">
+                    <v-list-item-title>成貓飼養</v-list-item-title>
+                  </v-list-item>
+                </v-list>
+              </v-menu>
+            </v-list-item>
+
+            <!-- 第二層列表 -->
+            <v-list-item link>
+              <v-list-item-title>疾病資訊</v-list-item-title>
+            </v-list-item>
+          </v-list>
+        </v-menu>
+
+        <v-btn v-if="!nav.isMenu && nav.show" :to="nav.to" :prepend-icon="nav.icon">
           {{ nav.text }}
           <v-badge v-if="nav.to === '/cart'" :content="user.cart" floating color="red"></v-badge>
         </v-btn>
       </template>
+
+      <v-btn v-if="user.isLoggedIn" prepend-icon="mdi-account-arrow-right" @click="logout">{{
+        $t('nav.logout')
+      }}</v-btn>
 
       <v-menu>
         <template #activator="{ props }">
@@ -74,10 +112,17 @@ const navs = computed(() => {
     {
       to: 'null',
       text: t('nav.about'),
-      show: true,
+      show: false,
       isMenu: true,
     },
-    { to: '/info', text: t('nav.info'), icon: 'mdi-note-search-outline', show: true },
+
+    {
+      to: 'null',
+      text: t('nav.info'),
+      show: false,
+      isInfo: true,
+    },
+
     { to: '/adopt', text: t('nav.adopt'), icon: 'mdi-home-heart', show: true },
     { to: '/account', text: t('nav.account'), icon: 'mdi-account', show: true },
     { to: '/register', text: t('nav.register'), icon: 'mdi-account-plus', show: !user.isLoggedIn },
@@ -102,7 +147,7 @@ const logout = async () => {
   try {
     await apiAuth.delete('/user/logout')
   } catch (error) {
-    console.log(error)
+    console.log('error:', error)
   }
   user.logout()
   createSnackbar({
