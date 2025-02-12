@@ -4,11 +4,16 @@
       <v-col cols="12">
         <v-text-field v-model="search" prepend-inner-icon="mdi-magnify"></v-text-field>
       </v-col>
-      <v-col v-for="product of filteredProducts" :key="product._id" cols="12" md="6" lg="3" >
+      <v-col v-for="product of filteredProducts" :key="product._id" cols="12" md="6" lg="3">
         <product-card v-bind="product"></product-card>
       </v-col>
       <v-col cols="12">
-        <v-pagination v-model="currentPage" :length="totalPage"></v-pagination>
+        <v-pagination
+          v-model="currentPage"
+          :length="totalPage"
+          rounded="circle"
+          color="grey darken-1"
+        ></v-pagination>
       </v-col>
     </v-row>
   </v-container>
@@ -28,15 +33,17 @@ const totalPage = computed(() => Math.ceil(products.value.length / ITEMS_PER_PAG
 const products = ref([])
 const search = ref('')
 const filteredProducts = computed(() => {
-  return products.value
-    .filter(product => product.name.toLowerCase().includes(search.value.toLowerCase()))
-    // 一頁 2 筆
-    // 第 1 頁 = 0 ~ 1
-    // 第 2 頁 = 2 ~ 3
-    // 第 3 頁 = 4 ~ 5
-    // .slice(開始索引, 結束索引)
-    // 不包含結束索引
-    .slice((currentPage.value - 1) * ITEMS_PER_PAGE, currentPage.value * ITEMS_PER_PAGE)
+  return (
+    products.value
+      .filter((product) => product.name.toLowerCase().includes(search.value.toLowerCase()))
+      // 一頁 2 筆
+      // 第 1 頁 = 0 ~ 1
+      // 第 2 頁 = 2 ~ 3
+      // 第 3 頁 = 4 ~ 5
+      // .slice(開始索引, 結束索引)
+      // 不包含結束索引
+      .slice((currentPage.value - 1) * ITEMS_PER_PAGE, currentPage.value * ITEMS_PER_PAGE)
+  )
 })
 
 const getProducts = async () => {

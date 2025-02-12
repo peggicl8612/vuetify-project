@@ -23,11 +23,11 @@ export default createVuetify({
     defaultTheme: 'pink',
     themes: {
       pink: {
-        dark: false, // 如果需要深色模式，设置为 true
+        dark: false,
         colors: {
-          primary: '#E8B4B8', // 设置主题主色，导航列默认会继承 primary
-          secondary: '#FFC107', // 设置其他辅助颜色
-          appBarBackground: '#F06292', // 自定义导航列颜色
+          primary: '#E8B4B8', // 主题主色，導航列默認會繼承 primary
+          secondary: '#FFC107', // 其他辅助颜色
+          appBarBackground: '#F06292', // 自定義導航列颜色
         },
       },
     },

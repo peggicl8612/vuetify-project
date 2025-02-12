@@ -13,7 +13,7 @@ import VuetifyUseDialog from 'vuetify-use-dialog'
 import VueFileAgentNext from '@boindil/vue-file-agent-next'
 import '@boindil/vue-file-agent-next/dist/vue-file-agent-next.css'
 
-export function registerPlugins (app) {
+export function registerPlugins(app) {
   app
     .use(i18n)
     .use(vuetify)
@@ -21,9 +21,9 @@ export function registerPlugins (app) {
       snackbar: {
         showCloseButton: false,
         snackbarPoprs: {
-          timeout: 2000
-        }
-      }
+          timeout: 2000,
+        },
+      },
     })
     .use(router)
     .use(pinia)

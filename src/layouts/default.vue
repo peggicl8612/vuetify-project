@@ -1,21 +1,33 @@
 <template>
   <v-app-bar
-    :style="{ backgroundColor: '#E8B4B8', color: 'white', fontSize: '36px', fontFamily: 'Junge' }"
+    :style="{ backgroundColor: '#D4878D', color: 'white', fontSize: '36px', fontFamily: 'Junge' }"
   >
     <v-container class="d-flex align-center">
-      <v-btn to="/home" :active="false" :style="{ fontSize: '24px', fontFamily: 'Junge' }">
+      <v-btn to="/home" :active="false" :style="{ fontSize: '28px', fontFamily: 'Junge' }">
         咪凹屋
       </v-btn>
 
       <v-spacer />
 
+      <!-- 關於我們 -->
       <template v-for="nav of navs" :key="nav.to">
-        <v-menu v-if="nav.isMenu" offset-y :close-on-content-click="true">
+        <!-- 首頁 -->
+        <v-btn
+          v-if="!nav.isMenu && nav.show && !nav.isAbout && !nav.isInfo && !nav.isAdopt"
+          :to="nav.to"
+          :prepend-icon="nav.icon"
+        >
+          {{ nav.text }}
+          <v-badge v-if="nav.to === '/cart'" :content="user.cart" floating color="red"></v-badge>
+        </v-btn>
+
+        <!-- 關於我們 -->
+        <v-menu v-if="nav.isAbout" offset-y :close-on-content-click="true">
           <template #activator="{ props }">
             <v-btn v-bind="props">
               <v-icon icon="mdi-information-box-outline"></v-icon>
-              {{ nav.text }}</v-btn
-            >
+              {{ nav.text }}
+            </v-btn>
           </template>
           <v-list>
             <v-list-item @click="goTo('about-us')">
@@ -27,12 +39,13 @@
           </v-list>
         </v-menu>
 
+        <!-- 喵的資訊 -->
         <v-menu v-if="nav.isInfo" offset-y :close-on-content-click="true">
           <template #activator="{ props }">
             <v-btn v-bind="props">
               <v-icon icon="mdi-note-search-outline"></v-icon>
-              {{ nav.text }}</v-btn
-            >
+              {{ nav.text }}
+            </v-btn>
           </template>
           <v-list>
             <!-- 第一層 -->
@@ -62,15 +75,45 @@
           </v-list>
         </v-menu>
 
-        <v-btn v-if="!nav.isMenu && nav.show" :to="nav.to" :prepend-icon="nav.icon">
-          {{ nav.text }}
-          <v-badge v-if="nav.to === '/cart'" :content="user.cart" floating color="red"></v-badge>
-        </v-btn>
-      </template>
+        <!-- 認養貓咪 -->
+        <v-menu v-if="nav.isAdopt" offset-y :close-on-content-click="true">
+          <template #activator="{ props }">
+            <v-btn v-bind="props">
+              <v-icon icon="mdi-home-heart"></v-icon>
+              {{ nav.text }}
+            </v-btn>
+          </template>
+          <v-list>
+            <!-- 第一層 -->
+            <v-list-item link>
+              <v-list-item-title>領養專區</v-list-item-title>
+              <template #append>
+                <v-icon icon="mdi-menu-right" size="x-small"></v-icon>
+              </template>
 
-      <v-btn v-if="user.isLoggedIn" prepend-icon="mdi-account-arrow-right" @click="logout">{{
-        $t('nav.logout')
-      }}</v-btn>
+              <!-- 第二層 -->
+              <v-menu :open-on-focus="false" activator="parent" open-on-hover submenu>
+                <v-list>
+                  <v-list-item @click="goTo('adopting')">
+                    <v-list-item-title>待領養專區</v-list-item-title>
+                  </v-list-item>
+                  <v-list-item @click="goTo('agree')">
+                    <v-list-item-title>下載同意書</v-list-item-title>
+                  </v-list-item>
+                </v-list>
+              </v-menu>
+            </v-list-item>
+
+            <!-- 第二層列表 -->
+            <v-list-item @click="goTo('rehome')">
+              <v-list-item-title>送養專區</v-list-item-title>
+            </v-list-item>
+          </v-list>
+        </v-menu>
+      </template>
+      <v-btn v-if="user.isLoggedIn" prepend-icon="mdi-account-arrow-right" @click="logout">
+        {{ $t('nav.logout') }}
+      </v-btn>
 
       <v-menu>
         <template #activator="{ props }">
@@ -106,6 +149,7 @@ const { apiAuth } = useAxios()
 const createSnackbar = useSnackbar()
 const router = useRouter()
 
+// 導覽列項目
 const navs = computed(() => {
   return [
     { to: '/home', text: t('nav.home'), icon: 'mdi-home', show: true },
@@ -113,7 +157,7 @@ const navs = computed(() => {
       to: 'null',
       text: t('nav.about'),
       show: false,
-      isMenu: true,
+      isAbout: true,
     },
 
     {
@@ -123,7 +167,13 @@ const navs = computed(() => {
       isInfo: true,
     },
 
-    { to: '/adopt', text: t('nav.adopt'), icon: 'mdi-home-heart', show: true },
+    {
+      to: 'null',
+      text: t('nav.adopt'),
+      show: user.isLoggedIn,
+      isAdopt: true,
+    },
+
     { to: '/account', text: t('nav.account'), icon: 'mdi-account', show: true },
     { to: '/register', text: t('nav.register'), icon: 'mdi-account-plus', show: !user.isLoggedIn },
     { to: '/login', text: t('nav.login'), icon: 'mdi-account-arrow-left', show: !user.isLoggedIn },
@@ -153,7 +203,7 @@ const logout = async () => {
   createSnackbar({
     text: t('logout.success'),
     snackbarProps: {
-      color: 'green',
+      color: 'rgb(117, 117, 117)',
     },
   })
   router.push('/')

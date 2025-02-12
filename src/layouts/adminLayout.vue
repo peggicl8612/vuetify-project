@@ -1,7 +1,9 @@
 <template>
-  <v-app>
-    <v-main>
-      <router-view />
-    </v-main>
-  </v-app>
+  <div>
+    <header>Admin Layout</header>
+    <main>
+      <router-view></router-view>
+    </main>
+    <footer>Admin Footer</footer>
+  </div>
 </template>

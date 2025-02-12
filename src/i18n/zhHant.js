@@ -1,3 +1,5 @@
+import { name } from '@vue/eslint-config-prettier/skip-formatting'
+import avatar from 'animal-avatar-generator'
 import { zhHant } from 'vuetify/locale'
 
 export default {
@@ -11,16 +13,20 @@ export default {
     logout: '登出',
     adminProducts: '商品管理',
     adminOrders: '訂單管理',
+    adminUsers: '使用者管理',
     home: '首頁',
     product: '商品',
     about: '關於我們',
     info: '喵的資訊',
     adopt: '認養貓咪',
     account: '會員專區',
+    adopting: '待領養專區',
+    agree: '下載同意書',
+
     // theme: ' ',
   },
   register: {
-    submit: '建立帳號',
+    submit: '建立用戶帳號',
     success: '註冊成功',
   },
   login: {
@@ -31,11 +37,22 @@ export default {
     success: '登出成功',
   },
   user: {
-    account: '帳號',
-    email: '信箱',
-    password: '密碼',
-    passwordConfirm: '確認密碼',
+    account: '請輸入帳號',
+    email: '請輸入信箱',
+    password: '請輸入密碼',
+    passwordConfirm: '請再次確認密碼',
+    avatar: '大頭貼',
+    name: '姓名',
+    role: '身分',
+    active: '啟用',
+    createdAt: '建立時間',
+    updatedAt: '更新時間',
   },
+  userRole: {
+    user: '使用者',
+    admin: '管理員',
+  },
+
   cart: {
     checkout: '結帳',
   },
@@ -47,6 +64,14 @@ export default {
   },
   admin: {
     index: '選擇管理項目',
+  },
+  adminUser: {
+    new: '新增使用者',
+    edit: '編輯使用者',
+    cancel: '取消',
+    submit: '確認',
+    newSuccess: '新增成功',
+    editSuccess: '編輯成功',
   },
   adminProduct: {
     new: '新增商品',
@@ -89,6 +114,7 @@ export default {
     userAccountInvalid: '使用者帳號格式不符',
     userAccountDuplicate: '使用者帳號重複',
     userPasswordRequired: '使用者密碼必填',
+    userPasswordConfirm: '請再次輸入密碼',
     userPasswordTooShort: '使用者密碼太短',
     userPasswordTooLong: '使用者密碼太長',
     userPasswordIncorrect: '密碼錯誤',
@@ -123,5 +149,13 @@ export default {
     serverError: '伺服器錯誤',
     unknownError: '未知錯誤',
     uploadFailed: '上傳失敗',
+    limitFileSize: '檔案大小超過限制',
+    pleaseSelectFile: '請選擇檔案',
+    unsupportedFileFormat: '檔案格式不支援',
+    catNotFound: '查無貓咪',
+    CatIdInvalid: '貓咪 ID 錯誤',
+    alreadyLiked: '已經按過讚了',
+    likeSuccess: '按讚成功',
+    userNameRequired: '使用者名稱必填',
   },
 }

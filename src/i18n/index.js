@@ -8,8 +8,8 @@ const i18n = createI18n({
   legacy: false,
   messages: {
     zhHant,
-    en
-  }
+    en,
+  },
 })
 
 export default i18n
