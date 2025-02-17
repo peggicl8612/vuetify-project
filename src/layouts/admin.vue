@@ -36,11 +36,14 @@ import App from '@/App.vue'
 const { t } = useI18n()
 const user = useUserStore()
 const app = createApp(App)
-console.log(app.error)
+app.config.errorHandler = (err) => {
+  console.error('Vue Error:', err)
+}
 const navs = computed(() => {
+  // 已是管理員頁面,所以不需要加 show: !user.isLoggedIn
   return [
     { to: '/admin/users', text: t('nav.adminUsers'), icon: 'mdi-account-box-outline' },
-    { to: '/admin/products', text: t('nav.adminProducts'), icon: 'mdi-shopping' },
+    { to: '/admin/products', text: t('nav.adminAdopting'), icon: 'mdi-shopping' },
     { to: '/admin/orders', text: t('nav.adminOrders'), icon: 'mdi-format-list-bulleted' },
     { to: '/home', text: t('nav.home'), icon: 'mdi-home' },
   ]

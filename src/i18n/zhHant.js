@@ -1,5 +1,5 @@
-import { name } from '@vue/eslint-config-prettier/skip-formatting'
-import avatar from 'animal-avatar-generator'
+// import { name } from '@vue/eslint-config-prettier/skip-formatting'
+// import avatar from 'animal-avatar-generator'
 import { zhHant } from 'vuetify/locale'
 
 export default {
@@ -12,6 +12,7 @@ export default {
     admin: '管理',
     logout: '登出',
     adminProducts: '商品管理',
+    adminAdopting: '待領養管理',
     adminOrders: '訂單管理',
     adminUsers: '使用者管理',
     home: '首頁',
@@ -42,7 +43,7 @@ export default {
     password: '請輸入密碼',
     passwordConfirm: '請再次確認密碼',
     avatar: '大頭貼',
-    name: '姓名',
+    username: '使用者名稱',
     role: '身分',
     active: '啟用',
     createdAt: '建立時間',
@@ -52,7 +53,10 @@ export default {
     user: '使用者',
     admin: '管理員',
   },
-
+  userrole: {
+    0: '使用者',
+    1: '管理員',
+  },
   cart: {
     checkout: '結帳',
   },
@@ -73,9 +77,12 @@ export default {
     newSuccess: '新增成功',
     editSuccess: '編輯成功',
   },
+  adminUsers: {
+    edit: '管理員編輯',
+  },
   adminProduct: {
     new: '新增商品',
-    edit: '編輯商品',
+    edit: '編輯',
     cancel: '取消',
     submit: '確認',
     newSuccess: '新增成功',
@@ -83,7 +90,7 @@ export default {
   },
   product: {
     image: '圖片',
-    name: '名稱',
+    name: '名字',
     description: '說明',
     price: '價格',
     category: '分類',
@@ -102,6 +109,39 @@ export default {
     music: '音樂',
     phone: '手機',
   },
+  cat: {
+    name: '名字',
+    age: '年齡',
+    breed: '品種',
+    category: '分類',
+    selectCategory: '選擇品種',
+  },
+  catBreed: {
+    black: '黑貓',
+    orange: '橘貓',
+    flower: '花貓',
+    tiger: '虎斑',
+  },
+  adopt: {
+    formTitle: '送養表單',
+    submit: '送出',
+    catName: '貓咪名字',
+    catAge: '貓咪年齡',
+    catBreed: '貓咪品種',
+    catDescription: '貓咪描述',
+    catImage: '貓咪照片',
+    email: '信箱',
+    photoHelpText: '點擊或拖曳照片至此',
+    cancel: '取消',
+    catNameRequired: '貓咪名字必填',
+    catAgeRequired: '貓咪年齡必填',
+    catBreedRequired: '貓咪品種必填',
+    catAgeTooSmall: '貓咪年齡不符',
+    catPhotoRequired: '貓咪照片必填',
+    emailInvalid: '信箱格式不符',
+    emailRequired: '信箱必填',
+  },
+
   fileAgent: {
     helpText: '點擊或拖曳檔案至此',
     errorType: '檔案類型錯誤',
@@ -157,5 +197,13 @@ export default {
     alreadyLiked: '已經按過讚了',
     likeSuccess: '按讚成功',
     userNameRequired: '使用者名稱必填',
+    userActiveRequired: '使用者啟用必填',
+    userRoleRequired: '使用者身分必填',
+    catAgeRequired: '貓咪年齡必填',
+    catBreedRequired: '貓咪品種必填',
+    catNameRequired: '貓咪名稱必填',
+    catImageRequired: '貓咪圖片必填',
+    catDescriptionRequired: '貓咪說明必填',
+    catIdInvalid: '貓咪 ID 錯誤',
   },
 }

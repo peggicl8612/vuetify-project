@@ -21,6 +21,7 @@ import Adopting from '@/pages/adopting.vue'
 import Agree from '@/pages/agree.vue'
 import Rehome from '@/pages/rehome.vue'
 import users from '@/pages/admin/users.vue'
+import Disease from '@/pages/disease.vue'
 
 const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
@@ -62,6 +63,7 @@ const router = createRouter({
     { path: '/about-us', name: 'about-us', component: AboutUs },
     { path: '/kitten', name: 'kitten', component: Kitten },
     { path: '/adult', name: 'adult', component: Adult },
+    { path: '/disease', name: 'disease', component: Disease },
     { path: '/faq', name: 'faq', component: Faq },
     // meta: { requiresAuth: true } 表示這個頁面需要登入才能進入
     { path: '/adopting', name: 'adopting', component: Adopting, meta: { requiresAuth: true } },

@@ -20,7 +20,7 @@ export function registerPlugins(app) {
     .use(VuetifyUseDialog, {
       snackbar: {
         showCloseButton: false,
-        snackbarPoprs: {
+        snackbarProps: {
           timeout: 2000,
         },
       },

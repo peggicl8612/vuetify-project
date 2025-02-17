@@ -20,15 +20,15 @@
           </template>
 
           <template #[`item.active`]="{ value }">
-            <v-icon v-if="value" icon="mdi-check"></v-icon>
-            <v-icon v-else icon="mdi-close"></v-icon>
+            <v-icon>{{ value ? 'mdi-check' : 'mdi-close' }}</v-icon>
           </template>
 
-          <template #[`item.name`]="{ value }">
-            <v-img :src="value" height="50"></v-img>
+          <template #[`item.username`]="{ value }">
+            <span>{{ value }}</span>
           </template>
           <template #[`item.email`]="{ value }">
-            <v-icon v-if="value" icon="mdi-check"></v-icon>
+            <!-- -icon 替換成 v-text 來呈現 email -->
+            <span>{{ value }}</span>
           </template>
           <template #[`item.createdAt`]="{ value }">
             {{ new Date(value).toLocaleString() }}
@@ -52,9 +52,9 @@
         <v-card-title>{{ $t(dialog.id ? 'adminUsers.edit' : 'adminUser.new') }}</v-card-title>
         <v-card-text>
           <v-text-field
-            v-model="name.value.value"
-            :label="$t('user.name')"
-            :error-messages="name.errorMessage.value"
+            v-model="username.value.value"
+            :label="$t('user.username')"
+            :error-messages="username.errorMessage.value"
           ></v-text-field>
           <v-text-field
             v-model="email.value.value"
@@ -74,6 +74,7 @@
             v-model="active.value.value"
             :label="$t('user.active')"
             :error-messages="active.errorMessage.value"
+            icon="mdi-check"
           ></v-checkbox>
           <v-divider></v-divider>
         </v-card-text>
@@ -100,12 +101,19 @@ const createSnackbar = useSnackbar()
 
 const users = ref([])
 
+const user = ref({
+  username: '', // 使用者名稱
+  email: '', // 使用者 email
+  role: '', // 使用者角色
+  active: true, // 是否啟用
+})
+
 const search = ref('')
 const headers = computed(() => {
   return [
     { title: 'ID', key: '_id', sortable: true },
     { title: t('user.avatar'), key: 'avatar', sortable: false },
-    { title: t('user.name'), key: 'name', sortable: true },
+    { title: t('user.username'), key: 'account', sortable: true },
     { title: t('user.email'), key: 'email', sortable: true },
     { title: t('user.role'), key: 'role', sortable: true },
     { title: t('user.active'), key: 'active', sortable: true },
@@ -130,6 +138,7 @@ const getUsers = async () => {
     })
   }
 }
+
 console.log('headers:', headers.value)
 console.log('users:', users.value)
 getUsers()
@@ -141,10 +150,12 @@ const dialog = ref({
 const openDialog = (item) => {
   if (item) {
     dialog.value.id = item._id
-    name.value.value = item.name
-    email.value.value = item.email
-    role.value.value = item.role
-    active.value.value = item.active
+    setValues({
+      username: item.username || '',
+      email: item.email || '',
+      role: item.role || '',
+      active: item.active !== undefined ? item.active : true,
+    })
   }
   dialog.value.open = true
 }
@@ -156,33 +167,35 @@ const closeDialog = () => {
 }
 
 const schema = yup.object({
-  name: yup.string().required(t('api.userNameRequired')),
+  username: yup.string().required(t('api.userNameRequired')),
   email: yup.string().email(t('api.userEmailInvalid')).required(t('api.userEmailRequired')),
   role: yup.string().required(t('api.userRoleRequired')),
   active: yup.boolean().required(t('api.userActiveRequired')),
 })
-const { handleSubmit, isSubmitting, resetForm } = useForm({
+const { handleSubmit, isSubmitting, resetForm, setValues } = useForm({
   validationSchema: schema,
   initialValues: {
-    name: '',
+    username: '',
     email: '',
     role: '',
-    active: '',
+    active: true,
   },
 })
-const name = useField('name')
-const email = useField('email')
-const role = useField('role')
-const active = useField('active')
+const username = useField('username', { initialValue: user.value.username })
+const email = useField('email', { initialValue: user.value.email })
+const role = useField('role', { initialValue: user.value.role })
+const active = useField('active', { initialValue: user.value.active })
 const roleOptions = computed(() => [
-  { text: t('userRole.admin'), value: 'admin' },
-  { text: t('userRole.user'), value: 'user' },
+  { text: t('userRole.admin'), value: '1' },
+  { text: t('userRole.user'), value: '0' },
 ])
 
 const submit = handleSubmit(async (values) => {
+  console.log('Submitting:', values)
+
   try {
     const fd = new FormData()
-    fd.append('name', values.name)
+    fd.append('username', values.username)
     fd.append('email', values.email)
     fd.append('role', values.role)
     fd.append('active', values.active ? '1' : '0')

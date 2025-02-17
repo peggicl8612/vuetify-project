@@ -11,7 +11,11 @@
             <v-toolbar>
               <v-btn @click="openDialog(null)">{{ $t('adminProduct.new') }}</v-btn>
               <v-spacer></v-spacer>
-              <v-text-field v-model="search" prepend-inner-icon="mdi-magnify" variant="underlined"></v-text-field>
+              <v-text-field
+                v-model="search"
+                prepend-inner-icon="mdi-magnify"
+                variant="underlined"
+              ></v-text-field>
             </v-toolbar>
           </template>
           <template #[`item.image`]="{ value }">
@@ -26,8 +30,8 @@
           <template #[`item.updatedAt`]="{ value }">
             {{ new Date(value).toLocaleString() }}
           </template>
-          <template #[`item.category`]="{ value }">
-            {{ $t('productCategory.' + value) }}
+          <template #[`item.breed`]="{ value }">
+            {{ $t('catBreed.' + value) }}
           </template>
           <template #[`item.edit`]="{ item }">
             <v-btn icon="mdi-pencil" variant="text" @click="openDialog(item)"></v-btn>
@@ -47,16 +51,16 @@
             :error-messages="name.errorMessage.value"
           ></v-text-field>
           <v-text-field
-            v-model="price.value.value"
-            :label="$t('product.price')"
-            :error-messages="price.errorMessage.value"
-            type="number" min="0"
+            v-model="age.value.value"
+            :label="$t('cat.age')"
+            :error-messages="age.errorMessage.value"
+            type="number"
+            min="0"
           ></v-text-field>
           <v-select
             v-model="category.value.value"
             :error-messages="category.errorMessage.value"
             :items="categoryOptions"
-            :label="$t('product.category')"
             item-title="text"
             item-value="value"
           ></v-select>
@@ -71,7 +75,8 @@
             :error-messages="description.errorMessage.value"
           ></v-textarea>
           <VueFileAgent
-            ref="fileAgent" v-model="fileRecords"
+            ref="fileAgent"
+            v-model="fileRecords"
             v-model:raw-model-value="rawFileRecords"
             accept="image/jpeg,image/png"
             deletable
@@ -109,8 +114,8 @@ const headers = computed(() => {
     { title: t('product.image'), key: 'image', sortable: false },
     { title: t('product.name'), key: 'name', sortable: true },
     { title: t('product.description'), key: 'description', sortable: true },
-    { title: t('product.price'), key: 'price', sortable: true },
-    { title: t('product.category'), key: 'category', sortable: true },
+    { title: t('cat.age'), key: 'age', sortable: true },
+    { title: t('cat.category'), key: 'category', sortable: true },
     { title: t('product.sell'), key: 'sell', sortable: true },
     { title: t('product.createdAt'), key: 'createdAt', sortable: true },
     { title: t('product.updatedAt'), key: 'updatedAt', sortable: true },
@@ -127,8 +132,8 @@ const getProducts = async () => {
     createSnackbar({
       text: t('api.' + (error?.response?.data?.message || 'unknownError')),
       snackbarProps: {
-        color: 'red'
-      }
+        color: 'red',
+      },
     })
   }
 }
@@ -136,15 +141,21 @@ getProducts()
 
 const dialog = ref({
   open: false,
-  id: ''
+  id: '',
 })
 const openDialog = (item) => {
   if (item) {
+    console.log('item.category:', item.category) // 確認這裡的值是否正確
+    category.value.value = ['black', 'orange', 'flower', 'tiger'].includes(item.category)
+      ? item.category
+      : '' // 如果 category 無效，就設為空值
+    console.log('category.value.value:', category.value.value)
+
     dialog.value.id = item._id
     name.value.value = item.name
-    price.value.value = item.price
+    age.value.value = item.age
     description.value.value = item.description
-    category.value.value = item.category
+    // category.value.value = item.category
     sell.value.value = item.sell
   }
   dialog.value.open = true
@@ -157,45 +168,41 @@ const closeDialog = () => {
 }
 
 const schema = yup.object({
-  name: yup
-    .string()
-    .required(t('api.productNameRequired')),
-  price: yup
+  name: yup.string().required(t('api.CtNameRequired')),
+  age: yup
     .number()
-    .typeError(t('api.productPriceRequired'))
-    .required(t('api.productPriceRequired'))
-    .min(0, t('api.productPriceTooSmall')),
-  description: yup
-    .string()
-    .required(t('api.productDescriptionRequired')),
+    .typeError(t('api.catAgeRequired'))
+    .required(t('api.catAgeRequired'))
+    .min(0, t('api.catAgeTooSmall')),
+  description: yup.string().required(t('api.productDescriptionRequired')),
   category: yup
     .string()
-    .required(t('api.productCategoryRequired'))
-    .oneOf(['food', 'drink', 'music', 'phone'], t('api.productCategoryInvalid')),
-  sell: yup
-    .boolean()
-    .required(t('api.productSellRequired')),
+    .trim()
+    .required(t('api.catBreedRequired'))
+    .oneOf(['black', 'orange', 'flower', 'tiger'], t('api.catBreedRequired')),
+  sell: yup.boolean().required(t('api.productSellRequired')),
 })
 const { handleSubmit, isSubmitting, resetForm } = useForm({
   validationSchema: schema,
   initialValues: {
     name: '',
-    price: 0,
+    age: 0,
     description: '',
     category: '',
     sell: false,
-  }
+  },
 })
 const name = useField('name')
-const price = useField('price')
+const age = useField('age')
 const description = useField('description')
 const category = useField('category')
 const sell = useField('sell')
 const categoryOptions = computed(() => [
-  { text: t('productCategory.food'), value: 'food' },
-  { text: t('productCategory.drink'), value: 'drink' },
-  { text: t('productCategory.music'), value: 'music' },
-  { text: t('productCategory.phone'), value: 'phone' },
+  { text: t('cat.selectCategory'), value: '' },
+  { text: t('catBreed.black'), value: 'black' },
+  { text: t('catBreed.orange'), value: 'orange' },
+  { text: t('catBreed.flower'), value: 'flower' },
+  { text: t('catBreed.tiger'), value: 'tiger' },
 ])
 
 const fileAgent = ref(null)
@@ -203,13 +210,15 @@ const fileRecords = ref([])
 const rawFileRecords = ref([])
 
 const submit = handleSubmit(async (values) => {
-  if (fileRecords.value[0]?.error)      return
+  console.log('提交的值:', values)
+  console.log('category 值:', values.category)
+  if (fileRecords.value[0]?.error) return
   if (dialog.value.id.length === 0 && fileRecords.value.length === 0) {
     createSnackbar({
       text: t('api.productImageRequired'),
       snackbarProps: {
-        color: 'red'
-      }
+        color: 'red',
+      },
     })
     return
   }
@@ -218,7 +227,7 @@ const submit = handleSubmit(async (values) => {
     const fd = new FormData()
     // fd.append(key, value)
     fd.append('name', values.name)
-    fd.append('price', values.price)
+    fd.append('age', values.age)
     fd.append('description', values.description)
     fd.append('category', values.category)
     fd.append('sell', values.sell)
@@ -227,9 +236,9 @@ const submit = handleSubmit(async (values) => {
     }
 
     if (dialog.value.id.length > 0) {
-      await apiAuth.patch('/product/' + dialog.value.id, fd)
+      await apiAuth.patch('/adopting/' + dialog.value.id, fd)
     } else {
-      await apiAuth.post('/product', fd)
+      await apiAuth.post('/adopting', fd)
     }
 
     products.splice(0, products.length)
@@ -237,8 +246,8 @@ const submit = handleSubmit(async (values) => {
     createSnackbar({
       text: t(dialog.value.id.length > 0 ? 'adminProduct.editSuccess' : 'adminProduct.newSuccess'),
       snackbarProps: {
-        color: 'green'
-      }
+        color: 'green',
+      },
     })
     closeDialog()
   } catch (error) {
@@ -246,8 +255,8 @@ const submit = handleSubmit(async (values) => {
     createSnackbar({
       text: t('api.' + (error?.response?.data?.message || 'unknownError')),
       snackbarProps: {
-        color: 'red'
-      }
+        color: 'red',
+      },
     })
   }
 })
@@ -258,5 +267,5 @@ meta:
   layout: admin
   login: true
   admin: true
-  title: 'nav.adminProducts'
+  title: 'nav.adminAdopting'
 </route>

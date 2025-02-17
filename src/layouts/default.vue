@@ -69,7 +69,7 @@
             </v-list-item>
 
             <!-- 第二層列表 -->
-            <v-list-item link>
+            <v-list-item link @click="goTo('disease')">
               <v-list-item-title>疾病資訊</v-list-item-title>
             </v-list-item>
           </v-list>
@@ -177,13 +177,13 @@ const navs = computed(() => {
     { to: '/account', text: t('nav.account'), icon: 'mdi-account', show: true },
     { to: '/register', text: t('nav.register'), icon: 'mdi-account-plus', show: !user.isLoggedIn },
     { to: '/login', text: t('nav.login'), icon: 'mdi-account-arrow-left', show: !user.isLoggedIn },
-    { to: '/cart', text: t('nav.cart'), icon: 'mdi-cart', show: user.isLoggedIn },
-    {
-      to: '/orders',
-      text: t('nav.orders'),
-      icon: 'mdi-format-list-bulleted',
-      show: user.isLoggedIn,
-    },
+    // { to: '/cart', text: t('nav.cart'), icon: 'mdi-cart', show: user.isLoggedIn },
+    // {
+    //   to: '/orders',
+    //   text: t('nav.orders'),
+    //   icon: 'mdi-format-list-bulleted',
+    //   show: user.isLoggedIn,
+    // },
     { to: '/admin', text: t('nav.admin'), icon: 'mdi-cog', show: user.isLoggedIn && user.isAdmin },
   ]
 })

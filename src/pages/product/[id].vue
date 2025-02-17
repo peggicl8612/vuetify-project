@@ -2,14 +2,14 @@
   <v-container>
     <v-row>
       <v-col cols="12">
-        <h1 class="text-center">{{ product.name }}</h1>
+        <h1 class="text-center">{{ cat.name }}</h1>
       </v-col>
       <v-divider></v-divider>
       <v-col cols="12" md="6">
         <v-img :src="product.image"></v-img>
       </v-col>
       <v-col cols="12" md="6">
-        <p>{{ $t('productCategory.' + product.category) }}</p>
+        <p>{{ $t('catCategory.' + cat.category) }}</p>
         <p>{{ product.price }}</p>
         <p>{{ product.description }}</p>
         <v-form :disabled="isSubmitting" @submit.prevent="submit">
@@ -53,21 +53,21 @@ const { t } = useI18n()
 const user = useUserStore()
 const createSnackbar = useSnackbar()
 
-const product = ref({
+const cat = ref({
   _id: '',
   name: '',
   price: 0,
   description: '',
   image: '',
   sell: true,
-  category: 'food',
+  category: '',
 })
 
 const getProduct = async () => {
   try {
     const { data } = await api.get('/product/' + route.params.id)
-    product.value = data.result
-    document.title = product.value.name + ' | 咪凹屋'
+    cat.value = data.result
+    document.title = cat.value.name + ' | 咪凹屋'
   } catch (error) {
     console.log(error)
     router.push('/')
@@ -98,7 +98,7 @@ const submit = handleSubmit(async (values) => {
   }
   try {
     const { data } = await apiAuth.patch('/user/cart', {
-      product: product.value._id,
+      cat: cat.value._id,
       quantity: values.quantity,
     })
     user.cart = data.result
