@@ -1,5 +1,6 @@
 <template>
   <h1>領養須知</h1>
+
   <v-card class="card">
     <v-tabs v-model="tab" class="tabs">
       <div class="v">
@@ -11,14 +12,25 @@
     <v-card-text>
       <v-tabs-window v-model="tab">
         <v-tabs-window-item value="one">
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Reprehenderit aliquid repellat
-          repellendus nemo! Voluptatum voluptate, doloribus officia cum quia vero molestiae magnam
-          earum perspiciatis consequuntur ab repellat ipsum enim veniam.
+          <p>
+            領養人條件
+            <br />
+            <br />
+            ．年滿20歲 <br />
+            ．無動保法第三十三條之一第一項各款所定情形 <br />
+            ．理解飼主責任、動物福利及動物飼養管理教育 <br />
+            ．家中成員皆同意飼養 <br />
+            ．可提供適合及安全的居住環境 <br />
+            ．經濟能力得以應付長期的固定開銷及突發的醫療費用 <br />
+            ．對毛孩的終生負責絕不棄養 <br />
+          </p>
         </v-tabs-window-item>
       </v-tabs-window>
 
       <!-- 下載檔案按鈕 -->
-      <v-btn color="primary" class="download" @click="downloadFile"> 下載檔案 </v-btn>
+      <div class="download">
+        <v-btn color="primary" class="download" @click="downloadFile"> 下載同意書 </v-btn>
+      </div>
     </v-card-text>
   </v-card>
 </template>
@@ -30,11 +42,14 @@ export default {
   }),
   methods: {
     downloadFile() {
-      // 創建一個隱藏的 <a> 元素來進行檔案下載
+      // 設定要下載的檔案路徑
+      const fileUrl = '/public/adoption-guide.pdf' // 放在 public 資料夾中的檔案
       const link = document.createElement('a')
-      link.href = require('@/assets/images') // 輸入正確的檔案路徑
-      link.download = '認養同意書.pdf' // 設定下載的檔案名稱
-      link.click() // 模擬點擊下載
+      link.href = fileUrl
+      link.setAttribute('download', 'adoption-guide.pdf') // 設定下載的檔案名稱
+      document.body.appendChild(link)
+      link.click()
+      document.body.removeChild(link)
     },
   },
 }
@@ -78,6 +93,18 @@ h1 {
 }
 .v-tabs-window {
   font-family: 'Zen Old Mincho', serif;
+  font-size: 24px;
+}
+
+.download {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* background: #e8b4b8; */
+  margin-top: 20px;
+  font-family: 'Zen Old Mincho', serif;
   font-size: 20px;
+  color: #757575;
 }
 </style>

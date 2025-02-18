@@ -1,26 +1,41 @@
 <template>
-  <v-container>
+  <v-container class="py-6">
     <v-row>
       <v-col cols="12">
         <h1 class="text-center">{{ $t('nav.adminUsers') }}</h1>
       </v-col>
       <v-divider></v-divider>
       <v-col cols="12">
-        <v-data-table :items="users" :headers="headers" :search="search">
+        <v-data-table
+          class="elevation-3 rounded-lg hover_table"
+          :items="users"
+          :headers="headers"
+          :search="search"
+          density="compact"
+        >
           <template #top>
-            <v-toolbar>
-              <v-btn @click="openDialog(null)">{{ $t('adminUser.new') }}</v-btn>
+            <v-toolbar class="mb-2">
+              <v-btn
+                class="text-white bg-brown-lighten-3 rounded-lg px-5"
+                @click="openDialog(null)"
+              >
+                {{ $t('adminUser.new') }}
+              </v-btn>
               <v-spacer></v-spacer>
               <v-text-field
                 v-model="search"
                 prepend-inner-icon="mdi-magnify"
                 variant="underlined"
+                label="搜尋使用者"
+                class="w-40"
               ></v-text-field>
             </v-toolbar>
           </template>
 
           <template #[`item.active`]="{ value }">
-            <v-icon>{{ value ? 'mdi-check' : 'mdi-close' }}</v-icon>
+            <v-icon :color="value ? 'green' : 'red'">{{
+              value ? 'mdi-checkbox-blank-circle-outline' : 'mdi-close'
+            }}</v-icon>
           </template>
 
           <template #[`item.username`]="{ value }">
@@ -40,27 +55,38 @@
             {{ $t('userrole.' + value) }}
           </template>
           <template #[`item.edit`]="{ item }">
-            <v-btn icon="mdi-pencil" variant="text" @click="openDialog(item)"></v-btn>
+            <v-btn
+              icon="mdi-pencil"
+              variant="text"
+              class="text-brown-darken-1"
+              @click="openDialog(item)"
+            ></v-btn>
           </template>
         </v-data-table>
       </v-col>
     </v-row>
   </v-container>
-  <v-dialog v-model="dialog.open" persistent>
+  <v-dialog v-model="dialog.open" persistent max-width="600px">
     <v-form :disabled="isSubmitting" @submit.prevent="submit">
-      <v-card>
-        <v-card-title>{{ $t(dialog.id ? 'adminUsers.edit' : 'adminUser.new') }}</v-card-title>
-        <v-card-text>
+      <v-card class="rounded-lg">
+        <v-card-title class="text-h5 font-weight-bold" font-family="Junge">
+          {{ $t(dialog.id ? 'adminUsers.edit' : 'adminUser.new') }}</v-card-title
+        >
+        <v-card-text class="py-4">
           <v-text-field
             v-model="username.value.value"
             :label="$t('user.username')"
             :error-messages="username.errorMessage.value"
+            readonly
+            variant="outlined"
           ></v-text-field>
           <v-text-field
             v-model="email.value.value"
             :label="$t('user.email')"
             :error-messages="email.errorMessage.value"
             type="email"
+            readonly
+            variant="outlined"
           ></v-text-field>
           <v-select
             v-model="role.value.value"
@@ -69,6 +95,7 @@
             :label="$t('user.role')"
             item-title="text"
             item-value="value"
+            variant="outlined"
           ></v-select>
           <v-checkbox
             v-model="active.value.value"
@@ -127,7 +154,10 @@ const getUsers = async () => {
   try {
     const { data } = await apiAuth.get('/user/all')
     console.log('API 回傳資料：', data)
-    users.value = data.result // 直接賦值，而不是 push
+    users.value = data.result.map((user) => ({
+      ...user,
+      active: user.active !== undefined ? user.active : true, // 預設啟用
+    })) // 將 API 回傳的資料設定到 users 陣列
   } catch (error) {
     console.error('取得使用者失敗：', error)
     createSnackbar({
@@ -151,10 +181,17 @@ const openDialog = (item) => {
   if (item) {
     dialog.value.id = item._id
     setValues({
-      username: item.username || '',
+      username: item.account || '',
       email: item.email || '',
-      role: item.role || '',
+      role: item.role || '0',
       active: item.active !== undefined ? item.active : true,
+    })
+  } else {
+    setValues({
+      username: '',
+      email: '',
+      role: '0', // 預設角色為一般使用者
+      active: true, // 預設為啟用
     })
   }
   dialog.value.open = true
@@ -184,7 +221,7 @@ const { handleSubmit, isSubmitting, resetForm, setValues } = useForm({
 const username = useField('username', { initialValue: user.value.username })
 const email = useField('email', { initialValue: user.value.email })
 const role = useField('role', { initialValue: user.value.role })
-const active = useField('active', { initialValue: user.value.active })
+const active = useField('active', { initialValue: true })
 const roleOptions = computed(() => [
   { text: t('userRole.admin'), value: '1' },
   { text: t('userRole.user'), value: '0' },
@@ -202,12 +239,18 @@ const submit = handleSubmit(async (values) => {
 
     if (dialog.value.id.length > 0) {
       await apiAuth.patch('/user/' + dialog.value.id, fd)
+      // 更新 `users` 陣列內對應的 user
+      const index = users.value.findIndex((u) => u._id === dialog.value.id)
+      if (index !== -1) {
+        users.value[index].active = values.active // 直接更新資料
+      }
     } else {
-      await apiAuth.post('/user', fd)
+      const { data } = await apiAuth.post('/user', fd)
+      users.value.push(data.result) // 直接新增至 users 陣列
     }
 
-    users.value.splice(0, users.value.length)
-    getUsers()
+    // users.value.splice(0, users.value.length)
+    // getUsers()
     createSnackbar({
       text: t(dialog.value.id.length > 0 ? 'adminUser.editSuccess' : 'adminUser.newSuccess'),
       snackbarProps: {
@@ -235,4 +278,14 @@ meta:
   title: 'nav.adminUsers'
 </route>
 
-<style></style>
+<style>
+.hover_table tbody tr:hover {
+  background-color: #f0e9df;
+  transition: background-color 0.2s ease-in-out;
+}
+
+body {
+  background-color: #f4f7fa; /* 淺灰藍色背景 */
+}
+</style>
+顏色沒變

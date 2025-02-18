@@ -168,7 +168,7 @@ const closeDialog = () => {
 }
 
 const schema = yup.object({
-  name: yup.string().required(t('api.CtNameRequired')),
+  name: yup.string().required(t('api.CatNameRequired')),
   age: yup
     .number()
     .typeError(t('api.catAgeRequired'))
@@ -236,9 +236,12 @@ const submit = handleSubmit(async (values) => {
     }
 
     if (dialog.value.id.length > 0) {
-      await apiAuth.patch('/adopting/' + dialog.value.id, fd)
+      await apiAuth.patch('/product/' + dialog.value.id, fd)
     } else {
-      await apiAuth.post('/adopting', fd)
+      // 前端接資料的動作,不一定要寫
+      const { data } = await apiAuth.post('/product', fd)
+      console.log(data)
+      // await apiAuth.post('/product', fd)
     }
 
     products.splice(0, products.length)

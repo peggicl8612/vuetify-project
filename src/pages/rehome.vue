@@ -5,6 +5,7 @@
         <v-card class="custom-card">
           <v-card-title class="text-h4 text-center">{{ $t('adopt.formTitle') }}</v-card-title>
           <v-card-text>
+            <!-- 綁定 submit 函式到表單 -->
             <v-form ref="form" :disabled="isSubmitting" @submit.prevent="submit">
               <v-text-field
                 v-model="name"
@@ -115,7 +116,7 @@ const { handleSubmit, resetForm, isSubmitting } = useForm({
 
 const { value: name, errorMessage: nameError } = useField('name')
 const { value: age, errorMessage: ageError } = useField('age')
-const { value: breed, errorMessage: breedError } = useField('breed') // 修改這行
+const { value: breed, errorMessage: breedError } = useField('breed')
 const { value: email, errorMessage: emailError } = useField('email')
 const { value: photo, errorMessage: photoError } = useField('photo')
 
@@ -161,9 +162,3 @@ const submit = handleSubmit(async (values) => {
   color: #757575;
 }
 </style>
-
-<route lang="yaml">
-meta:
-  layout: admin
-  title: 'adopt.formTitle'
-</route>
