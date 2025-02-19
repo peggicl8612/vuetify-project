@@ -14,6 +14,7 @@ export const useUserStore = defineStore(
     const svg = ref('')
     const id = ref('')
     const email = ref('')
+    const phone = ref('')
 
     const isLoggedIn = computed(() => {
       return token.value.length > 0
@@ -34,6 +35,7 @@ export const useUserStore = defineStore(
       cart.value = data.cart
       id.value = data._id
       email.value = data.email
+      phone.value = data.phone
     }
 
     const logout = () => {
@@ -50,6 +52,7 @@ export const useUserStore = defineStore(
       role,
       cart,
       email,
+      phone,
       id,
       isLoggedIn,
       isAdmin,

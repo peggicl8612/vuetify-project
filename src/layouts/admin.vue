@@ -44,6 +44,7 @@ const navs = computed(() => {
   return [
     { to: '/admin/users', text: t('nav.adminUsers'), icon: 'mdi-account-box-outline' },
     { to: '/admin/products', text: t('nav.adminAdopting'), icon: 'mdi-shopping' },
+    { to: '/admin/cats', text: t('nav.adminCats'), icon: 'mdi-cat' },
     // { to: '/admin/orders', text: t('nav.adminOrders'), icon: 'mdi-format-list-bulleted' },
     { to: '/home', text: t('nav.home'), icon: 'mdi-home' },
   ]

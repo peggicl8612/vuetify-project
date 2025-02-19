@@ -1,90 +1,143 @@
-<script setup>
-import { ref, computed, watchEffect } from 'vue'
-import { useForm, useField } from 'vee-validate'
-import * as yup from 'yup'
-import axios from 'axios'
-import { useUserStore } from '@/stores/user'
-
-const user = useUserStore()
-
-console.log(user.id)
-
-// 定義驗證規則
-const schema = yup.object({
-  phone: yup
-    .string()
-    .matches(/^[0-9]{10}$/, '請輸入正確的手機號碼') // 10 位數字驗證
-    .required('此欄位為必填'),
-})
-
-// 設定表單
-const { handleSubmit, isSubmitting } = useForm({
-  validationSchema: schema,
-})
-
-// 設定表單欄位
-const phone = useField('phone') // 使用 vee-validate 來綁定欄位和錯誤訊息
-
-// 提交表單
-const submitForm = handleSubmit(async (values) => {
-  try {
-    await axios.patch(`/user/${user.id}`, { phone: values.phone })
-    alert('資料已成功保存')
-  } catch (error) {
-    console.error('保存資料失敗:', error)
-  }
-})
-</script>
-
 <template>
-  <v-container>
+  <v-container class="container">
     <v-row>
-      <v-col cols="12">
-        <h1>會員資料</h1>
-        <v-divider></v-divider>
+      <v-col cols="12" class="text-center">
+        <h1 class="title">會員資料</h1>
+        <v-divider class="divider"></v-divider>
       </v-col>
     </v-row>
 
-    <v-form @submit.prevent="submitForm">
+    <v-form class="form-box" @submit.prevent="submitForm">
       <v-row>
-        <!-- 使用者帳號（不可修改） -->
         <v-col cols="12" md="8">
-          <v-text-field v-model="user.account" label="使用者帳號" outlined></v-text-field>
+          <v-text-field
+            v-model="user.account"
+            label="使用者帳號"
+            outlined
+            disabled
+            class="rounded"
+          ></v-text-field>
         </v-col>
 
-        <!-- 電子信箱（不可修改） -->
         <v-col cols="12" md="8">
-          <v-text-field v-model="user.email" label="電子郵件" outlined></v-text-field>
+          <v-text-field
+            v-model="user.email"
+            label="電子郵件"
+            outlined
+            disabled
+            class="rounded"
+          ></v-text-field>
         </v-col>
 
-        <!-- 電話（可編輯） -->
         <v-col cols="12" md="6">
           <v-text-field
             v-model="phone.value.value"
             label="電話"
-            :error-messages="errorMessage"
+            :error-messages="phone.errorMessage.value"
             outlined
+            class="rounded"
           ></v-text-field>
+        </v-col>
 
+        <v-col cols="12" md="6">
           <VueFileAgent
             v-model="photo"
             accept="image/jpeg,image/png"
-            :help-text="$t('adopt.photoHelpText')"
-            :error-text="$t('adopt.photoErrorText')"
-            :error-messages="photoError"
+            class="photo-upload"
             deletable
             required
           ></VueFileAgent>
         </v-col>
 
-        <!-- 提交按鈕 -->
-        <v-col cols="12">
-          <v-btn type="submit" color="primary" :loading="isSubmitting">保存</v-btn>
+        <v-col cols="12" class="text-center">
+          <v-btn type="submit" color="pink" class="cute-btn" :loading="isSubmitting">💾 保存</v-btn>
         </v-col>
       </v-row>
     </v-form>
   </v-container>
 </template>
+
+<script setup>
+import { ref } from 'vue'
+import { useForm, useField } from 'vee-validate'
+import * as yup from 'yup'
+import { useAxios } from '@/composables/axios'
+import { useUserStore } from '@/stores/user'
+
+const { apiAuth } = useAxios()
+
+const user = useUserStore()
+
+const schema = yup.object({
+  phone: yup
+    .string()
+    .matches(/^[0-9]{10}$/, '請輸入正確的手機號碼')
+    .required('此欄位為必填'),
+})
+const { handleSubmit, isSubmitting } = useForm({
+  validationSchema: schema,
+  initialValues: {
+    phone: user.phone,
+  },
+})
+const phone = useField('phone')
+
+// const phone = useField('phone', { initialValue: user.phone })
+const submitForm = handleSubmit(async (values) => {
+  try {
+    const fd = new FormData()
+    fd.append('phone', values.phone)
+
+    console.log(fd)
+
+    await apiAuth.patch('/user/' + user.id, fd)
+
+    alert('資料已成功保存')
+  } catch (error) {
+    console.error('保存資料失敗:', error)
+    alert('保存失敗，請稍後再試')
+  }
+})
+</script>
+
+<style scoped>
+.container {
+  background-color: #f5f1e2;
+  border-radius: 16px;
+  padding: 80px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  width: 1500px;
+  height: 820px;
+}
+.title {
+  font-family: 'Zen Old Mincho', serif;
+  color: #757575;
+}
+.divider {
+  border-color: #757575;
+}
+.form-box {
+  background: #f7f5ecaf;
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 4px 8px rgba(211, 210, 148, 0.3);
+}
+.rounded {
+  border-radius: 12px;
+}
+.cute-btn {
+  background-color: #757575 !important;
+  color: white;
+  border-radius: 20px;
+  font-weight: bold;
+  font-family: 'Zen Old Mincho', serif;
+}
+.photo-upload {
+  border: 2px dashed #757575;
+  border-radius: 12px;
+  padding: 10px;
+}
+</style>
 
 <route lang="yaml">
 meta:

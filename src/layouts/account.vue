@@ -242,3 +242,11 @@ const leftDrawers = computed(() => {
   align-items: center;
 }
 </style>
+
+<route lang="yaml">
+meta:
+  layout: 'account'
+  login: true
+  admin: false
+  title: 'nav.account'
+</route>

@@ -152,12 +152,12 @@ const headers = computed(() => {
 
 const getUsers = async () => {
   try {
-    const { data } = await apiAuth.get('/user/all')
+    const { data } = await apiAuth.get('/user/profile')
     console.log('API 回傳資料：', data)
     users.value = data.result.map((user) => ({
       ...user,
-      active: user.active !== undefined ? user.active : true, // 預設啟用
-    })) // 將 API 回傳的資料設定到 users 陣列
+      active: user.active !== undefined ? user.active : true,
+    }))
   } catch (error) {
     console.error('取得使用者失敗：', error)
     createSnackbar({
@@ -288,4 +288,3 @@ body {
   background-color: #f4f7fa; /* 淺灰藍色背景 */
 }
 </style>
-顏色沒變
