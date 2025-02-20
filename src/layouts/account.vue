@@ -134,12 +134,14 @@
     <v-navigation-drawer permanent class="drawer">
       <v-list>
         <!-- 顯示用戶的 Avatar 和帳戶名稱 -->
-        <v-list-item>
-          <template #prepend>
-            <div class="user-svg" v-html="user.svg"></div>
-          </template>
-          <v-list-item-title class="account-title">{{ user.account }}</v-list-item-title>
-          <!-- 显示用户名 -->
+        <v-list-item class="d-flex flex-column align-center">
+          <v-avatar size="100">
+            <v-img class="image" :src="user.image"></v-img>
+          </v-avatar>
+
+          <v-list-item-title class="account-title">
+            {{ user.account }}
+          </v-list-item-title>
         </v-list-item>
       </v-list>
 
@@ -224,22 +226,18 @@ const leftDrawers = computed(() => {
 
 <style scoped>
 .drawer {
-  width: 250px;
+  font-family: 'Zen Old Mincho', serif;
+  background: #c8c9bb54;
+  font-size: 20px;
+  color: #757575;
 }
 
 .account-title {
-  font-weight: bold;
-  font-size: 18px;
-}
-
-.user-svg {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  overflow: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  text-align: center;
+  margin-top: 8px;
+  font-size: 28px;
+  font-family: 'Zen Old Mincho', serif;
+  color: #757575;
 }
 </style>
 

@@ -39,15 +39,26 @@
           ></v-text-field>
         </v-col>
 
-        <v-col cols="12" md="6">
+        <VueFileAgent
+          ref="fileAgent"
+          v-model="fileRecords"
+          v-model:raw-model-value="rawFileRecords"
+          accept="image/jpeg,image/png"
+          deletable
+          max-size="1MB"
+          :help-text="$t('fileAgent.helpText')"
+          :error-text="{ type: $t('fileAgent.errorType'), size: $t('fileAgent.errorSize') }"
+        ></VueFileAgent>
+
+        <!-- <v-col cols="12" md="6">
           <VueFileAgent
-            v-model="photo"
+            v-model="image"
             accept="image/jpeg,image/png"
             class="photo-upload"
             deletable
             required
           ></VueFileAgent>
-        </v-col>
+        </v-col> -->
 
         <v-col cols="12" class="text-center">
           <v-btn type="submit" color="pink" class="cute-btn" :loading="isSubmitting">💾 保存</v-btn>
@@ -82,12 +93,50 @@ const { handleSubmit, isSubmitting } = useForm({
 })
 const phone = useField('phone')
 
+const uploadAvatar = async (file) => {
+  try {
+    const formData = new FormData()
+    formData.append('image', file)
+
+    const { data } = await apiAuth.post('/upload-avatar', formData, {
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+        'Content-Type': 'multipart/form-data',
+      },
+    })
+    user.image = data.image // 更新
+  } catch (error) {
+    console.log('上傳失敗', error.response?.data?.message || error.message)
+    console.log('大頭貼', uploadAvatar)
+  }
+}
+
+// const onFileChange = async (event) => {
+//   const file = event.target.files[0]
+//   if (file) {
+//     await uploadAvatar(file)
+//     event.target.value = ''
+//   }
+// }
+
+const fileAgent = ref(null)
+const fileRecords = ref([])
+const rawFileRecords = ref([])
+
 // const phone = useField('phone', { initialValue: user.phone })
 const submitForm = handleSubmit(async (values) => {
+  if (fileRecords.value[0]?.error) return
+  if (fileRecords.value.length === 0) {
+    alert('請上傳圖片')
+    return
+  }
+
   try {
     const fd = new FormData()
     fd.append('phone', values.phone)
-
+    if (fileRecords.value.length > 0) {
+      fd.append('image', fileRecords.value[0].file)
+    }
     console.log(fd)
 
     await apiAuth.patch('/user/' + user.id, fd)

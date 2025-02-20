@@ -4,7 +4,9 @@
       <!-- 顯示用戶的 Avatar -->
       <v-list-item>
         <template #prepend>
-          <div class="user-svg" v-html="user.svg"></div>
+          <v-avatar>
+            <v-img :src="user.image"></v-img>
+          </v-avatar>
           <!-- 顯示用戶的 avatar -->
         </template>
         <v-list-item-title class="account-title">{{ user.account }}</v-list-item-title>
