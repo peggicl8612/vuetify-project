@@ -56,48 +56,47 @@ import { ref, computed } from 'vue'
 import { useAxios } from '@/composables/axios'
 import ProductCard from '@/components/ProductCard.vue'
 
-const { api } = useAxios()
+const { api, apiAuth } = useAxios()
 
 const ITEMS_PER_PAGE = 6
 const currentPage = ref(1)
-const totalPage = computed(() => Math.ceil(products.value.length / ITEMS_PER_PAGE))
+const totalPage = computed(() => Math.ceil(cats.value.length / ITEMS_PER_PAGE))
 
-const products = ref([])
+const cats = ref([])
 const search = ref('')
 
 const filteredProducts = computed(() => {
-  return products.value
+  return cats.value
     .filter((product) => product.name.toLowerCase().includes(search.value.toLowerCase()))
     .slice((currentPage.value - 1) * ITEMS_PER_PAGE, currentPage.value * ITEMS_PER_PAGE)
 })
 
-const getProducts = async () => {
+const getCats = async () => {
   try {
-    const { data } = await api.get('/product')
-    products.value.push(...data.result)
+    const { data } = await api.get('/cat')
+    cats.value.push(...data.result)
   } catch (error) {
     console.log(error)
   }
 }
-getProducts()
+getCats()
 
-const toggleLike = async (product) => {
-  product.liked = !product.liked
+const toggleLike = async (cat) => {
+  cat.liked = !cat.liked
 
   // 發送更新請求到後端
   try {
-    const response = await api.patch('/user/like', {
-      productId: product._id, // 產品 ID
-      liked: product.liked, // 喜愛狀態
+    const response = await apiAuth.patch('/user/favorites', {
+      catId: cat._id, // 產品 ID
+      liked: cat.liked, // 喜愛狀態
     })
-
-    console.log(response.data.message) // 顯示成功訊息
+    console.log('adopting.vue 成功', response.data.message) // 顯示成功訊息
   } catch (error) {
     console.error('更新喜好狀態時出錯:', error)
   }
 
   // 本地儲存更新的產品資料
-  localStorage.setItem('likedProducts', JSON.stringify(products.value))
+  localStorage.setItem('likedProducts', JSON.stringify(cats.value))
 }
 </script>
 

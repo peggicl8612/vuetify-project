@@ -5,7 +5,6 @@
         <v-card class="custom-card">
           <v-card-title class="text-h4 text-center">{{ $t('adopt.formTitle') }}</v-card-title>
           <v-card-text>
-            <!-- 綁定 submit 函式到表單 -->
             <v-form ref="form" :disabled="isSubmitting" @submit.prevent="submit">
               <v-text-field
                 v-model="name"
@@ -66,9 +65,9 @@
 
           <v-card-actions class="d-flex justify-end">
             <v-btn color="grey" outlined @click="resetForm">{{ $t('adopt.cancel') }}</v-btn>
-            <v-btn type="submit" :loading="isSubmitting" color="primary">{{
-              $t('adopt.submit')
-            }}</v-btn>
+            <v-btn type="submit" :loading="isSubmitting" color="primary" @click="submit">
+              {{ $t('adopt.submit') }}
+            </v-btn>
           </v-card-actions>
         </v-card>
       </v-col>
@@ -95,16 +94,7 @@ const breedOptions = computed(() => [
   { title: t('catBreed.tiger'), value: 'tiger' },
 ])
 
-const form = ref({
-  name: '',
-  age: '',
-  breed: '',
-  photo: null,
-  email: '',
-})
-
 const { handleSubmit, resetForm, isSubmitting } = useForm({
-  initialValues: form.value,
   validationSchema: yup.object({
     name: yup.string().required(t('adopt.catNameRequired')),
     age: yup.number().required(t('adopt.catAgeRequired')).min(0, t('adopt.catAgeTooSmall')),
@@ -127,9 +117,13 @@ const submit = handleSubmit(async (values) => {
     fd.append('age', values.age)
     fd.append('breed', values.breed)
     fd.append('email', values.email)
-    if (values.photo) fd.append('photo', values.photo)
 
-    // 调用后台API保存送养信息
+    // 只取第一張圖片
+    if (values.photo && values.photo.length > 0) {
+      fd.append('photo', values.photo[0].file)
+    }
+
+    // 送出 API
     await apiAuth.post('/adopt/cat', fd)
 
     createSnackbar({

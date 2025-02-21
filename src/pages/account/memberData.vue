@@ -93,23 +93,23 @@ const { handleSubmit, isSubmitting } = useForm({
 })
 const phone = useField('phone')
 
-const uploadAvatar = async (file) => {
-  try {
-    const formData = new FormData()
-    formData.append('image', file)
+// const uploadAvatar = async (file) => {
+//   try {
+//     const formData = new FormData()
+//     formData.append('image', file)
 
-    const { data } = await apiAuth.post('/upload-avatar', formData, {
-      headers: {
-        Authorization: `Bearer ${user.token}`,
-        'Content-Type': 'multipart/form-data',
-      },
-    })
-    user.image = data.image // 更新
-  } catch (error) {
-    console.log('上傳失敗', error.response?.data?.message || error.message)
-    console.log('大頭貼', uploadAvatar)
-  }
-}
+//     const { data } = await apiAuth.post('/upload-avatar', formData, {
+//       headers: {
+//         Authorization: `Bearer ${user.token}`,
+//         'Content-Type': 'multipart/form-data',
+//       },
+//     })
+//     user.image = data.image // 更新
+//   } catch (error) {
+//     console.log('上傳失敗', error.response?.data?.message || error.message)
+//     console.log('大頭貼', uploadAvatar)
+//   }
+// }
 
 // const onFileChange = async (event) => {
 //   const file = event.target.files[0]

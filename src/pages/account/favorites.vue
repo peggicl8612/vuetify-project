@@ -9,12 +9,12 @@
 
     <!-- 顯示收藏的貓咪列表 -->
     <v-row>
-      <v-col v-for="cat in cats" :key="cat.id" cols="12" md="4">
+      <v-col v-for="cat in paginatedCats" :key="cat._id" cols="12" md="4">
         <v-card class="mb-4 card-hover">
           <v-img :src="cat.image" height="200px" class="rounded-top"></v-img>
           <v-card-title class="text-center">{{ cat.name }}</v-card-title>
           <v-card-actions class="justify-center">
-            <v-btn class="ma-1" :disabled="false"> 讚 💕 </v-btn>
+            <v-btn class="ma-1" :disabled="false">讚 💕</v-btn>
           </v-card-actions>
         </v-card>
       </v-col>
@@ -26,22 +26,48 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
+import { useAxios } from '@/composables/axios'
+import { useSnackbar } from 'vuetify-use-dialog'
 
-// 模擬的貓咪資料
-const cats = ref([
-  { id: 1, name: '小虎', image: 'https://example.com/cat1.jpg' },
-  { id: 2, name: '小花', image: 'https://example.com/cat2.jpg' },
-  { id: 3, name: '大橘', image: 'https://example.com/cat3.jpg' },
-  { id: 4, name: '黑貓', image: 'https://example.com/cat4.jpg' },
-  { id: 5, name: '小雪', image: 'https://example.com/cat5.jpg' },
-  { id: 6, name: '小藍', image: 'https://example.com/cat6.jpg' },
-])
+const { api } = useAxios()
+const createSnackbar = useSnackbar()
 
-// 分頁設置
+const favoriteCats = ref([])
+
+// 載入使用者的收藏貓咪資料
+const loadFavorites = async () => {
+  try {
+    const { data } = await api.get('/user/favorites') // 假設有這個API來取得使用者的收藏
+    favoriteCats.value = data.likes // 假設返回的數據結構中有 likes 陣列
+  } catch (error) {
+    console.error(error)
+    createSnackbar({
+      text: 'Failed to load favorites.',
+      snackbarProps: { color: 'red' },
+    })
+  }
+}
+
+// 當前頁數
 const currentPage = ref(1)
+// 每頁顯示數量
 const itemsPerPage = 6
-const pageCount = computed(() => Math.ceil(cats.value.length / itemsPerPage))
+
+// 計算頁面總數
+const pageCount = computed(() => Math.ceil(favoriteCats.value.length / itemsPerPage))
+
+// 計算當前頁顯示的貓咪
+const paginatedCats = computed(() => {
+  const start = (currentPage.value - 1) * itemsPerPage
+  const end = start + itemsPerPage
+  return favoriteCats.value.slice(start, end)
+})
+
+// 頁面加載時執行
+onMounted(() => {
+  loadFavorites()
+})
 </script>
 
 <style scoped>
@@ -97,6 +123,7 @@ h1 {
   justify-content: center;
 }
 </style>
+
 <route lang="yaml">
 meta:
   layout: account

@@ -152,7 +152,7 @@ const headers = computed(() => {
 
 const getUsers = async () => {
   try {
-    const { data } = await apiAuth.get('/user/profile')
+    const { data } = await apiAuth.get('/user/all')
     console.log('API 回傳資料：', data)
     users.value = data.result.map((user) => ({
       ...user,
