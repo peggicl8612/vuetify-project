@@ -41,6 +41,15 @@
           <template #[`item.username`]="{ value }">
             <span>{{ value }}</span>
           </template>
+          <template #[`item.image`]="{value}">
+            <v-img
+            :src="value"
+            width="50"
+            height="50"
+            class="rounded-circle"
+            contain
+            ></v-img>
+          </template>
           <template #[`item.email`]="{ value }">
             <!-- -icon 替換成 v-text 來呈現 email -->
             <span>{{ value }}</span>
@@ -139,7 +148,7 @@ const search = ref('')
 const headers = computed(() => {
   return [
     { title: 'ID', key: '_id', sortable: true },
-    { title: t('user.avatar'), key: 'avatar', sortable: false },
+    { title: t('user.image'), key: 'image', sortable: false },
     { title: t('user.username'), key: 'account', sortable: true },
     { title: t('user.email'), key: 'email', sortable: true },
     { title: t('user.role'), key: 'role', sortable: true },

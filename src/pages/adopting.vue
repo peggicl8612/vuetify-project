@@ -15,8 +15,8 @@
       <!-- 設定卡片等高並且並排 -->
       <v-row justify="center" align="stretch">
         <v-col
-          v-for="product of filteredProducts"
-          :key="product._id"
+          v-for="cat of filteredCats"
+          :key="cat._id"
           cols="12"
           sm="6"
           md="4"
@@ -24,17 +24,20 @@
           class="d-flex"
         >
           <v-card class="cute-card" elevation="5">
-            <product-card v-bind="product"></product-card>
+            <product-card v-bind="cat"></product-card>
 
             <!-- 愛心按鈕 -->
-            <v-btn
-              class="likebtn"
-              icon
-              :color="product.liked ? 'red' : 'grey'"
-              @click="toggleLike(product)"
-            >
-              <v-icon>{{ product.liked ? 'mdi-heart' : 'mdi-heart-outline' }}</v-icon>
-            </v-btn>
+            <div class="like_container">
+              <v-btn
+                class="likebtn"
+                icon
+                :color="cat.liked ? 'pink' : 'grey'"
+                @click="toggleLike(cat)"
+              >
+                <v-icon>{{ cat.liked ? 'mdi-heart' : 'mdi-heart-outline' }}</v-icon>
+              </v-btn>
+              <span class="like_count">{{ cat.likes }}</span>
+            </div>
           </v-card>
         </v-col>
       </v-row>
@@ -62,42 +65,72 @@ const ITEMS_PER_PAGE = 6
 const currentPage = ref(1)
 const totalPage = computed(() => Math.ceil(cats.value.length / ITEMS_PER_PAGE))
 
-const cats = ref([])
-const search = ref('')
+const cats = ref([])  // 用來儲存所有貓咪資料
+const search = ref('')  // 搜尋框內容
+const userFavorites = ref([])  // 用來儲存使用者已經按過讚的貓咪 ID
 
-const filteredProducts = computed(() => {
+const filteredCats = computed(() => {
   return cats.value
-    .filter((product) => product.name.toLowerCase().includes(search.value.toLowerCase()))
+    .filter((cat) => cat.name.toLowerCase().includes(search.value.toLowerCase()))
     .slice((currentPage.value - 1) * ITEMS_PER_PAGE, currentPage.value * ITEMS_PER_PAGE)
 })
 
+// 取得貓咪清單
 const getCats = async () => {
   try {
     const { data } = await api.get('/cat')
-    cats.value.push(...data.result)
+    cats.value = data.result // 確保資料結構符合
+    await getFavorites() // 取得喜愛的貓咪資料
   } catch (error) {
     console.log(error)
   }
 }
+
+// 取得使用者已按讚的貓咪清單
+const getFavorites = async () => {
+  try {
+    const { data } = await apiAuth.get('/user/favorites')
+    userFavorites.value = data.result.map(cat => cat._id)  // 存入已按讚的貓咪 ID 陣列
+
+    // 更新 `cats` 陣列，標記哪些貓咪是使用者按過讚的
+    cats.value.forEach(cat => {
+      cat.liked = userFavorites.value.includes(cat._id)
+    })
+  } catch (error) {
+    console.log('無法獲取使用者的喜好資料:', error)
+  }
+}
+
+// 呼叫初始化資料
 getCats()
 
+// 點擊喜歡按鈕後的處理邏輯
 const toggleLike = async (cat) => {
-  cat.liked = !cat.liked
-
-  // 發送更新請求到後端
   try {
-    const response = await apiAuth.patch('/user/favorites', {
-      catId: cat._id, // 產品 ID
-      liked: cat.liked, // 喜愛狀態
+    const response = await apiAuth.post('/user/favorites', {
+      catId: cat._id,
+      liked: !cat.liked
     })
+
     console.log('adopting.vue 成功', response.data.message) // 顯示成功訊息
+
+    // 更新本地資料
+    cat.liked = !cat.liked
+    cat.likes = response.data.likes
+
+    // 更新 userFavorites 中的資料
+    if (cat.liked) {
+      userFavorites.value.push(cat._id)
+    } else {
+      userFavorites.value = userFavorites.value.filter(id => id !== cat._id)
+    }
   } catch (error) {
     console.error('更新喜好狀態時出錯:', error)
   }
-
-  // 本地儲存更新的產品資料
-  localStorage.setItem('likedProducts', JSON.stringify(cats.value))
 }
+
+// 初始化時執行
+computed(getCats)
 </script>
 
 <style>
@@ -123,11 +156,24 @@ const toggleLike = async (cat) => {
   bottom: 20px;
   right: 20px;
 }
-</style>
 
-<route lang="yaml">
-meta:
-  login: false
-  admin: false
-  title: 'nav.home'
-</route>
+.like_container {
+  display: flex;
+  width: 50px;
+  height: auto;
+  align-items: center;
+  position: absolute;
+  bottom: 20px;
+  right: 30px;
+}
+
+.like_count {
+  font-weight: bold;
+  color: #d32f2f !important; /* 深紅色，讓數字更明顯 */
+  position: absolute;
+  right: -5px;
+  bottom: 25px;
+  font-size: 24px;
+  font-family: Junge;
+}
+</style>

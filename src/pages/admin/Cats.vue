@@ -79,6 +79,7 @@ const cats = reactive([])
 const search = ref('')
 const headers = computed(() => {
   return [
+  { title: 'ID', key: '_id', sortable: true },
     { title: t('cat.image'), key: 'image', sortable: false },
     { title: t('cat.name'), key: 'name', sortable: false },
     { title: t('cat.age'), key: 'age', sortable: true },

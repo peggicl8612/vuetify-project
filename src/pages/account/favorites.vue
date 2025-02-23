@@ -30,7 +30,7 @@ import { ref, computed, onMounted } from 'vue'
 import { useAxios } from '@/composables/axios'
 import { useSnackbar } from 'vuetify-use-dialog'
 
-const { api } = useAxios()
+const { apiAuth } = useAxios()
 const createSnackbar = useSnackbar()
 
 const favoriteCats = ref([])
@@ -38,8 +38,8 @@ const favoriteCats = ref([])
 // 載入使用者的收藏貓咪資料
 const loadFavorites = async () => {
   try {
-    const { data } = await api.get('/user/favorites') // 假設有這個API來取得使用者的收藏
-    favoriteCats.value = data.likes // 假設返回的數據結構中有 likes 陣列
+    const { data } = await apiAuth.get('/favorites') // 假設有這個API來取得使用者的收藏
+    favoriteCats.value = data
   } catch (error) {
     console.error(error)
     createSnackbar({
