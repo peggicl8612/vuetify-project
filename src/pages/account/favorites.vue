@@ -14,7 +14,7 @@
           <v-img :src="cat.image" height="200px" class="rounded-top"></v-img>
           <v-card-title class="text-center">{{ cat.name }}</v-card-title>
           <v-card-actions class="justify-center">
-            <v-btn class="ma-1" :disabled="false">讚 💕</v-btn>
+            <v-btn class="ma-1" @click="removeFavorite(cat._id)">取消收藏 💔</v-btn>
           </v-card-actions>
         </v-card>
       </v-col>
@@ -30,7 +30,7 @@ import { ref, computed, onMounted } from 'vue'
 import { useAxios } from '@/composables/axios'
 import { useSnackbar } from 'vuetify-use-dialog'
 
-const { api } = useAxios()
+const { apiAuth } = useAxios()
 const createSnackbar = useSnackbar()
 
 const favoriteCats = ref([])
@@ -38,23 +38,34 @@ const favoriteCats = ref([])
 // 載入使用者的收藏貓咪資料
 const loadFavorites = async () => {
   try {
-    const { data } = await api.get('/user/favorites') // 假設有這個API來取得使用者的收藏
-    favoriteCats.value = data.likes // 假設返回的數據結構中有 likes 陣列
+    const { data } = await apiAuth.get('/user/favorites') // 後端應返回完整的貓咪資料
+    favoriteCats.value = data.result
   } catch (error) {
     console.error(error)
     createSnackbar({
-      text: 'Failed to load favorites.',
+      text: '獲取收藏列表失敗',
       snackbarProps: { color: 'red' },
     })
   }
 }
 
+// 移除收藏
+const removeFavorite = async (catId) => {
+  try {
+    await apiAuth.delete(`/favorites/${catId}`)
+    favoriteCats.value = favoriteCats.value.filter(cat => cat._id !== catId)
+    createSnackbar({ text: '已取消收藏', snackbarProps: { color: 'green' } })
+  } catch (error) {
+    console.error(error)
+    createSnackbar({ text: '取消收藏失敗', snackbarProps: { color: 'red' } })
+  }
+}
+
 // 當前頁數
 const currentPage = ref(1)
-// 每頁顯示數量
 const itemsPerPage = 6
 
-// 計算頁面總數
+// 計算總頁數
 const pageCount = computed(() => Math.ceil(favoriteCats.value.length / itemsPerPage))
 
 // 計算當前頁顯示的貓咪
@@ -65,10 +76,9 @@ const paginatedCats = computed(() => {
 })
 
 // 頁面加載時執行
-onMounted(() => {
-  loadFavorites()
-})
+onMounted(loadFavorites)
 </script>
+
 
 <style scoped>
 h1 {

@@ -125,10 +125,16 @@ const rawFileRecords = ref([])
 
 // const phone = useField('phone', { initialValue: user.phone })
 const submitForm = handleSubmit(async (values) => {
-  if (fileRecords.value[0]?.error) return
-  if (fileRecords.value.length === 0) {
-    alert('請上傳圖片')
+  // 如果圖片欄位有錯誤，則停止提交
+  if (fileRecords.value[0]?.error) {
     return
+  }
+
+  // 如果圖片欄位沒有填寫且是非必填，則不需要檢查
+  if (fileRecords.value.length > 0) {
+    // 如果有圖片，才進行圖片處理
+    const fd = new FormData()
+    fd.append('photo', fileRecords.value[0].file)
   }
 
   try {

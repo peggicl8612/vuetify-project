@@ -16,6 +16,7 @@ export const useUserStore = defineStore(
     const email = ref('')
     const phone = ref('')
     const image = ref('')
+    const favorites= ref('')
 
     const updateImage = (newImageUrl) => {
       image.value = newImageUrl
@@ -42,6 +43,7 @@ export const useUserStore = defineStore(
       email.value = data.email
       phone.value = data.phone
       image.value = data.image || ''
+      favorites.value = data.favorites
     }
 
     const logout = () => {
@@ -51,6 +53,7 @@ export const useUserStore = defineStore(
       role.value = UserRole.USER
       cart.value = 0
       image.value = ''
+      favorites.value= ''
     }
 
     return {
@@ -61,6 +64,7 @@ export const useUserStore = defineStore(
       email,
       phone,
       image,
+      favorites,
       updateImage,
       id,
       isLoggedIn,
@@ -73,7 +77,7 @@ export const useUserStore = defineStore(
   {
     persist: {
       key: 'shop-user',
-      pick: ['token', 'image'],
+      pick: ['token', 'image', 'favorites'],
     },
   },
 )

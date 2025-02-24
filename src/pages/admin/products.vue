@@ -140,12 +140,15 @@ const getProducts = async () => {
 getProducts()
 
 const dialog = ref({
+  // 對話框開啟的狀態,預設 false
   open: false,
+  // 若對話框有東西 => 編輯
+  // 若對話框沒東西 => 新增
   id: '',
 })
 const openDialog = (item) => {
   if (item) {
-    console.log('item.category:', item.category) // 確認這裡的值是否正確
+    console.log('item.category:', item.category)
     category.value.value = ['black', 'orange', 'flower', 'tiger'].includes(item.category)
       ? item.category
       : '' // 如果 category 無效，就設為空值

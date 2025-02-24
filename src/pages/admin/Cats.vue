@@ -62,7 +62,64 @@
       </v-col>
     </v-row>
   </v-container>
-  <v-dialog> </v-dialog>
+  <v-dialog v-model="dialog.open" persistent>
+    <v-form :disabled="isSubmitting" @submit.prevent="submit">
+      <v-card>
+        <v-card-title>{{ $t(dialog.id ? 'adminCat.edit' : 'adminCat.new') }}</v-card-title>
+        <v-card-text>
+          <v-text-field
+            v-model="name.value.value"
+            :label="$t('cat.name')"
+            :error-messages="name.errorMessage.value"
+          ></v-text-field>
+          <v-text-field
+            v-model="age.value.value"
+            :label="$t('cat.age')"
+            :error-messages="age.errorMessage.value"
+            type="number"
+            min="0"
+          ></v-text-field>
+          <v-text-field
+            v-model="gender.value.value"
+            :label="$t('cat.gender')"
+            :error-messages="gender.errorMessage.value"
+          ></v-text-field>
+          <v-select
+            v-model="breed.value.value"
+            :error-messages="breed.errorMessage.value"
+            :items="breedOptions"
+            item-title="text"
+            item-value="value"
+          ></v-select>
+          <v-checkbox
+            v-model="isAdopting.value.value"
+            :label="$t('cat.isAdopting')"
+            :error-messages="isAdopting.errorMessage.value"
+          ></v-checkbox>
+          <v-textarea
+            v-model="description.value.value"
+            :label="$t('cat.description')"
+            :error-messages="description.errorMessage.value"
+          ></v-textarea>
+          <VueFileAgent
+            v-model="fileRecords"
+            v-model:raw-model-value="rawFileRecords"
+            accept="image/jpeg,image/png"
+            :help-text="$t('fileAgent.helpText')"
+            :error-text="{ type: $t('fileAgent.errorType'), size: $t('fileAgent.errorSize') }"
+            deletable
+            max-size="1MB"
+            required
+          ></VueFileAgent>
+        </v-card-text>
+
+        <v-card-actions>
+          <v-btn @click="closeDialog">{{ $t('adminProduct.cancel') }}</v-btn>
+          <v-btn type="submit" :loading="isSubmitting">{{ $t('adminProduct.submit') }}</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-form>
+  </v-dialog>
 </template>
 
 <script setup>
@@ -70,18 +127,23 @@ import { useAxios } from '@/composables/axios'
 import { computed, reactive, ref } from 'vue'
 import { useSnackbar } from 'vuetify-use-dialog'
 import { useI18n } from 'vue-i18n'
+import { useForm, useField } from 'vee-validate'
+import * as yup from 'yup'
 
 const { t } = useI18n()
 const { apiAuth } = useAxios()
 const createSnackbar = useSnackbar()
 
 const cats = reactive([])
+// const cats = ref([])
 const search = ref('')
 const headers = computed(() => {
   return [
+    { title: 'ID', key: '_id', sortable: true },
     { title: t('cat.image'), key: 'image', sortable: false },
     { title: t('cat.name'), key: 'name', sortable: false },
     { title: t('cat.age'), key: 'age', sortable: true },
+    { title: t('cats.gender'), key: 'gender', sortable: true },
     { title: t('cat.breed'), key: 'breed', sortable: true },
     { title: t('cat.isAdopting'), key: 'isAdopting', sortable: true },
     { title: t('cat.description'), key: 'description', sortable: false },
@@ -104,6 +166,128 @@ const getCats = async () => {
 }
 
 getCats()
+
+const dialog = ref({
+  open: false,
+  id: '',
+})
+
+const openDialog = (item) => {
+  if (item) {
+    // 改為使用 breed
+    breed.value.value = item.breed || '' // 如果 breed 不存在，設為空字串
+
+    dialog.value.id = item._id
+    name.value.value = item.name
+    age.value.value = item.age
+    description.value.value = item.description
+    isAdopting.value.value = item.isAdopting
+    gender.value.value = item.gender
+  }
+  dialog.value.open = true
+}
+
+const closeDialog = () => {
+  resetForm()
+  dialog.value.id = ''
+  dialog.value.open = false
+  fileAgent.value.deleteFileRecord()
+}
+
+const schema = yup.object({
+  name: yup.string().required(t('api.catNameRequired')),
+  breed: yup
+    .string()
+    .required(t('api.catBreedRequired'))
+    .oneOf(['black', 'orange', 'flower', 'tiger'], t('api.catBreedRequired')),
+  age: yup.number().typeError(t('api.catAgeInvalid')).required(t('api.catAgeRequired')),
+  description: yup.string().required(t('api.catDescriptionRequired')),
+  gender: yup.string().required(t('api.catGenderRequired')),
+  isAdopting: yup.boolean().required(t('api.catIsadoptingRequired')),
+})
+const { handleSubmit, isSubmitting, resetForm } = useForm({
+  validationSchema: schema,
+  initialValues: {
+    name: '',
+    age: '',
+    description: '',
+    breed: '',
+    isAdopting: 'false',
+  },
+})
+const name = useField('name')
+const age = useField('age')
+const breed = useField('breed')
+const description = useField('description')
+const gender = useField('gender')
+const isAdopting = useField('isAdopting')
+const breedOptions = computed(() => [
+  { text: t('cat.selectBreed'), value: '' },
+  { text: t('catBreed.black'), value: 'black' },
+  { text: t('catBreed.orange'), value: 'orange' },
+  { text: t('catBreed.flower'), value: 'flower' },
+  { text: t('catBreed.tiger'), value: 'tiger' },
+])
+
+const fileAgent = ref(null)
+const fileRecords = ref([])
+const rawFileRecords = ref([])
+
+const submit = handleSubmit(async (values) => {
+  console.log('提交的值:', values)
+  console.log('breed 值:', values.breed)
+  if (fileRecords.value[0]?.error) return
+  if (dialog.value.id.length === 0 && fileRecords.value.length === 0) {
+    createSnackbar({
+      text: t('api.productImageRequired'),
+      snackbarProps: {
+        color: 'red',
+      },
+    })
+    return
+  }
+
+  try {
+    const fd = new FormData()
+    // fd.append(key, value)
+    fd.append('name', values.name)
+    fd.append('age', values.age)
+    fd.append('description', values.description)
+    fd.append('breed', values.breed)
+    fd.append('gender', values.gender)
+    fd.append('isAdopting', values.isAdopting)
+    if (fileRecords.value.length > 0) {
+      fd.append('image', fileRecords.value[0].file)
+    }
+
+    if (dialog.value.id.length > 0) {
+      await apiAuth.patch('/cat/' + dialog.value.id, fd)
+    } else {
+      // 前端接資料的動作,不一定要寫
+      const { data } = await apiAuth.post('/cat', fd)
+      console.log(data)
+      // await apiAuth.post('/product', fd)
+    }
+
+    cats.splice(0, cats.length)
+    getCats()
+    createSnackbar({
+      text: t(dialog.value.id.length > 0 ? 'adminCat.editSuccess' : 'adminCat.newSuccess'),
+      snackbarProps: {
+        color: 'green',
+      },
+    })
+    closeDialog()
+  } catch (error) {
+    console.log(error)
+    createSnackbar({
+      text: t('api.' + (error?.response?.data?.message || 'unknownError')),
+      snackbarProps: {
+        color: 'red',
+      },
+    })
+  }
+})
 </script>
 
 <style scoped>

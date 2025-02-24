@@ -229,5 +229,7 @@ export default {
     catImageRequired: '貓咪圖片必填',
     catDescriptionRequired: '貓咪說明必填',
     catIdInvalid: '貓咪 ID 錯誤',
+    catIsadoptingRequired: '領養狀態必填',
+    isAdopting: '領養狀態必填',
   },
 }
