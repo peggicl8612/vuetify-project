@@ -44,7 +44,7 @@ const loadFavorites = async () => {
     console.error(error)
     createSnackbar({
       text: '獲取收藏列表失敗',
-      snackbarProps: { color: 'red' },
+      snackbarProps: { color: 'pink' },
     })
   }
 }
@@ -52,12 +52,12 @@ const loadFavorites = async () => {
 // 移除收藏
 const removeFavorite = async (catId) => {
   try {
-    await apiAuth.delete(`/favorites/${catId}`)
-    favoriteCats.value = favoriteCats.value.filter(cat => cat._id !== catId)
-    createSnackbar({ text: '已取消收藏', snackbarProps: { color: 'green' } })
+    await apiAuth.delete(`/user/favorites/${catId}`)
+    favoriteCats.value = favoriteCats.value.filter((cat) => cat._id !== catId)
+    createSnackbar({ text: '已取消收藏', snackbarProps: { color: 'brown' } })
   } catch (error) {
     console.error(error)
-    createSnackbar({ text: '取消收藏失敗', snackbarProps: { color: 'red' } })
+    createSnackbar({ text: '取消收藏失敗', snackbarProps: { color: 'pink' } })
   }
 }
 
@@ -78,7 +78,6 @@ const paginatedCats = computed(() => {
 // 頁面加載時執行
 onMounted(loadFavorites)
 </script>
-
 
 <style scoped>
 h1 {

@@ -114,8 +114,8 @@
         </v-card-text>
 
         <v-card-actions>
-          <v-btn @click="closeDialog">{{ $t('adminProduct.cancel') }}</v-btn>
-          <v-btn type="submit" :loading="isSubmitting">{{ $t('adminProduct.submit') }}</v-btn>
+          <v-btn @click="closeDialog">{{ $t('adminCat.cancel') }}</v-btn>
+          <v-btn type="submit" :loading="isSubmitting">{{ $t('adminCat.submit') }}</v-btn>
         </v-card-actions>
       </v-card>
     </v-form>
@@ -181,8 +181,11 @@ const openDialog = (item) => {
     name.value.value = item.name
     age.value.value = item.age
     description.value.value = item.description
-    isAdopting.value.value = item.isAdopting
+    isAdopting.value.value = Boolean(item.isAdopting)
+    // 避免 undefined
     gender.value.value = item.gender
+  } else {
+    isAdopting.value.value = false // 確保新貓咪的預設值為 false
   }
   dialog.value.open = true
 }
@@ -212,7 +215,7 @@ const { handleSubmit, isSubmitting, resetForm } = useForm({
     age: '',
     description: '',
     breed: '',
-    isAdopting: 'false',
+    isAdopting: false,
   },
 })
 const name = useField('name')
@@ -220,7 +223,7 @@ const age = useField('age')
 const breed = useField('breed')
 const description = useField('description')
 const gender = useField('gender')
-const isAdopting = useField('isAdopting')
+const isAdopting = useField('isAdopting', undefined, { initialValue: false })
 const breedOptions = computed(() => [
   { text: t('cat.selectBreed'), value: '' },
   { text: t('catBreed.black'), value: 'black' },
@@ -234,12 +237,10 @@ const fileRecords = ref([])
 const rawFileRecords = ref([])
 
 const submit = handleSubmit(async (values) => {
-  console.log('提交的值:', values)
-  console.log('breed 值:', values.breed)
   if (fileRecords.value[0]?.error) return
   if (dialog.value.id.length === 0 && fileRecords.value.length === 0) {
     createSnackbar({
-      text: t('api.productImageRequired'),
+      text: t('api.CatImageRequired'),
       snackbarProps: {
         color: 'red',
       },
@@ -255,7 +256,7 @@ const submit = handleSubmit(async (values) => {
     fd.append('description', values.description)
     fd.append('breed', values.breed)
     fd.append('gender', values.gender)
-    fd.append('isAdopting', values.isAdopting)
+    fd.append('isAdopting', values.isAdopting ? 'true' : 'false')
     if (fileRecords.value.length > 0) {
       fd.append('image', fileRecords.value[0].file)
     }
