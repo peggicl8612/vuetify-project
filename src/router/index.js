@@ -12,15 +12,16 @@ import { useAxios } from '@/composables/axios'
 import { useUserStore } from '@/stores/user'
 import i18n from '@/i18n'
 import adminHome from '@/pages/home.vue'
-import adminLayout from '@/layouts/adminLayout.vue'
+import admin from '@/layouts/admin.vue'
 import AboutUs from '@/pages/about-us.vue'
 import Faq from '@/pages/faq.vue'
 import Kitten from '@/pages/kitten.vue'
 import Adult from '@/pages/adult.vue'
 import Adopting from '@/pages/adopting.vue'
 import Agree from '@/pages/agree.vue'
-import Rehome from '@/pages/rehome.vue'
+import rehome from '@/pages/rehome.vue'
 import users from '@/pages/admin/users.vue'
+import rehomes from '@/pages/admin/rehomes.vue'
 import Disease from '@/pages/disease.vue'
 
 const router = createRouter({
@@ -29,7 +30,7 @@ const router = createRouter({
     ...routes,
     {
       path: '/admin',
-      component: adminLayout,
+      component: admin,
       children: [
         {
           path: '',
@@ -53,6 +54,17 @@ const router = createRouter({
             title: 'nav.adminUsers',
           },
         },
+        {
+          path: '/rehomes',
+          name: 'adminRehomes',
+          component: rehomes,
+          meta: {
+            layout: 'admin',
+            login: true,
+            admin: true,
+            title: 'nav.adminRehomes',
+          },
+        },
       ],
     },
     {
@@ -68,7 +80,7 @@ const router = createRouter({
     // meta: { requiresAuth: true } 表示這個頁面需要登入才能進入
     { path: '/adopting', name: 'adopting', component: Adopting, meta: { requiresAuth: true } },
     { path: '/agree', name: 'agree', component: Agree, meta: { requiresAuth: true } },
-    { path: '/rehome', name: 'rehome', component: Rehome, meta: { requiresAuth: true } },
+    { path: '/rehome', name: 'rehome', component: rehome, meta: { requiresAuth: true } },
   ]),
 })
 

@@ -65,14 +65,19 @@ const ITEMS_PER_PAGE = 6
 const currentPage = ref(1)
 const totalPage = computed(() => Math.ceil(cats.value.length / ITEMS_PER_PAGE))
 
-const cats = ref([])  // 用來儲存所有貓咪資料
-const search = ref('')  // 搜尋框內容
-const userFavorites = ref([])  // 用來儲存使用者已經按過讚的貓咪 ID
+const cats = ref([]) // 用來儲存所有貓咪資料
+const search = ref('') // 搜尋框內容
+const userFavorites = ref([]) // 用來儲存使用者已經按過讚的貓咪 ID
 
 const filteredCats = computed(() => {
-  return cats.value
-    .filter((cat) => cat.name.toLowerCase().includes(search.value.toLowerCase()))
-    .slice((currentPage.value - 1) * ITEMS_PER_PAGE, currentPage.value * ITEMS_PER_PAGE)
+  // 先過濾搜尋條件，再進行分頁
+  const filtered = cats.value.filter((cat) =>
+    cat.name.toLowerCase().includes(search.value.toLowerCase()),
+  )
+  return filtered.slice(
+    (currentPage.value - 1) * ITEMS_PER_PAGE,
+    currentPage.value * ITEMS_PER_PAGE,
+  )
 })
 
 // 取得貓咪清單
@@ -90,10 +95,10 @@ const getCats = async () => {
 const getFavorites = async () => {
   try {
     const { data } = await apiAuth.get('/user/favorites')
-    userFavorites.value = data.result.map(cat => cat._id)  // 存入已按讚的貓咪 ID 陣列
+    userFavorites.value = data.result.map((cat) => cat._id) // 存入已按讚的貓咪 ID 陣列
 
     // 更新 `cats` 陣列，標記哪些貓咪是使用者按過讚的
-    cats.value.forEach(cat => {
+    cats.value.forEach((cat) => {
       cat.liked = userFavorites.value.includes(cat._id)
     })
   } catch (error) {
@@ -109,7 +114,7 @@ const toggleLike = async (cat) => {
   try {
     const response = await apiAuth.post('/user/favorites', {
       catId: cat._id,
-      liked: !cat.liked
+      liked: !cat.liked,
     })
 
     console.log('adopting.vue 成功', response.data.message) // 顯示成功訊息
@@ -117,12 +122,13 @@ const toggleLike = async (cat) => {
     // 更新本地資料
     cat.liked = !cat.liked
     cat.likes = response.data.likes
-
+    // 重新載入資料，保持同步
+    await getCats()
     // 更新 userFavorites 中的資料
     if (cat.liked) {
       userFavorites.value.push(cat._id)
     } else {
-      userFavorites.value = userFavorites.value.filter(id => id !== cat._id)
+      userFavorites.value = userFavorites.value.filter((id) => id !== cat._id)
     }
   } catch (error) {
     console.error('更新喜好狀態時出錯:', error)

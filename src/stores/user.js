@@ -16,7 +16,8 @@ export const useUserStore = defineStore(
     const email = ref('')
     const phone = ref('')
     const image = ref('')
-    const favorites= ref('')
+    const favorites = ref('')
+    const rehome = ref('')
 
     const updateImage = (newImageUrl) => {
       image.value = newImageUrl
@@ -44,6 +45,7 @@ export const useUserStore = defineStore(
       phone.value = data.phone
       image.value = data.image || ''
       favorites.value = data.favorites
+      rehome.value = data.rehome
     }
 
     const logout = () => {
@@ -53,7 +55,8 @@ export const useUserStore = defineStore(
       role.value = UserRole.USER
       cart.value = 0
       image.value = ''
-      favorites.value= ''
+      favorites.value = ''
+      rehome.value = ''
     }
 
     return {
@@ -72,6 +75,7 @@ export const useUserStore = defineStore(
       svg,
       login,
       logout,
+      rehome,
     }
   },
   {

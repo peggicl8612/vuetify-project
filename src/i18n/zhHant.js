@@ -24,6 +24,7 @@ export default {
     account: '會員專區',
     adopting: '待領養專區',
     agree: '下載同意書',
+    favorites: '收藏列表',
 
     // theme: ' ',
   },
@@ -146,12 +147,13 @@ export default {
     Female: '雌性',
     female: '雌性',
   },
-  adopt: {
+  rehome: {
     formTitle: '送養表單',
     submit: '送出',
     catName: '貓咪名字',
     catAge: '貓咪年齡',
     catBreed: '貓咪品種',
+    catGender: '貓咪性別',
     catDescription: '貓咪描述',
     catImage: '貓咪照片',
     email: '信箱',
@@ -160,10 +162,14 @@ export default {
     catNameRequired: '貓咪名字必填',
     catAgeRequired: '貓咪年齡必填',
     catBreedRequired: '貓咪品種必填',
+    catGenderRequired: '貓咪性別必填',
     catAgeTooSmall: '貓咪年齡不符',
     catPhotoRequired: '貓咪照片必填',
     emailInvalid: '信箱格式不符',
     emailRequired: '信箱必填',
+    photoErrorText: '照片必填',
+    submitSuccess: '送出成功',
+    submitError: '送出失敗',
   },
 
   fileAgent: {
@@ -224,7 +230,9 @@ export default {
     userActiveRequired: '使用者啟用必填',
     userRoleRequired: '使用者身分必填',
     catAgeRequired: '貓咪年齡必填',
+    catAgeTooSmall: '貓咪年齡不符',
     catBreedRequired: '貓咪品種必填',
+    catGenderRequired: '貓咪性別必填',
     catNameRequired: '貓咪名稱必填',
     catImageRequired: '貓咪圖片必填',
     catDescriptionRequired: '貓咪說明必填',

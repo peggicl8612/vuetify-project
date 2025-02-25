@@ -2,16 +2,16 @@
   <v-container>
     <v-row class="d-flex justify-center py-4">
       <v-col cols="12" md="8">
-        <v-card class="custom-card">
-          <v-card-title class="text-h4 text-center">{{ $t('adopt.formTitle') }}</v-card-title>
-          <v-card-text>
-            <v-form ref="form" :disabled="isSubmitting" @submit.prevent="submitForm">
+        <v-form ref="form" :disabled="isSubmitting" @submit.prevent="submitForm">
+          <v-card class="custom-card">
+            <v-card-title class="text-h4 text-center">{{ $t('rehome.formTitle') }}</v-card-title>
+            <v-card-text>
               <v-card>
                 <v-card-text>
                   <v-text-field
-                    v-model="name"
-                    :label="$t('adopt.catName')"
-                    :error-messages="errors.name"
+                    v-model="name.value.value"
+                    :label="$t('rehome.catName')"
+                    :error-messages="name.errorMessage.value"
                     required
                     outlined
                     dense
@@ -19,30 +19,52 @@
                   ></v-text-field>
 
                   <v-text-field
-                    v-model="age"
-                    :label="$t('adopt.catAge')"
+                    v-model="age.value.value"
+                    :label="$t('rehome.catAge')"
                     type="number"
                     min="0"
-                    :error-messages="errors.age"
+                    :error-messages="age.errorMessage.value"
                     required
                     outlined
                     dense
                     class="custom-input"
                   ></v-text-field>
 
-                  <!-- 類別欄位 -->
                   <v-select
-                    v-model="category"
+                    v-model="category.value.value"
                     :items="breedOptions"
                     item-text="title"
                     item-value="value"
-                    :label="$t('adopt.catBreed')"
-                    :error-messages="errors.breed"
+                    :label="$t('rehome.catBreed')"
+                    :error-messages="category.errorMessage.value"
                     required
                     outlined
                     dense
                     class="custom-input"
                   ></v-select>
+
+                  <v-select
+                    v-model="gender.value.value"
+                    :items="genderOptions"
+                    item-text="title"
+                    item-value="value"
+                    :label="$t('rehome.catGender')"
+                    :error-messages="gender.errorMessage.value"
+                    required
+                    outlined
+                    dense
+                    class="custom-input"
+                  ></v-select>
+
+                  <v-text-field
+                    v-model="description.value.value"
+                    :label="$t('rehome.catDescription')"
+                    :error-messages="description.errorMessage.value"
+                    outlined
+                    required
+                    dense
+                    class="custom-input"
+                  ></v-text-field>
 
                   <v-text-field
                     v-model="user.email"
@@ -61,8 +83,8 @@
                     v-model="fileRecords"
                     v-model:raw-model-value="rawFileRecords"
                     accept="image/jpeg,image/png"
-                    :help-text="$t('adopt.photoHelpText')"
-                    :error-text="$t('adopt.photoErrorText')"
+                    :help-text="$t('rehome.photoHelpText')"
+                    :error-text="$t('rehome.photoErrorText')"
                     :error-messages="errors.photo"
                     deletable
                     max-size="1MB"
@@ -70,16 +92,16 @@
                   ></VueFileAgent>
                 </v-card-text>
               </v-card>
-            </v-form>
-          </v-card-text>
 
-          <v-card-actions class="d-flex justify-end">
-            <v-btn color="grey" outlined @click="resetForm">{{ $t('adopt.cancel') }}</v-btn>
-            <v-btn type="submit" :loading="isSubmitting" color="primary">
-              {{ $t('adopt.submit') }}
-            </v-btn>
-          </v-card-actions>
-        </v-card>
+              <v-card-actions class="d-flex justify-end">
+                <v-btn color="grey" outlined @click="resetForm">{{ $t('rehome.cancel') }}</v-btn>
+                <v-btn type="submit" color="pink" :loading="isSubmitting">
+                  {{ $t('rehome.submit') }}
+                </v-btn>
+              </v-card-actions>
+            </v-card-text>
+          </v-card>
+        </v-form>
       </v-col>
     </v-row>
   </v-container>
@@ -90,18 +112,53 @@ import { ref, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useAxios } from '@/composables/axios'
 import { useSnackbar } from 'vuetify-use-dialog'
-import { useForm } from 'vee-validate'
+import { useForm, useField } from 'vee-validate'
 import { useUserStore } from '@/stores/user'
 import * as yup from 'yup'
 
 const { t } = useI18n()
 const { apiAuth } = useAxios()
 const createSnackbar = useSnackbar()
-
 const user = useUserStore()
-const category = ref('')
-const name = ref('')
-const age = ref('')
+
+const schema = yup.object({
+  name: yup.string().required(t('api.catNameRequired')),
+  age: yup.number().required(t('api.catAgeRequired')).min(0, t('api.catAgeTooSmall')),
+  category: yup
+    .string()
+    .trim()
+    .required(t('api.catBreedRequired'))
+    .oneOf(['black', 'orange', 'flower', 'tiger'], t('api.catBreedRequired')),
+  gender: yup.string().required(t('api.catGenderRequired')),
+  // image: yup.string().required(t('api.catImageRequired')),
+  description: yup.string().required(t('api.catDescriptionRequired')),
+})
+
+// 使用 useForm
+const { handleSubmit, resetForm, isSubmitting, errors } = useForm({
+  validationSchema: schema,
+  initialValues: {
+    name: '',
+    age: '',
+    category: '',
+    gender: '',
+    description: '',
+  },
+})
+
+// 使用 useField() 對每個表單字段進行綁定
+const name = useField('name')
+const age = useField('age')
+const category = useField('category')
+const gender = useField('gender')
+const description = useField('description')
+
+// const { value: name, errorMessage: nameError } = useField('name')
+// const { value: age, errorMessage: ageError } = useField('age')
+// const { value: category, errorMessage: categoryError } = useField('category')
+// const { value: gender, errorMessage: genderError } = useField('gender')
+// const { value: description, errorMessage: descriptionError } = useField('description')
+
 const breedOptions = computed(() => [
   { title: t('cat.selectCategory'), value: '' },
   { title: t('catBreed.black'), value: 'black' },
@@ -110,32 +167,20 @@ const breedOptions = computed(() => [
   { title: t('catBreed.tiger'), value: 'tiger' },
 ])
 
+const genderOptions = computed(() => [
+  { title: t('catGender.male'), value: 'male' },
+  { title: t('catGender.female'), value: 'female' },
+])
+
+const fileAgent = ref(null)
 const fileRecords = ref([])
 const rawFileRecords = ref([])
 
-const schema = yup.object({
-  name: yup.string().required(t('api.CatNameRequired')),
-  age: yup
-    .number()
-    .typeError(t('api.catAgeRequired'))
-    .required(t('api.catAgeRequired'))
-    .min(0, t('api.catAgeTooSmall')),
-  category: yup
-    .string()
-    .trim()
-    .required(t('api.catBreedRequired'))
-    .oneOf(['black', 'orange', 'flower', 'tiger'], t('api.catBreedRequired')),
-})
-
-// 使用 useForm 來處理表單提交
-const { handleSubmit, resetForm, isSubmitting, errors } = useForm({
-  validationSchema: schema,
-})
-
-// 提交表單
+// 提交
 const submitForm = handleSubmit(async (values) => {
+  console.log('submitForm triggered')
+  console.log('isSubmitting:', isSubmitting.value)
   try {
-    // 檢查是否有錯誤訊息
     if (Object.keys(errors.value).length > 0) {
       return
     }
@@ -143,19 +188,20 @@ const submitForm = handleSubmit(async (values) => {
     const fd = new FormData()
     fd.append('name', values.name)
     fd.append('age', values.age)
-    fd.append('breed', values.breed)
-    fd.append('email', values.email)
+    fd.append('breed', values.category)
+    fd.append('gender', values.gender)
+    fd.append('description', values.description)
+    fd.append('email', user.email)
 
-    // 只取第一張圖片
-    if (values.photo && values.photo.length > 0) {
-      fd.append('photo', values.photo[0].file)
+    // 照片
+    if (fileRecords.value.length > 0) {
+      fd.append('image', fileRecords.value[0].file)
     }
 
-    // 送出 API
-    await apiAuth.post('/adopt/cat', fd)
+    await apiAuth.post('/rehome', fd)
 
     createSnackbar({
-      text: t('adopt.submitSuccess'),
+      text: t('rehome.submitSuccess'),
       snackbarProps: { color: 'green' },
     })
 
@@ -163,9 +209,11 @@ const submitForm = handleSubmit(async (values) => {
   } catch (error) {
     console.error(error)
     createSnackbar({
-      text: t('adopt.submitError'),
+      text: t('rehome.submitError'),
       snackbarProps: { color: 'red' },
     })
+  } finally {
+    isSubmitting.value = false
   }
 })
 </script>
