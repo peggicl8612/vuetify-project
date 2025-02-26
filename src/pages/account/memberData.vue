@@ -70,10 +70,15 @@
 
 <script setup>
 import { ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useForm, useField } from 'vee-validate'
 import * as yup from 'yup'
 import { useAxios } from '@/composables/axios'
 import { useUserStore } from '@/stores/user'
+import { useSnackbar } from 'vuetify-use-dialog'
+const { t } = useI18n()
+
+const createSnackbar = useSnackbar()
 
 const { apiAuth } = useAxios()
 
@@ -147,10 +152,20 @@ const submitForm = handleSubmit(async (values) => {
 
     await apiAuth.patch('/user/' + user.id, fd)
 
-    alert('資料已成功保存')
+    createSnackbar({
+      text: t('save.success'),
+      snackbarProps: {
+        color: 'rgb(117, 117, 117)',
+      },
+    })
   } catch (error) {
     console.error('保存資料失敗:', error)
-    alert('保存失敗，請稍後再試')
+    createSnackbar({
+      text: t('save.failed'),
+      snackbarProps: {
+        color: 'rgb(117, 117, 117)',
+      },
+    })
   }
 })
 </script>

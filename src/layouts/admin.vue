@@ -41,9 +41,9 @@ const navs = computed(() => {
   // 已是管理員頁面,所以不需要加 show: !user.isLoggedIn
   return [
     { to: '/admin/users', text: t('nav.adminUsers'), icon: 'mdi-account-box-outline' },
-    { to: '/admin/products', text: t('nav.adminAdopting'), icon: 'mdi-shopping' },
     { to: '/admin/cats', text: t('nav.adminCats'), icon: 'mdi-cat' },
     { to: '/admin/rehomes', text: t('nav.adminRehomes'), icon: 'mdi-clipboard-check-outline' },
+    // { to: '/admin/products', text: t('nav.adminAdopting'), icon: 'mdi-shopping' },
     // { to: '/admin/orders', text: t('nav.adminOrders'), icon: 'mdi-format-list-bulleted' },
     { to: '/home', text: t('nav.home'), icon: 'mdi-home' },
   ]

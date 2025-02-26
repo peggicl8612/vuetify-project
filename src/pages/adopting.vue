@@ -1,57 +1,59 @@
 <template>
-  <v-container>
-    <v-row justify="center">
-      <v-col cols="12" md="8">
-        <v-text-field
-          v-model="search"
-          prepend-inner-icon="mdi-magnify"
-          label="搜尋可愛貓咪 💕"
-          rounded="lg"
-          color="pink lighten-3"
-          variant="outlined"
-        ></v-text-field>
-      </v-col>
+  <v-main class="container">
+    <v-container>
+      <v-row justify="center">
+        <v-col cols="12" md="8">
+          <v-text-field
+            v-model="search"
+            prepend-inner-icon="mdi-magnify"
+            label="搜尋可愛貓咪 💕"
+            rounded="lg"
+            color="pink lighten-3"
+            variant="outlined"
+          ></v-text-field>
+        </v-col>
 
-      <!-- 設定卡片等高並且並排 -->
-      <v-row justify="center" align="stretch">
-        <v-col
-          v-for="cat of filteredCats"
-          :key="cat._id"
-          cols="12"
-          sm="6"
-          md="4"
-          lg="4"
-          class="d-flex"
-        >
-          <v-card class="cute-card" elevation="5">
-            <product-card v-bind="cat"></product-card>
+        <!-- 設定卡片等高並且並排 -->
+        <v-row justify="center" align="stretch">
+          <v-col
+            v-for="cat of filteredCats"
+            :key="cat._id"
+            cols="12"
+            sm="6"
+            md="4"
+            lg="4"
+            class="d-flex"
+          >
+            <v-card class="cute-card" elevation="5">
+              <product-card v-bind="cat"></product-card>
 
-            <!-- 愛心按鈕 -->
-            <div class="like_container">
-              <v-btn
-                class="likebtn"
-                icon
-                :color="cat.liked ? 'pink' : 'grey'"
-                @click="toggleLike(cat)"
-              >
-                <v-icon>{{ cat.liked ? 'mdi-heart' : 'mdi-heart-outline' }}</v-icon>
-              </v-btn>
-              <span class="like_count">{{ cat.likes }}</span>
-            </div>
-          </v-card>
+              <!-- 愛心按鈕 -->
+              <div class="like_container">
+                <v-btn
+                  class="likebtn"
+                  icon
+                  :color="cat.liked ? 'pink' : 'grey'"
+                  @click="toggleLike(cat)"
+                >
+                  <v-icon>{{ cat.liked ? 'mdi-heart' : 'mdi-heart-outline' }}</v-icon>
+                </v-btn>
+                <span class="like_count">{{ cat.likes }}</span>
+              </div>
+            </v-card>
+          </v-col>
+        </v-row>
+
+        <v-col cols="12" class="d-flex justify-center">
+          <v-pagination
+            v-model="currentPage"
+            :length="totalPage"
+            rounded="lg"
+            color="pink lighten-2"
+          ></v-pagination>
         </v-col>
       </v-row>
-
-      <v-col cols="12" class="d-flex justify-center">
-        <v-pagination
-          v-model="currentPage"
-          :length="totalPage"
-          rounded="lg"
-          color="pink lighten-2"
-        ></v-pagination>
-      </v-col>
-    </v-row>
-  </v-container>
+    </v-container>
+  </v-main>
 </template>
 
 <script setup>
@@ -140,6 +142,11 @@ computed(getCats)
 </script>
 
 <style>
+.container {
+  width: 100vw;
+  height: 100vh;
+  background: #d6c4c4de;
+}
 .cute-card {
   background-color: #ffe3e3 !important;
   border-radius: 15px !important;

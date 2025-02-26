@@ -16,6 +16,7 @@ export default {
     adminOrders: '訂單管理',
     adminUsers: '使用者管理',
     adminCats: '待領養管理',
+    adminRehomes: '待審核管理',
     home: '首頁',
     product: '商品',
     about: '關於我們',
@@ -41,7 +42,9 @@ export default {
   },
   user: {
     account: '請輸入帳號',
-    email: '請輸入信箱',
+    useraccount: '使用者帳號',
+    useremail: '使用者信箱',
+    email: '信箱',
     password: '請輸入密碼',
     passwordConfirm: '請再次確認密碼',
     avatar: '大頭貼',
@@ -50,6 +53,13 @@ export default {
     active: '啟用',
     createdAt: '建立時間',
     updatedAt: '更新時間',
+  },
+  save: {
+    success: '保存成功',
+    failed: '保存失敗',
+  },
+  common: {
+    submit: '提交審核',
   },
   userRole: {
     user: '使用者',
@@ -120,12 +130,14 @@ export default {
     age: '年齡',
     breed: '品種',
     category: '分類',
+    gender: '性別',
     selectCategory: '選擇品種',
     image: '圖片',
     isAdopting: '可領養狀態',
     description: '敘述',
     createdAt: '建立時間',
     updatedAt: '更新時間',
+    reviewStatus: '審核狀態',
   },
   catCategory: {
     black: '黑貓',
