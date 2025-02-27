@@ -1,23 +1,15 @@
-<!-- 關於我們 -->
 <template>
-  <div>
+  <v-main class="main">
     <v-container>
       <v-row>
-        <v-col cols="6">
-          <v-img
-            :width="700"
-            :height="820"
-            aspect-ratio="1/1"
-            cover
-            src="https://i.imgur.com/uwhOZo7.png"
-            class="position-relative"
-          >
+        <v-col cols="4" class="d-flex justify-start">
+          <v-img :width="700" :height="820" cover src="https://i.imgur.com/uwhOZo7.png">
             <div class="faq">
               <h2 class="title">FAQ</h2>
-            </div></v-img
-          >
+            </div>
+          </v-img>
         </v-col>
-        <v-col cols="6" class="d-flex align-center">
+        <v-col cols="8" class="d-flex align-center">
           <div>
             <!-- <h1>常見問答</h1> -->
           </div>
@@ -34,26 +26,31 @@
         </v-col>
       </v-row>
     </v-container>
-  </div>
+  </v-main>
 </template>
 
-<script>
-export default {
-  methods: {
-    // 跳轉路由的方法
-    goTo(routeName) {
-      const route = this.$router.resolve({ name: routeName })
-      if (route.resolved.matched.length) {
-        this.$router.push({ name: routeName })
-      } else {
-        console.error(`路由名稱 "${routeName}" 不存在`)
-      }
-    },
-  },
-}
-</script>
-
 <style scoped>
+/* 背景動畫 */
+@keyframes gradientAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.main {
+  /* 設定背景動畫在 v-main 元素內 */
+  background: linear-gradient(45deg, #ce93b7, #d3bca7, #fcd0b7b6, #eed7e0);
+  background-size: 400% 400%; /* 減小背景的大小 */
+  animation: gradientAnimation 5s ease infinite; /* 背景動畫 */
+  height: 100vh; /* 確保 v-main 擴展到整個視窗高度 */
+}
+
 .faq {
   position: absolute;
   bottom: 0px;
@@ -72,8 +69,9 @@ h1 {
   position: absolute;
   top: 60px;
 }
+
 .memo {
-  width: 100%;
+  width: 50vw;
   display: flex;
   flex-direction: row;
   justify-content: start;
@@ -83,7 +81,7 @@ h1 {
 }
 
 .memo img {
-  width: 280px;
+  width: 300px;
   height: auto;
 }
 </style>

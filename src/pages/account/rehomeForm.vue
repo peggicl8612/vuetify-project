@@ -20,17 +20,8 @@
 
           <v-card-subtitle class="text-center">
             審核狀態:
-            <!-- 如果是管理員，顯示審核狀態選擇器，否則顯示審核狀態的文本 -->
-            <v-select
-              v-model="item.reviewStatus"
-              :items="reviewStatuses"
-              dense
-              outlined
-              class="mt-2"
-              @change="updateStatus(item)"
-            ></v-select>
-            <span>{{ item.reviewStatus }}</span>
-            <!-- 普通用戶顯示審核狀態 -->
+            <span>{{ item.status }}</span>
+            <!-- 顯示審核狀態，不顯示選擇器 -->
           </v-card-subtitle>
         </v-card>
       </v-col>
@@ -57,11 +48,23 @@ const rehomeForms = ref([])
 // 載入使用者送養表單資料
 const loadRehomeForms = async () => {
   try {
-    const { data } = await apiAuth.get('/rehome')
-    console.log('API Response:', data)
-    rehomeForms.value = data.result
+    const userResponse = await apiAuth.get('/user/me')
+    const isAdmin = userResponse.data.role === 1
+    const endpoint = isAdmin ? '/rehome' : '/rehome/mine' // 依身份選擇 API
+    const { data } = await apiAuth.get(endpoint)
+    console.log(' API 回應:', data)
+
+    if (data.success) {
+      rehomeForms.value = data.result
+    } else {
+      console.warn('API 回傳錯誤:', data.message)
+      createSnackbar({
+        text: '獲取送養紀錄失敗: ' + data.message,
+        snackbarProps: { color: 'pink' },
+      })
+    }
   } catch (error) {
-    console.error(error)
+    console.error(' API Error:', error.response ? error.response.data : error)
     createSnackbar({
       text: '獲取送養紀錄失敗',
       snackbarProps: { color: 'pink' },
@@ -83,23 +86,21 @@ const paginatedRehomes = computed(() => {
   return rehomeForms.value.slice(start, end)
 })
 
-// 更新審核狀態
-const updateStatus = async (item) => {
-  try {
-    await apiAuth.patch(`/rehome/${item._id}`, { status: item.reviewStatus }) // 更新狀態
-    createSnackbar({ text: '審核狀態更新成功', color: 'success' })
-  } catch (error) {
-    console.log('updateStatus', error)
-    createSnackbar({ text: '更新失敗', color: 'error' })
-  }
-}
+// const updateStatus = async (item) => {
+//   try {
+//     await apiAuth.patch(`/rehome/${item._id}`, { status: item.reviewStatus }) // 更新狀態
+//     createSnackbar({ text: '審核狀態更新成功', color: 'success' })
+//   } catch (error) {
+//     console.log('updateStatus', error)
+//     createSnackbar({ text: '更新失敗', color: 'error' })
+//   }
+// }
 
-// 審核狀態選項
-const reviewStatuses = ref([
-  { title: '待審核', value: 'pending' },
-  { title: '審核通過', value: 'approved' },
-  { title: '審核失敗', value: 'rejected' },
-])
+// const reviewStatuses = ref([
+//   { title: '待審核', value: 'pending' },
+//   { title: '審核通過', value: 'approved' },
+//   { title: '審核失敗', value: 'rejected' },
+// ])
 
 // 頁面加載時執行
 onMounted(loadRehomeForms)

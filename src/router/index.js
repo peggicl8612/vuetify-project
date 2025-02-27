@@ -5,7 +5,7 @@
  */
 
 // Composables
-import { createRouter, createWebHashHistory, START_LOCATION } from 'vue-router/auto'
+import { createRouter, createWebHistory, START_LOCATION } from 'vue-router/auto'
 import { setupLayouts } from 'virtual:generated-layouts'
 import { routes } from 'vue-router/auto-routes'
 import { useAxios } from '@/composables/axios'
@@ -25,9 +25,14 @@ import rehomes from '@/pages/admin/rehomes.vue'
 import Disease from '@/pages/disease.vue'
 
 const router = createRouter({
-  history: createWebHashHistory(import.meta.env.BASE_URL),
+  history: createWebHistory(import.meta.env.BASE_URL),
   routes: setupLayouts([
     ...routes,
+    {
+      path: '/',
+      redirect: () => '/home',
+    },
+
     {
       path: '/admin',
       component: admin,
@@ -67,11 +72,6 @@ const router = createRouter({
         },
       ],
     },
-    {
-      path: '/home',
-      redirect: '/home',
-    },
-
     { path: '/about-us', name: 'about-us', component: AboutUs },
     { path: '/kitten', name: 'kitten', component: Kitten },
     { path: '/adult', name: 'adult', component: Adult },
@@ -88,6 +88,12 @@ const router = createRouter({
 router.beforeEach(async (to, from, next) => {
   const { apiAuth } = useAxios()
   const user = useUserStore()
+
+  if (to.path === '/') {
+    next('/home')
+  } else {
+    next()
+  }
 
   if (from === START_LOCATION && user.isLoggedIn) {
     try {

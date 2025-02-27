@@ -206,7 +206,7 @@ const logout = async () => {
       color: 'rgb(117, 117, 117)',
     },
   })
-  router.push('/')
+  router.push('/home')
 }
 
 const goTo = (routeName) => {
