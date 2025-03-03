@@ -1,11 +1,11 @@
 <template>
   <v-card>
-    <v-img :src="image" height="200" cover></v-img>
+    <v-img :src="image" height="300" cover></v-img>
     <v-card-title>
       <router-link :to="'/cat/' + _id">{{ name }}</router-link>
     </v-card-title>
-    <v-card-subtitle>{{ $t('catCategory.' + category) }}</v-card-subtitle>
-    <v-card-subtitle>{{ age }}</v-card-subtitle>
+    <v-card-subtitle>{{ $t('catCategory.' + breed) }}</v-card-subtitle>
+    <v-card-subtitle>{{ age + '歲' }}</v-card-subtitle>
     <v-card-text>{{ description }}</v-card-text>
   </v-card>
 </template>

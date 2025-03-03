@@ -219,6 +219,7 @@ const leftDrawers = computed(() => {
   return [
     { text: '會員資料', icon: 'mdi-account', to: '/account/memberData' },
     { text: '收藏列表', icon: 'mdi-heart', to: '/account/favorites' },
+    { text: '送養列表', icon: 'mdi-note', to: '/account/rehomeForm' },
     { text: '首頁', icon: 'mdi-home', to: '/home' },
   ]
 })

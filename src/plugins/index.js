@@ -12,7 +12,8 @@ import i18n from '@/i18n'
 import VuetifyUseDialog from 'vuetify-use-dialog'
 import VueFileAgentNext from '@boindil/vue-file-agent-next'
 import '@boindil/vue-file-agent-next/dist/vue-file-agent-next.css'
-
+import Particles from '@tsparticles/vue3'
+import { loadFull } from 'tsparticles'
 export function registerPlugins(app) {
   app
     .use(i18n)
@@ -28,4 +29,9 @@ export function registerPlugins(app) {
     .use(router)
     .use(pinia)
     .use(VueFileAgentNext)
+    .use(Particles, {
+      init: async (engine) => {
+        await loadFull(engine)
+      },
+    })
 }

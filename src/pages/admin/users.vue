@@ -1,5 +1,5 @@
 <template>
-  <v-container class="py-6">
+  <v-container class="user_bg py-6">
     <v-row>
       <v-col cols="12">
         <h1 class="text-center">{{ $t('nav.adminUsers') }}</h1>
@@ -15,12 +15,12 @@
         >
           <template #top>
             <v-toolbar class="mb-2">
-              <v-btn
+              <!-- <v-btn
                 class="text-white bg-brown-lighten-3 rounded-lg px-5"
                 @click="openDialog(null)"
               >
                 {{ $t('adminUser.new') }}
-              </v-btn>
+              </v-btn> -->
               <v-spacer></v-spacer>
               <v-text-field
                 v-model="search"
@@ -40,6 +40,9 @@
 
           <template #[`item.username`]="{ value }">
             <span>{{ value }}</span>
+          </template>
+          <template #[`item.image`]="{ value }">
+            <v-img :src="value" width="50" height="50" class="rounded-circle" contain></v-img>
           </template>
           <template #[`item.email`]="{ value }">
             <!-- -icon 替換成 v-text 來呈現 email -->
@@ -139,7 +142,7 @@ const search = ref('')
 const headers = computed(() => {
   return [
     { title: 'ID', key: '_id', sortable: true },
-    { title: t('user.avatar'), key: 'avatar', sortable: false },
+    { title: t('user.image'), key: 'image', sortable: false },
     { title: t('user.username'), key: 'account', sortable: true },
     { title: t('user.email'), key: 'email', sortable: true },
     { title: t('user.role'), key: 'role', sortable: true },
@@ -232,7 +235,7 @@ const submit = handleSubmit(async (values) => {
 
   try {
     const fd = new FormData()
-    fd.append('username', values.username)
+    fd.append('account', values.username)
     fd.append('email', values.email)
     fd.append('role', values.role)
     fd.append('active', values.active ? '1' : '0')
@@ -279,12 +282,12 @@ meta:
 </route>
 
 <style>
+.user_bg {
+  height: 100vh;
+  background: #cae4ec75;
+}
 .hover_table tbody tr:hover {
   background-color: #f0e9df;
   transition: background-color 0.2s ease-in-out;
-}
-
-body {
-  background-color: #f4f7fa; /* 淺灰藍色背景 */
 }
 </style>

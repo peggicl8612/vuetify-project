@@ -9,7 +9,7 @@
         <v-img :src="product.image"></v-img>
       </v-col>
       <v-col cols="12" md="6">
-        <p>{{ $t('catCategory.' + cat.category) }}</p>
+        <p>{{ $t('catBreed.' + cat.breed) }}</p>
         <p>{{ product.price }}</p>
         <p>{{ product.description }}</p>
         <v-form :disabled="isSubmitting" @submit.prevent="submit">
@@ -60,7 +60,7 @@ const cat = ref({
   description: '',
   image: '',
   sell: true,
-  category: '',
+  breed: '',
 })
 
 const getProduct = async () => {
