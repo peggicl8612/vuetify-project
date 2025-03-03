@@ -1,8 +1,6 @@
 @font-face {
   font-family: 'Zen Old Mincho';
-  src: url('/src/assets/Zen_Old_Mincho/ZenOldMincho-Black.woff2') format('woff2');
-  font-weight: normal;
-  font-style: normal;
+  src: url('../assets/Zen_Old_Mincho/ZenOldMincho-Black.woff2') format('woff2');
 }
 
 @font-face {
