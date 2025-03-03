@@ -24,29 +24,26 @@
     </v-list>
   </v-navigation-drawer>
 
-  <v-main>
+  <v-main class="v-main" style="min-height: 100vh">
     <router-view></router-view>
   </v-main>
 </template>
 
 <script setup>
-import { computed, createApp } from 'vue'
+import { computed } from 'vue'
 import { useUserStore } from '@/stores/user'
 import { useI18n } from 'vue-i18n'
-import App from '@/App.vue'
 
 const { t } = useI18n()
 const user = useUserStore()
-const app = createApp(App)
-app.config.errorHandler = (err) => {
-  console.error('Vue Error:', err)
-}
+
 const navs = computed(() => {
   // 已是管理員頁面,所以不需要加 show: !user.isLoggedIn
   return [
     { to: '/admin/users', text: t('nav.adminUsers'), icon: 'mdi-account-box-outline' },
-    { to: '/admin/products', text: t('nav.adminAdopting'), icon: 'mdi-shopping' },
     { to: '/admin/cats', text: t('nav.adminCats'), icon: 'mdi-cat' },
+    { to: '/admin/rehomes', text: t('nav.adminRehomes'), icon: 'mdi-clipboard-check-outline' },
+    // { to: '/admin/products', text: t('nav.adminAdopting'), icon: 'mdi-shopping' },
     // { to: '/admin/orders', text: t('nav.adminOrders'), icon: 'mdi-format-list-bulleted' },
     { to: '/home', text: t('nav.home'), icon: 'mdi-home' },
   ]
@@ -55,6 +52,7 @@ const navs = computed(() => {
 
 <style>
 .drawer {
+  height: 100vh;
   font-family: 'Zen Old Mincho', serif;
 }
 .account-title {
@@ -65,5 +63,16 @@ const navs = computed(() => {
 }
 .user-svg {
   margin-right: 20px;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+/* 確保 v-main 會填滿頁面 */
+.v-main {
+  min-height: 100vh;
 }
 </style>

@@ -70,10 +70,15 @@
 
 <script setup>
 import { ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useForm, useField } from 'vee-validate'
 import * as yup from 'yup'
 import { useAxios } from '@/composables/axios'
 import { useUserStore } from '@/stores/user'
+import { useSnackbar } from 'vuetify-use-dialog'
+const { t } = useI18n()
+
+const createSnackbar = useSnackbar()
 
 const { apiAuth } = useAxios()
 
@@ -125,10 +130,16 @@ const rawFileRecords = ref([])
 
 // const phone = useField('phone', { initialValue: user.phone })
 const submitForm = handleSubmit(async (values) => {
-  if (fileRecords.value[0]?.error) return
-  if (fileRecords.value.length === 0) {
-    alert('請上傳圖片')
+  // 如果圖片欄位有錯誤，則停止提交
+  if (fileRecords.value[0]?.error) {
     return
+  }
+
+  // 如果圖片欄位沒有填寫且是非必填，則不需要檢查
+  if (fileRecords.value.length > 0) {
+    // 如果有圖片，才進行圖片處理
+    const fd = new FormData()
+    fd.append('photo', fileRecords.value[0].file)
   }
 
   try {
@@ -141,10 +152,20 @@ const submitForm = handleSubmit(async (values) => {
 
     await apiAuth.patch('/user/' + user.id, fd)
 
-    alert('資料已成功保存')
+    createSnackbar({
+      text: t('save.success'),
+      snackbarProps: {
+        color: 'rgb(117, 117, 117)',
+      },
+    })
   } catch (error) {
     console.error('保存資料失敗:', error)
-    alert('保存失敗，請稍後再試')
+    createSnackbar({
+      text: t('save.failed'),
+      snackbarProps: {
+        color: 'rgb(117, 117, 117)',
+      },
+    })
   }
 })
 </script>

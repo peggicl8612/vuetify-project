@@ -1,45 +1,47 @@
 <template>
-  <h1>成貓飼養</h1>
-  <v-card class="card">
-    <v-tabs v-model="tab" class="tabs">
-      <div class="v">
-        <v-tab value="one">新生期</v-tab>
-        <v-divider vertical></v-divider>
-      </div>
-    </v-tabs>
+  <v-main class="main">
+    <h1>成貓飼養</h1>
+    <v-card class="card">
+      <v-tabs v-model="tab" class="tabs">
+        <div class="v">
+          <v-tab value="one">新生期</v-tab>
+          <v-divider vertical></v-divider>
+        </div>
+      </v-tabs>
 
-    <v-card-text>
-      <v-tabs-window v-model="tab">
-        <v-tabs-window-item value="one"> </v-tabs-window-item>
-        成貓飼養指南 <br /><br />
-        1. 飲食管理 ✔ 均衡飲食：選擇高品質的貓糧，確保含有足夠的蛋白質和營養。<br />
-        ✔ 固定餵食時間：每天餵食 2-3 次，避免過度餵食導致肥胖。<br />
-        ✔ 保持水分攝取：提供乾淨的飲用水，可搭配流動飲水機提高飲水量。<br />
-        ✔ 避免危險食物：巧克力、洋蔥、葡萄、生魚等食物對貓咪有害，請勿餵食。<br />
-        <br />
-        <hr />
-        <br />
-        2. 環境布置 ✔ 提供舒適空間：準備柔軟的貓窩，讓貓咪有安全感。<br />
-        ✔ 貓砂盆管理：選擇適合的貓砂，每天清理，保持衛生。<br />
-        ✔ 貓抓板與玩具：提供貓抓板避免家具被抓壞，並準備玩具豐富生活。<br />
-        ✔ 確保安全：避免讓貓咪接觸危險物品，如電線、清潔劑等。<br />
-        <br />
-        <hr />
-        <br />
-        3. 健康管理 ✔ 定期健康檢查：每年帶貓咪至獸醫院進行健康檢查與疫苗接種。<br />
-        ✔ 寄生蟲預防：定期使用驅蟲藥，避免跳蚤、蜱蟲和內寄生蟲感染。<br />
-        ✔ 關注體重變化：若發現體重異常變化，應立即諮詢獸醫。<br />
-        ✔ 牙齒保健：每週幫貓咪刷牙或提供潔牙零食，預防牙周病。<br />
-        <br />
-        <hr />
-        <br />
-        4. 心理與行為照顧 ✔ 保持穩定環境：貓咪喜歡固定的作息與環境，避免頻繁變動。<br />
-        ✔ 與貓咪互動：每天陪伴遊戲，提供適量運動，避免過度無聊。<br />
-        ✔ 觀察行為變化：若發現貓咪出現異常行為，如攻擊性增加、食慾下降，應及時查明原因。<br />
-        ✔ 提供隱私空間：貓咪有時候需要獨處，準備隱蔽的休息角落。<br />
-      </v-tabs-window>
-    </v-card-text>
-  </v-card>
+      <v-card-text>
+        <v-tabs-window v-model="tab">
+          <v-tabs-window-item value="one"> </v-tabs-window-item>
+          成貓飼養指南 <br /><br />
+          1. 飲食管理 ✔ 均衡飲食：選擇高品質的貓糧，確保含有足夠的蛋白質和營養。<br />
+          ✔ 固定餵食時間：每天餵食 2-3 次，避免過度餵食導致肥胖。<br />
+          ✔ 保持水分攝取：提供乾淨的飲用水，可搭配流動飲水機提高飲水量。<br />
+          ✔ 避免危險食物：巧克力、洋蔥、葡萄、生魚等食物對貓咪有害，請勿餵食。<br />
+          <br />
+          <br />
+          2. 環境布置 ✔ 提供舒適空間：準備柔軟的貓窩，讓貓咪有安全感。<br />
+          ✔ 貓砂盆管理：選擇適合的貓砂，每天清理，保持衛生。<br />
+          ✔ 貓抓板與玩具：提供貓抓板避免家具被抓壞，並準備玩具豐富生活。<br />
+          ✔ 確保安全：避免讓貓咪接觸危險物品，如電線、清潔劑等。<br />
+          <br />
+          <br />
+          3. 健康管理 ✔ 定期健康檢查：每年帶貓咪至獸醫院進行健康檢查與疫苗接種。<br />
+          ✔ 寄生蟲預防：定期使用驅蟲藥，避免跳蚤、蜱蟲和內寄生蟲感染。<br />
+          ✔ 關注體重變化：若發現體重異常變化，應立即諮詢獸醫。<br />
+          ✔ 牙齒保健：每週幫貓咪刷牙或提供潔牙零食，預防牙周病。<br />
+          <br />
+          <br />
+          4. 心理與行為照顧 ✔ 保持穩定環境：貓咪喜歡固定的作息與環境，避免頻繁變動。<br />
+          ✔ 與貓咪互動：每天陪伴遊戲，提供適量運動，避免過度無聊。<br />
+          ✔ 觀察行為變化：若發現貓咪出現異常行為，如攻擊性增加、食慾下降，應及時查明原因。<br />
+          ✔ 提供隱私空間：貓咪有時候需要獨處，準備隱蔽的休息角落。<br />
+        </v-tabs-window>
+      </v-card-text>
+    </v-card>
+    <div>
+      <v-img class="sleep_cat" src="../assets/images/sleep_cat.png"></v-img>
+    </div>
+  </v-main>
 </template>
 
 <script>
@@ -55,14 +57,33 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+@keyframes gradientAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.main {
+  background: linear-gradient(90deg, #e8b4ce, #a6ccd6, #d54368b6, #5d6ca7);
+  background-size: 400% 400%;
+  animation: gradientAnimation 5s ease infinite;
+  height: 100vh;
+}
 h1 {
-  font-size: 48px;
+  font-size: 52px;
   font-weight: bold;
   margin-bottom: 20px;
-  margin-left: 100px;
-  color: #67595e;
-  font-family: 'Zen Old Mincho', serif;
+  text-align: center;
+  color: #e3bd72;
+  font-family: 'Zen Kurenaido', sans-serif;
+  text-shadow: 2px 2px 4px rgba(255, 170, 170, 0.5);
 }
 .card {
   margin: 20px auto;
@@ -75,7 +96,7 @@ h1 {
 
 .v-tab {
   font-size: 16px !important;
-  font-family: 'Zen Old Mincho', serif !important;
+  font-family: 'Zen Kurenaido', sans-serif !important;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
 }
@@ -87,13 +108,22 @@ h1 {
   font-size: 40px;
   font-weight: bold;
   color: #67595e;
-  background-color: #e8b4b8;
+  background-color: #efecec6c;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   font-family: 'Zen Old Mincho', serif;
 }
 .v-tabs-window {
-  font-family: 'Zen Old Mincho', serif;
+  font-family: 'Zen Kurenaido', sans-serif;
   font-size: 20px;
+}
+
+.sleep_cat {
+  width: 300px;
+  height: auto;
+  position: absolute;
+  bottom: 0;
+  right: 150px;
+  opacity: 0.3;
 }
 </style>

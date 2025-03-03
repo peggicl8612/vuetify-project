@@ -115,6 +115,10 @@ const schema = yup.object({
     // .ref(欄位名稱)      取得欄位的值
     // .ref('password')   password 欄位的值
     .oneOf([yup.ref('password')], t('api.userPasswordNotMatch')),
+  phone: yup
+    .string()
+    .nullable() // 讓 phone 欄位可以是 null
+    .notRequired(), // 使 phone 欄位成為可選
 })
 
 // 此種寫法只能一個頁面使用一個 form 標籤

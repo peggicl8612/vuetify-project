@@ -58,10 +58,15 @@
 
 <script setup>
 import { ref, computed } from 'vue'
+import { useI18n } from 'vue-i18n'
+import { useSnackbar } from 'vuetify-use-dialog'
 import { useAxios } from '@/composables/axios'
 import ProductCard from '@/components/ProductCard.vue'
 
-const { api, apiAuth } = useAxios()
+const { apiAuth } = useAxios()
+const { t } = useI18n()
+const createSnackbar = useSnackbar()
+
 
 const ITEMS_PER_PAGE = 6
 const currentPage = ref(1)

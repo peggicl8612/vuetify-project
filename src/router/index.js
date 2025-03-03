@@ -5,31 +5,37 @@
  */
 
 // Composables
-import { createRouter, createWebHashHistory, START_LOCATION } from 'vue-router/auto'
+import { createRouter, createWebHistory, START_LOCATION } from 'vue-router/auto'
 import { setupLayouts } from 'virtual:generated-layouts'
 import { routes } from 'vue-router/auto-routes'
 import { useAxios } from '@/composables/axios'
 import { useUserStore } from '@/stores/user'
 import i18n from '@/i18n'
 import adminHome from '@/pages/home.vue'
-import adminLayout from '@/layouts/adminLayout.vue'
+import admin from '@/layouts/admin.vue'
 import AboutUs from '@/pages/about-us.vue'
 import Faq from '@/pages/faq.vue'
 import Kitten from '@/pages/kitten.vue'
 import Adult from '@/pages/adult.vue'
 import Adopting from '@/pages/adopting.vue'
 import Agree from '@/pages/agree.vue'
-import Rehome from '@/pages/rehome.vue'
+import rehome from '@/pages/rehome.vue'
 import users from '@/pages/admin/users.vue'
+import rehomes from '@/pages/admin/rehomes.vue'
 import Disease from '@/pages/disease.vue'
 
 const router = createRouter({
-  history: createWebHashHistory(import.meta.env.BASE_URL),
+  history: createWebHistory(import.meta.env.BASE_URL),
   routes: setupLayouts([
     ...routes,
     {
+      path: '/',
+      redirect: () => '/home',
+    },
+
+    {
       path: '/admin',
-      component: adminLayout,
+      component: admin,
       children: [
         {
           path: '',
@@ -53,13 +59,19 @@ const router = createRouter({
             title: 'nav.adminUsers',
           },
         },
+        {
+          path: '/rehomes',
+          name: 'adminRehomes',
+          component: rehomes,
+          meta: {
+            layout: 'admin',
+            login: true,
+            admin: true,
+            title: 'nav.adminRehomes',
+          },
+        },
       ],
     },
-    {
-      path: '/home',
-      redirect: '/home',
-    },
-
     { path: '/about-us', name: 'about-us', component: AboutUs },
     { path: '/kitten', name: 'kitten', component: Kitten },
     { path: '/adult', name: 'adult', component: Adult },
@@ -68,7 +80,7 @@ const router = createRouter({
     // meta: { requiresAuth: true } 表示這個頁面需要登入才能進入
     { path: '/adopting', name: 'adopting', component: Adopting, meta: { requiresAuth: true } },
     { path: '/agree', name: 'agree', component: Agree, meta: { requiresAuth: true } },
-    { path: '/rehome', name: 'rehome', component: Rehome, meta: { requiresAuth: true } },
+    { path: '/rehome', name: 'rehome', component: rehome, meta: { requiresAuth: true } },
   ]),
 })
 
@@ -76,6 +88,12 @@ const router = createRouter({
 router.beforeEach(async (to, from, next) => {
   const { apiAuth } = useAxios()
   const user = useUserStore()
+
+  if (to.path === '/') {
+    next('/home')
+  } else {
+    next()
+  }
 
   if (from === START_LOCATION && user.isLoggedIn) {
     try {

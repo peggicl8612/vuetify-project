@@ -1,8 +1,8 @@
 @font-face {
   font-family: 'Zen Old Mincho';
   src:
-    url('@/assets/Zen_Old_Mincho/ZenOldMincho-Black.woff2') format('woff2'),
-    url('@/assets/Zen_Old_Mincho/ZenOldMincho-Black.ttf') format('truetype');
+    url('../assets/Zen_Old_Mincho/ZenOldMincho-Black.woff2') format('woff2'),
+    url('../assets/Zen_Old_Mincho/ZenOldMincho-Black.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
@@ -10,8 +10,8 @@
 @font-face {
   font-family: 'Zen Kurenaido';
   src:
-    url('../assets/Zen_Kurenaido/ZenKurenaido-Regular.woff2') format('woff2'),
-    url('../assets/Zen_Kurenaido/ZenKurenaido-Regular.ttf') format('truetype');
+    url('@/assets/Zen_Kurenaido/ZenKurenaido-Regular.woff2') format('woff2'),
+    url('@/assets/Zen_Kurenaido/ZenKurenaido-Regular.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
