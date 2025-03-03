@@ -41,19 +41,8 @@
           <template #[`item.username`]="{ value }">
             <span>{{ value }}</span>
           </template>
-<<<<<<< HEAD
           <template #[`item.image`]="{ value }">
             <v-img :src="value" width="50" height="50" class="rounded-circle" contain></v-img>
-=======
-          <template #[`item.image`]="{value}">
-            <v-img
-            :src="value"
-            width="50"
-            height="50"
-            class="rounded-circle"
-            contain
-            ></v-img>
->>>>>>> d197db0b129941a398854a894ea9407ad7ff5159
           </template>
           <template #[`item.email`]="{ value }">
             <!-- -icon 替換成 v-text 來呈現 email -->

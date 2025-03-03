@@ -199,11 +199,4 @@ video {
   width: 90%; /* 根據需要調整大小 */
   height: auto;
 }
-<<<<<<< HEAD
-=======
-.main {
-  background: #f9f1f0;
-  opacity: 0.9;
-}
->>>>>>> d197db0b129941a398854a894ea9407ad7ff5159
 </style>

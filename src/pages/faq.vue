@@ -8,10 +8,7 @@
               <h2 class="title">FAQ</h2>
             </div>
           </v-img>
-<<<<<<< HEAD
           <v-img class="faq_cat" :width="500" src="https://i.imgur.com/sD30SXM.png"></v-img>
-=======
->>>>>>> d197db0b129941a398854a894ea9407ad7ff5159
         </v-col>
         <v-col cols="8" class="d-flex align-center">
           <div>

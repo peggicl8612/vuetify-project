@@ -149,15 +149,6 @@ const dialog = ref({
 })
 const openDialog = (item) => {
   if (item) {
-<<<<<<< HEAD
-=======
-    console.log('item.category:', item.category)
-    category.value.value = ['black', 'orange', 'flower', 'tiger'].includes(item.category)
-      ? item.category
-      : '' // 如果 category 無效，就設為空值
-    console.log('category.value.value:', category.value.value)
-
->>>>>>> d197db0b129941a398854a894ea9407ad7ff5159
     dialog.value.id = item._id
     name.value.value = item.name
     price.value.value = item.price
