@@ -1,8 +1,7 @@
 @font-face {
   font-family: 'Zen Old Mincho';
-  src: url('../assets/Zen_Old_Mincho/ZenOldMincho-Black.woff2') format('woff2');
+  src: url('@/assets/Zen_Old_Mincho/ZenOldMincho-Black.woff2') format('woff2');
 }
-
 @font-face {
   font-family: 'Zen Kurenaido';
   src: url('../assets/Zen_Kurenaido/ZenKurenaido-Regular.ttf') format('truetype');
