@@ -86,7 +86,6 @@
             type="number"
             min="0"
           ></v-text-field>
-<<<<<<< HEAD
           <v-select
             v-model="gender.value.value"
             :error-messages="gender.errorMessage.value"
@@ -94,13 +93,6 @@
             item-title="text"
             item-value="value"
           ></v-select>
-=======
-          <v-text-field
-            v-model="gender.value.value"
-            :label="$t('cat.gender')"
-            :error-messages="gender.errorMessage.value"
-          ></v-text-field>
->>>>>>> d197db0b129941a398854a894ea9407ad7ff5159
           <v-select
             v-model="breed.value.value"
             :error-messages="breed.errorMessage.value"
@@ -119,10 +111,7 @@
             :error-messages="description.errorMessage.value"
           ></v-textarea>
           <VueFileAgent
-<<<<<<< HEAD
             ref="fileAgent"
-=======
->>>>>>> d197db0b129941a398854a894ea9407ad7ff5159
             v-model="fileRecords"
             v-model:raw-model-value="rawFileRecords"
             accept="image/jpeg,image/png"
@@ -226,14 +215,10 @@ const schema = yup.object({
     .oneOf(['black', 'orange', 'flower', 'tiger'], t('api.catBreedRequired')),
   age: yup.number().typeError(t('api.catAgeInvalid')).required(t('api.catAgeRequired')),
   description: yup.string().required(t('api.catDescriptionRequired')),
-<<<<<<< HEAD
   gender: yup
     .string()
     .required(t('api.catGenderRequired'))
     .oneOf(['Male', 'Female'], t('api.catGenderRequired')),
-=======
-  gender: yup.string().required(t('api.catGenderRequired')),
->>>>>>> d197db0b129941a398854a894ea9407ad7ff5159
   isAdopting: yup.boolean().required(t('api.catIsadoptingRequired')),
 })
 const { handleSubmit, isSubmitting, resetForm } = useForm({
@@ -243,10 +228,7 @@ const { handleSubmit, isSubmitting, resetForm } = useForm({
     age: '',
     description: '',
     breed: '',
-<<<<<<< HEAD
     gender: '',
-=======
->>>>>>> d197db0b129941a398854a894ea9407ad7ff5159
     isAdopting: false,
   },
 })
@@ -263,14 +245,11 @@ const breedOptions = computed(() => [
   { text: t('catBreed.flower'), value: 'flower' },
   { text: t('catBreed.tiger'), value: 'tiger' },
 ])
-<<<<<<< HEAD
 const genderOptions = computed(() => [
   { text: t('cat.selectGender'), value: '' },
   { text: t('catBreed.Male'), value: 'Male' },
   { text: t('catBreed.Female'), value: 'Female' },
 ])
-=======
->>>>>>> d197db0b129941a398854a894ea9407ad7ff5159
 
 const fileAgent = ref(null)
 const fileRecords = ref([])
@@ -297,16 +276,11 @@ const submit = handleSubmit(async (values) => {
     fd.append('breed', values.breed)
     fd.append('gender', values.gender)
     fd.append('isAdopting', values.isAdopting ? 'true' : 'false')
-<<<<<<< HEAD
     if (fileRecords.value.length > 0 && !fileRecords.value[0]?.error) {
       fd.append('image', fileRecords.value[0].file)
     } else {
       // 保留現有圖片或傳 null
       fd.append('image', dialog.value.image || null)
-=======
-    if (fileRecords.value.length > 0) {
-      fd.append('image', fileRecords.value[0].file)
->>>>>>> d197db0b129941a398854a894ea9407ad7ff5159
     }
 
     if (dialog.value.id.length > 0) {
@@ -323,11 +297,7 @@ const submit = handleSubmit(async (values) => {
     createSnackbar({
       text: t(dialog.value.id.length > 0 ? 'adminCat.editSuccess' : 'adminCat.newSuccess'),
       snackbarProps: {
-<<<<<<< HEAD
         color: 'rgb(117, 117, 117)',
-=======
-        color: 'green',
->>>>>>> d197db0b129941a398854a894ea9407ad7ff5159
       },
     })
     closeDialog()
@@ -336,11 +306,7 @@ const submit = handleSubmit(async (values) => {
     createSnackbar({
       text: t('api.' + (error?.response?.data?.message || 'unknownError')),
       snackbarProps: {
-<<<<<<< HEAD
         color: 'rgb(212, 135, 141)',
-=======
-        color: 'red',
->>>>>>> d197db0b129941a398854a894ea9407ad7ff5159
       },
     })
   }
@@ -349,11 +315,7 @@ const submit = handleSubmit(async (values) => {
 
 <style scoped>
 .container {
-<<<<<<< HEAD
   min-height: 100vh;
-=======
-  height: 100vh;
->>>>>>> d197db0b129941a398854a894ea9407ad7ff5159
   background: #f5eef4;
   font-family: 'Zen Old Mincho', serif;
   display: flex;
@@ -363,10 +325,7 @@ const submit = handleSubmit(async (values) => {
 
 .v-container {
   width: 100%;
-<<<<<<< HEAD
   height: 100%;
-=======
->>>>>>> d197db0b129941a398854a894ea9407ad7ff5159
   margin-right: 220px;
 }
 :deep(.v-data-table tbody tr:hover) {
