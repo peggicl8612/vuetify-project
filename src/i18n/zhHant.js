@@ -250,7 +250,10 @@ export default {
     userActiveRequired: '使用者啟用必填',
     userRoleRequired: '使用者身分必填',
     catAgeRequired: '貓咪年齡必填',
+<<<<<<< HEAD
     catAgeInvalid: '貓咪年齡必填',
+=======
+>>>>>>> d197db0b129941a398854a894ea9407ad7ff5159
     catAgeTooSmall: '貓咪年齡不符',
     catBreedRequired: '貓咪品種必填',
     catGenderRequired: '貓咪性別必填',

@@ -143,7 +143,11 @@ meta:
 <style scoped>
 .container {
   height: 100vh;
+<<<<<<< HEAD
   background: rgba(255, 239, 213, 0.363);
+=======
+  background: #ddcfd7;
+>>>>>>> d197db0b129941a398854a894ea9407ad7ff5159
   display: flex;
   justify-content: center;
   align-items: start;

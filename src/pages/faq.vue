@@ -8,7 +8,10 @@
               <h2 class="title">FAQ</h2>
             </div>
           </v-img>
+<<<<<<< HEAD
           <v-img class="faq_cat" :width="500" src="https://i.imgur.com/sD30SXM.png"></v-img>
+=======
+>>>>>>> d197db0b129941a398854a894ea9407ad7ff5159
         </v-col>
         <v-col cols="8" class="d-flex align-center">
           <div>
@@ -86,6 +89,27 @@
 </template>
 
 <style scoped>
+/* 背景動畫 */
+@keyframes gradientAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.main {
+  /* 設定背景動畫在 v-main 元素內 */
+  background: linear-gradient(45deg, #ce93b7, #d3bca7, #fcd0b7b6, #eed7e0);
+  background-size: 400% 400%; /* 減小背景的大小 */
+  animation: gradientAnimation 5s ease infinite; /* 背景動畫 */
+  height: 100vh; /* 確保 v-main 擴展到整個視窗高度 */
+}
+
 .faq {
   position: absolute;
   bottom: 0px;

@@ -1,13 +1,21 @@
 <template>
+<<<<<<< HEAD
   <div class="v-container">
     <!-- 載入動畫 -->
+=======
+  <div class="container">
+>>>>>>> d197db0b129941a398854a894ea9407ad7ff5159
     <div v-if="isLoading" class="loading-overlay">
       <video autoplay loop muted class="loading-video">
         <source src="../assets/Cat_Animation.webm" type="video/webm" />
       </video>
     </div>
 
+<<<<<<< HEAD
     <!-- 主輪播圖 -->
+=======
+    <!-- 主要內容區塊 -->
+>>>>>>> d197db0b129941a398854a894ea9407ad7ff5159
     <swiper
       v-if="!isLoading"
       :loop="true"
@@ -19,6 +27,7 @@
       @slide-change="onSlideChange"
     >
       <swiper-slide v-for="(image, index) in images" :key="index">
+<<<<<<< HEAD
         <div class="image-container">
           <img :src="image.src" />
           <div class="image-text">{{ image.text }}</div>
@@ -28,6 +37,13 @@
     </swiper>
 
     <!-- 縮略圖輪播圖 -->
+=======
+        <img :src="image" />
+      </swiper-slide>
+    </swiper>
+
+    <!-- 其他內容 -->
+>>>>>>> d197db0b129941a398854a894ea9407ad7ff5159
     <swiper
       v-if="!isLoading"
       :loop="true"
@@ -44,6 +60,7 @@
         :key="index"
         :class="{ 'active-thumb': isActiveThumb(index) }"
       >
+<<<<<<< HEAD
         <img :src="image.src" />
       </swiper-slide>
     </swiper>
@@ -67,10 +84,24 @@
               </li>
               <br />
               <li>
+=======
+        <img :src="image" />
+      </swiper-slide>
+    </swiper>
+
+    <v-container v-if="!isLoading">
+      <v-row>
+        <v-col cols="12" md="6">
+          <div v-if="isLoaded" class="news-container animate__animated animate__fadeInLeft">
+            <h1 class="news">最新消息</h1>
+            <ul>
+              <li>
+>>>>>>> d197db0b129941a398854a894ea9407ad7ff5159
                 114/02/11
                 <a
                   href="https://animal.moa.gov.tw/Frontend/News/Detail/N0000000001630"
                   target="_blank"
+<<<<<<< HEAD
                   >高雄市犬貓絕育(結紮)三合一活動【3月16日阿蓮場】</a
                 >
               </li>
@@ -156,6 +187,27 @@
     </v-row>
 
     <!-- WebM 動畫影片區域 -->
+=======
+                  >高雄市犬貓絕育(結紮)三合一活動【3月16日阿蓮場】
+                </a>
+              </li>
+              <li>222</li>
+              <li>333</li>
+              <li>444</li>
+              <li>555</li>
+            </ul>
+          </div>
+        </v-col>
+        <v-col cols="12" md="6">
+          <div v-if="isLoaded" class="info-container animate__animated animate__fadeInRight">
+            <h1 class="info">活動資訊</h1>
+            <p>More details about activities and events can be added here.</p>
+          </div>
+        </v-col>
+      </v-row>
+    </v-container>
+
+>>>>>>> d197db0b129941a398854a894ea9407ad7ff5159
     <div v-if="!isLoading" class="webm-container">
       <video
         ref="webmVideo"
@@ -189,24 +241,39 @@ export default {
   },
   setup() {
     const images = ref([
+<<<<<<< HEAD
       { src: 'https://i.imgur.com/LjEbMqs.jpeg', text: '歡迎來到咪凹屋' },
       { src: 'https://i.imgur.com/2scnSBL.jpeg', text: '' },
       { src: 'https://i.imgur.com/hxAFsLi.jpeg', text: '' },
       { src: 'https://i.imgur.com/f7FZqaU.jpeg', text: '' },
+=======
+      'https://i.imgur.com/LjEbMqs.jpeg',
+      'https://i.imgur.com/2scnSBL.jpeg',
+      'https://i.imgur.com/hxAFsLi.jpeg',
+      'https://i.imgur.com/f7FZqaU.jpeg',
+>>>>>>> d197db0b129941a398854a894ea9407ad7ff5159
     ])
 
     const thumbsSwiper = ref(null)
     const activeIndex = ref(0)
+<<<<<<< HEAD
     const isLoading = ref(true)
+=======
+    const isLoading = ref(true) // 用於顯示/隱藏Loading動畫
+>>>>>>> d197db0b129941a398854a894ea9407ad7ff5159
     const isLoaded = ref(false)
     const showHoverMessage = ref(false)
 
     onMounted(() => {
       setTimeout(() => {
         isLoading.value = false
+<<<<<<< HEAD
         isLoaded.value = true
         gsap.from('.news', { x: -1000, opacity: 0.5, duration: 3 })
         gsap.from('.info', { x: 1000, opacity: 0.5, duration: 3 })
+=======
+        isLoaded.value = true // 讓歡迎標題顯示
+>>>>>>> d197db0b129941a398854a894ea9407ad7ff5159
       }, 3000)
     })
 
@@ -222,6 +289,25 @@ export default {
       return activeIndex.value === index
     }
 
+<<<<<<< HEAD
+=======
+    const webmVideo = ref(null)
+
+    onMounted(() => {
+      setTimeout(() => {
+        isLoading.value = false
+        setTimeout(() => {
+          isLoaded.value = true
+          gsap.from('.news', { x: -1000, opacity: 0.5, duration: 3 }) // 👈 加入滑入動畫
+          gsap.from('.info', { x: 1000, opacity: 0.5, duration: 3 }) // 👈 加入滑入動畫
+        })
+      }, 3000)
+    })
+
+    // 使用GSAP動畫讓WebM視頻淡入
+    gsap.fromTo(webmVideo.value, { opacity: 0 }, { opacity: 1, duration: 10, delay: 1 })
+
+>>>>>>> d197db0b129941a398854a894ea9407ad7ff5159
     return {
       images,
       thumbsSwiper,
@@ -229,6 +315,10 @@ export default {
       onSlideChange,
       isActiveThumb,
       modules: [FreeMode, Navigation, Thumbs],
+<<<<<<< HEAD
+=======
+      webmVideo,
+>>>>>>> d197db0b129941a398854a894ea9407ad7ff5159
       isLoading,
       isLoaded,
       showHoverMessage,
@@ -238,6 +328,10 @@ export default {
 </script>
 
 <style scoped>
+<<<<<<< HEAD
+=======
+/* 載入動畫的樣式 (WebM 動圖) */
+>>>>>>> d197db0b129941a398854a894ea9407ad7ff5159
 .loading-overlay {
   position: fixed;
   top: 0;
@@ -258,6 +352,14 @@ export default {
 }
 
 /* 主要內容 */
+<<<<<<< HEAD
+=======
+.container {
+  background-color: #ebe9e9 !important;
+  height: 100vh;
+  padding: 20px;
+}
+>>>>>>> d197db0b129941a398854a894ea9407ad7ff5159
 
 /* 主圖 */
 .mySwiper2 {
@@ -271,6 +373,7 @@ export default {
   object-fit: cover;
 }
 
+<<<<<<< HEAD
 .mySwiper2 .image-container {
   position: relative;
 }
@@ -356,6 +459,58 @@ export default {
   font-weight: bold;
 }
 
+=======
+/* 縮圖 */
+.mySwiper {
+  width: 100%;
+  max-width: 1000px;
+  margin-top: 5px;
+}
+.mySwiper img {
+  width: 100%;
+  height: 80px;
+  object-fit: cover;
+  cursor: pointer;
+}
+
+.mySwiper .swiper-slide {
+  filter: brightness(0.4);
+  transition: filter 0.8s;
+  cursor: url('https://example.com/custom-cursor.png'), pointer;
+}
+
+.mySwiper .swiper-slide.active-thumb {
+  filter: brightness(1);
+}
+
+:deep(.swiper-button-prev),
+:deep(.swiper-button-next) {
+  color: #757575;
+  opacity: 0.3;
+  font-size: 30px;
+  width: 50px;
+  height: 50px;
+}
+
+.news-container,
+.info-container {
+  width: 100%;
+  height: 500px;
+  border: 2px solid #757575;
+  padding: 30px;
+  border-radius: 8px;
+  background-color: #dfcdcd; /* 背景顏色，增加可讀性 */
+  opacity: 0.7;
+}
+
+.news,
+.info {
+  text-align: left;
+  margin-bottom: 20px; /* 給標題一點底部間距 */
+  color: #757575;
+}
+
+>>>>>>> d197db0b129941a398854a894ea9407ad7ff5159
 /* WebM 動畫區域 */
 .webm-container {
   position: relative;
@@ -381,6 +536,7 @@ export default {
 
 .show {
   opacity: 0.8;
+<<<<<<< HEAD
 }
 
 .more {
@@ -389,5 +545,7 @@ export default {
 }
 .more a:visited {
   color: #757575;
+=======
+>>>>>>> d197db0b129941a398854a894ea9407ad7ff5159
 }
 </style>
