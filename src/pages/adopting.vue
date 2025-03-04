@@ -1,6 +1,6 @@
 <template>
   <v-main class="container">
-    <v-container>
+    <v-container class="container">
       <v-row justify="center">
         <v-col cols="12" md="8">
           <v-text-field
@@ -145,7 +145,7 @@ computed(getCats)
 .container {
   width: 100vw;
   height: 100vh;
-  background: #d6c4c4de;
+  background: #ebd0ddde;
 }
 .cute-card {
   background-color: #ffe3e3 !important;

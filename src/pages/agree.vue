@@ -1,6 +1,5 @@
 <template>
   <h1>領養須知</h1>
-
   <v-card class="card">
     <v-tabs v-model="tab" class="tabs">
       <div class="v">
@@ -23,13 +22,17 @@
             ．可提供適合及安全的居住環境 <br />
             ．經濟能力得以應付長期的固定開銷及突發的醫療費用 <br />
             ．對毛孩的終生負責絕不棄養 <br />
+            ．若違反認養條款(如遺棄、虐待、私自轉讓等)送養方有權依法追回貓咪<br />
+            ．確認無重大動物過失紀錄，並承諾遵守《動物保護法》相關規定<br />
           </p>
         </v-tabs-window-item>
       </v-tabs-window>
 
       <!-- 下載檔案按鈕 -->
       <div class="download">
-        <v-btn color="primary" class="download" @click="downloadFile"> 下載同意書 </v-btn>
+        <v-btn color="rgb(231, 208, 208)" class="download" @click="downloadFile">
+          下載同意書
+        </v-btn>
       </div>
     </v-card-text>
   </v-card>
@@ -69,7 +72,8 @@ h1 {
   width: 80%;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(37, 46, 88, 0.76);
-  height: 100%;
+  height: 80%;
+  background: #fcf8e6;
 }
 
 .v-tab {
@@ -86,7 +90,7 @@ h1 {
   font-size: 40px;
   font-weight: bold;
   color: #67595e;
-  background-color: #e8b4b8;
+  background-color: #e6d2a8;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   font-family: 'Zen Old Mincho', serif;
@@ -97,14 +101,16 @@ h1 {
 }
 
 .download {
-  width: 100%;
+  width: 70%;
   display: flex;
   justify-content: center;
   align-items: center;
-  /* background: #e8b4b8; */
   margin-top: 20px;
   font-family: 'Zen Old Mincho', serif;
   font-size: 20px;
   color: #757575;
+  position: absolute;
+  top: 280px;
+  left: 380px;
 }
 </style>

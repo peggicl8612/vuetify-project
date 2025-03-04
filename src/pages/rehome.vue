@@ -221,6 +221,17 @@ const submitForm = handleSubmit(async (values) => {
 </script>
 
 <style scoped>
+.container,
+.v-container,
+.v-row {
+  margin: 0;
+  padding: 0;
+}
+
+v-main {
+  height: 100%;
+}
+
 .main {
   text-align: center;
   padding: 20px;
