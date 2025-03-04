@@ -1,0 +1,1 @@
+import{_ as o,o as t,b as s,w as a,d as e,ai as c,aj as n,V as r}from"./index-k8Pl_hTx.js";const l={};function _(f,d){return t(),s(r,null,{default:a(()=>[e(c,null,{default:a(()=>[e(n,{cols:"12"})]),_:1})]),_:1})}const u=o(l,[["render",_]]);export{u as default};
