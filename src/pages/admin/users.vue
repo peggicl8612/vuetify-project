@@ -115,6 +115,11 @@
       </v-card>
     </v-form>
   </v-dialog>
+
+  <v-btn class="excel text-grey bg-gray-darken-2 rounded-lg px-5 mt-4" @click="exportToExcel">
+    {{ $t('adminUser.exportExcel') }}
+    <v-icon end>mdi-file-excel</v-icon>
+  </v-btn>
 </template>
 
 <script setup>
@@ -124,6 +129,7 @@ import { useI18n } from 'vue-i18n'
 import { computed, ref } from 'vue'
 import { useForm, useField } from 'vee-validate'
 import * as yup from 'yup'
+import * as XLSX from 'xlsx'
 
 const { t } = useI18n()
 const { apiAuth } = useAxios()
@@ -271,6 +277,34 @@ const submit = handleSubmit(async (values) => {
     })
   }
 })
+
+const exportToExcel = () => {
+  if (!users.value.length) {
+    createSnackbar({
+      text: t('adminUser.noDataToExport'),
+      snackbarProps: { color: 'red' },
+    })
+    return
+  }
+  // 定義要匯出的資料
+  const dataToExport = users.value.map((user) => ({
+    ID: user._id,
+    帳號: user.account,
+    Email: user.email,
+    角色: t('userrole.' + user.role),
+    啟用狀態: user.active ? '啟用' : '停用',
+    創建時間: new Date(user.createdAt).toLocaleString(),
+    更新時間: new Date(user.updatedAt).toLocaleString(),
+  }))
+
+  // 轉換為工作表
+  const worksheet = XLSX.utils.json_to_sheet(dataToExport)
+  const workbook = XLSX.utils.book_new()
+  XLSX.utils.book_append_sheet(workbook, worksheet, '會員資料')
+
+  // 下載 Excel 檔案
+  XLSX.writeFile(workbook, '會員資料.xlsx')
+}
 </script>
 
 <route lang="yaml">
@@ -289,5 +323,10 @@ meta:
 .hover_table tbody tr:hover {
   background-color: #f0e9df;
   transition: background-color 0.2s ease-in-out;
+}
+.excel {
+  position: relative;
+  bottom: 50px;
+  left: 1100px;
 }
 </style>

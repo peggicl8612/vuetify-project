@@ -175,7 +175,7 @@ const openDialog = (disease) => {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  opacity: 0.5; /* 調整透明度 */
+  opacity: 0; /* 調整透明度 */
   z-index: 0; /* 保證它在最底層 */
 }
 
