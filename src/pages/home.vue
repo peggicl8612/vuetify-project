@@ -77,7 +77,9 @@
               <br />
               <li>
                 114/02/25
-                <a href="https://animal.moa.gov.tw/Frontend/News/LatestNews?tab=0" target="_blank"
+                <a
+                  href="https://animal.moa.gov.tw/Frontend/News/Detail/N0000000001656"
+                  target="_blank"
                   >南昌動保園區114年3月開辦動保講座</a
                 >
               </li>

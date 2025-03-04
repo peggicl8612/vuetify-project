@@ -8,7 +8,8 @@ import App from './App.vue'
 import { createApp } from 'vue'
 
 // fonts
-import './assets/Zen_Old_Mincho/ZenOldMincho-Black.woff2'
+import '@/assets/fonts.css'
+import './assets/Zen_Old_Mincho/ZenOldMincho-Black.ttf'
 import './assets/Zen_Kurenaido/ZenKurenaido-Regular.ttf'
 
 // animate

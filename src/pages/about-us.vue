@@ -39,7 +39,7 @@
 
     <div class="IG_container">
       <a
-        href="https://www.instagram.com/peggicl1712?igsh=amQwaXNiMWU5ejly&utm_source=qr"
+        href="https://www.instagram.com/meowu_19/?utm_source=ig_web_button_share_sheet"
         target="_blank"
       >
         <video ref="webmVideo" autoplay loop muted>
