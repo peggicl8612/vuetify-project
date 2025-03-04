@@ -154,7 +154,6 @@ export default {
   background: linear-gradient(45deg, #ffebcd, #ffd1dc, #ffe4b5, #fff7e6);
   background-size: 400% 400%;
   animation: gradientAnimation 8s ease infinite;
-  min-height: 100vh; /* 確保頁面填滿 */
 }
 
 /* 卡片加上圓角，讓它更柔和 */
@@ -225,7 +224,6 @@ h1 {
   /* padding: 20px; */
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(37, 46, 88, 0.76);
-  height: 100%;
   background: #e8b4b865;
 }
 

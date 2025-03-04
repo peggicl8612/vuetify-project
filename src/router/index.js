@@ -5,7 +5,7 @@
  */
 
 // Composables
-import { createRouter, createWebHistory, START_LOCATION } from 'vue-router/auto'
+import { createRouter, createWebHashHistory, START_LOCATION } from 'vue-router/auto'
 import { setupLayouts } from 'virtual:generated-layouts'
 import { routes } from 'vue-router/auto-routes'
 import { useAxios } from '@/composables/axios'
@@ -25,7 +25,7 @@ import rehomes from '@/pages/admin/rehomes.vue'
 import Disease from '@/pages/disease.vue'
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHashHistory(import.meta.env.BASE_URL),
   routes: setupLayouts([
     ...routes,
     {

@@ -1,6 +1,6 @@
 <template>
   <v-main class="container">
-    <v-container>
+    <v-container class="container">
       <v-row justify="center">
         <v-col cols="12" md="8">
           <v-text-field
@@ -58,15 +58,10 @@
 
 <script setup>
 import { ref, computed } from 'vue'
-import { useI18n } from 'vue-i18n'
-import { useSnackbar } from 'vuetify-use-dialog'
 import { useAxios } from '@/composables/axios'
 import ProductCard from '@/components/ProductCard.vue'
 
-const { apiAuth } = useAxios()
-const { t } = useI18n()
-const createSnackbar = useSnackbar()
-
+const { api, apiAuth } = useAxios()
 
 const ITEMS_PER_PAGE = 6
 const currentPage = ref(1)
@@ -149,8 +144,7 @@ computed(getCats)
 <style>
 .container {
   width: 100vw;
-  height: 100vh;
-  background: #d6c4c4de;
+  background: #ebd0ddde;
 }
 .cute-card {
   background-color: #ffe3e3 !important;

@@ -209,7 +209,7 @@ export default {
         isLoaded.value = true
         gsap.from('.news', { x: -1000, opacity: 0.5, duration: 3 })
         gsap.from('.info', { x: 1000, opacity: 0.5, duration: 3 })
-      }, 3000)
+      }, 2000)
     })
 
     const setThumbsSwiper = (swiper) => {
