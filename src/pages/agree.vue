@@ -1,5 +1,5 @@
 <template>
-  <h1>領養須知</h1>
+  <h1>須知</h1>
   <v-card class="card">
     <v-tabs v-model="tab" class="tabs">
       <div class="v">
@@ -70,7 +70,7 @@
 
 <style>
 h1 {
-  font-size: 48px;
+  font-size: 42px;
   font-weight: bold;
   margin-bottom: 20px;
   margin-left: 100px;
