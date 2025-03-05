@@ -25,13 +25,20 @@
             ．若違反認養條款(如遺棄、虐待、私自轉讓等)送養方有權依法追回貓咪<br />
             ．確認無重大動物過失紀錄，並承諾遵守《動物保護法》相關規定<br />
           </p>
+          <br />
+          <p>
+            領養流程 <br /><br />
+            ．下載同意書並填寫內容<br />
+            ．填寫完畢寄送至 email：meowu_19@gmail.com<br />
+            ．審核約 3-5個工作日(領養結果以 mail 通知) <br />
+          </p>
         </v-tabs-window-item>
       </v-tabs-window>
 
       <!-- 下載檔案按鈕 -->
       <div class="download">
-        <v-btn color="rgb(231, 208, 208)" class="download" @click="downloadFile">
-          下載同意書
+        <v-btn color="rgb(231, 208, 208)" class="download">
+          <a href="/adoption.pdf" download="adoption.pdf" target="_blank"> 下載同意書 </a>
         </v-btn>
       </div>
     </v-card-text>
