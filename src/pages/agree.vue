@@ -29,7 +29,7 @@
           <p>
             領養流程 <br /><br />
             ．下載同意書並填寫內容<br />
-            ．填寫完畢寄送至 email：meowu_19@gmail.com<br />
+            ．填寫完畢寄送至 email：Meowu_19@gmail.com<br />
             ．審核約 3-5個工作日(領養結果以 mail 通知) <br />
           </p>
         </v-tabs-window-item>
