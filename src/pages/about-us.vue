@@ -28,8 +28,8 @@
           <div>
             <h1>聯繫我們</h1>
             <hr />
-            <p>TEL: (02)XXXX-XXXX</p>
-            <P>email: meow@gmail.com</P>
+            <p>TEL: 0912-333-444</p>
+            <P>email: Meowu_19@gmail.com</P>
             <p>contact: Ms.Lin</p>
           </div>
         </v-col>

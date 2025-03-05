@@ -130,6 +130,11 @@
       </v-card>
     </v-form>
   </v-dialog>
+
+  <v-btn class="excel text-grey bg-gray-darken-2 rounded-lg px-5 mt-4" @click="exportToExcel">
+    {{ $t('adminCat.exportExcel') }}
+    <v-icon end>mdi-file-excel</v-icon>
+  </v-btn>
 </template>
 
 <script setup>
@@ -139,6 +144,7 @@ import { useSnackbar } from 'vuetify-use-dialog'
 import { useI18n } from 'vue-i18n'
 import { useForm, useField } from 'vee-validate'
 import * as yup from 'yup'
+import * as XLSX from 'xlsx'
 
 const { t } = useI18n()
 const { apiAuth } = useAxios()
@@ -311,6 +317,37 @@ const submit = handleSubmit(async (values) => {
     })
   }
 })
+
+const exportToExcel = () => {
+  if (!cats.length) {
+    createSnackbar({
+      text: t('adminCat.noDataToExport'),
+      snackbarProps: { color: 'red' },
+    })
+    return
+  }
+
+  // 定義要匯出的資料
+  const dataToExport = cats.map((cat) => ({
+    ID: cat._id,
+    名字: cat.name,
+    年齡: cat.age,
+    性別: t(`catGender.${cat.gender}`),
+    品種: t(`catBreed.${cat.breed}`),
+    是否可領養: cat.isAdopting ? t('adminCat.yes') : t('adminCat.no'),
+    描述: cat.description,
+    創建時間: new Date(cat.createdAt).toLocaleString(),
+    更新時間: new Date(cat.updatedAt).toLocaleString(),
+  }))
+
+  // 轉換為工作表
+  const worksheet = XLSX.utils.json_to_sheet(dataToExport)
+  const workbook = XLSX.utils.book_new()
+  XLSX.utils.book_append_sheet(workbook, worksheet, '貓咪資料')
+
+  // 下載 Excel 檔案
+  XLSX.writeFile(workbook, '貓咪資料.xlsx')
+}
 </script>
 
 <style scoped>
@@ -350,6 +387,12 @@ const submit = handleSubmit(async (values) => {
 :deep(.v-data-table thead) {
   background-color: #cfc2cd !important;
   color: white !important;
+}
+
+.excel {
+  position: absolute;
+  top: 1100px;
+  left: 1512px;
 }
 </style>
 

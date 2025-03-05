@@ -1,6 +1,6 @@
 <template>
   <v-main class="container">
-    <v-container class="container">
+    <v-container>
       <v-row justify="center">
         <v-col cols="12" md="8">
           <v-text-field
@@ -21,7 +21,7 @@
             cols="12"
             sm="6"
             md="4"
-            lg="4"
+            lg="3"
             class="d-flex"
           >
             <v-card class="cute-card" elevation="5">
@@ -63,7 +63,7 @@ import ProductCard from '@/components/ProductCard.vue'
 
 const { api, apiAuth } = useAxios()
 
-const ITEMS_PER_PAGE = 6
+const ITEMS_PER_PAGE = 8
 const currentPage = ref(1)
 const totalPage = computed(() => Math.ceil(cats.value.length / ITEMS_PER_PAGE))
 
@@ -144,7 +144,6 @@ computed(getCats)
 <style>
 .container {
   width: 100vw;
-  height: 100vh;
   background: #ebd0ddde;
 }
 .cute-card {
@@ -155,7 +154,7 @@ computed(getCats)
   transition: transform 0.3s ease-in-out;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: space-evenly;
   width: 100%;
 }
 

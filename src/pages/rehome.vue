@@ -204,7 +204,9 @@ const submitForm = handleSubmit(async (values) => {
 
     createSnackbar({
       text: t('rehome.submitSuccess'),
-      snackbarProps: { color: 'green' },
+      snackbarProps: {
+        color: 'rgb(117, 117, 117)',
+      },
     })
 
     resetForm()
@@ -212,7 +214,9 @@ const submitForm = handleSubmit(async (values) => {
     console.error(error)
     createSnackbar({
       text: t('rehome.submitError'),
-      snackbarProps: { color: 'red' },
+      snackbarProps: {
+        color: 'rgb(212, 135, 141)',
+      },
     })
   } finally {
     isSubmitting.value = false

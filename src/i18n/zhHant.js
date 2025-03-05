@@ -42,17 +42,18 @@ export default {
   },
   user: {
     account: '請輸入帳號',
-    useraccount: '使用者帳號',
+    useraccount: '會員帳號',
     useremail: '使用者信箱',
     email: '信箱',
     password: '請輸入密碼',
     passwordConfirm: '請再次確認密碼',
     avatar: '大頭貼',
-    username: '使用者名稱',
+    username: '使用者',
     role: '身分',
     active: '啟用',
     createdAt: '建立時間',
     updatedAt: '更新時間',
+    image: '頭貼',
   },
   save: {
     success: '保存成功',
@@ -83,11 +84,12 @@ export default {
   },
   adminUser: {
     new: '新增使用者',
-    edit: '編輯使用者',
+    edit: '編輯',
     cancel: '取消',
     submit: '確認',
     newSuccess: '新增成功',
     editSuccess: '編輯成功',
+    exportExcel: '會員資料匯出',
   },
   adminUsers: {
     edit: '管理員編輯',
@@ -128,6 +130,7 @@ export default {
     editSuccess: '編輯貓咪成功',
     cancel: '取消',
     submit: '確定',
+    exportExcel: '貓咪資料匯出',
   },
   cat: {
     name: '名字',
@@ -145,6 +148,9 @@ export default {
     updatedAt: '更新時間',
     reviewStatus: '審核狀態',
   },
+  cats: {
+    gender: '性別',
+  },
   catCategory: {
     black: '黑貓',
     orange: '橘貓',
@@ -152,8 +158,8 @@ export default {
     tiger: '虎斑',
   },
   catBreed: {
-    Male: '雄性',
-    Female: '雌性',
+    Male: '公貓',
+    Female: '母貓',
     black: '黑貓',
     orange: '橘貓',
     flower: '花貓',
@@ -162,10 +168,10 @@ export default {
     Persian: '波斯貓',
   },
   catGender: {
-    Male: '雄性',
-    male: '雄性',
-    Female: '雌性',
-    female: '雌性',
+    Male: '公貓',
+    male: '公貓',
+    Female: '母貓',
+    female: '母貓',
   },
   rehome: {
     formTitle: '送養表單',
