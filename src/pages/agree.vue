@@ -39,7 +39,7 @@
       <!-- 下載檔案按鈕 -->
       <div class="download">
         <v-btn color="rgb(231, 208, 208)" class="download">
-          <a href="/public/adoption-guide.pdf" download="adoption-guide.pdf" target="_blank">
+          <a href="/adoption-guide.pdf" download="adoption-guide.pdf" target="_blank">
             下載同意書
           </a>
         </v-btn>
