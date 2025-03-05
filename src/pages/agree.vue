@@ -49,23 +49,11 @@
 </template>
 
 <script>
-// export default {
-//   data: () => ({
-//     tab: null,
-//   }),
-//   methods: {
-//     downloadFile() {
-//       // 設定要下載的檔案路徑
-//       const fileUrl = '/vuetify-project-main/public/adoption-guide' // 放在 public 資料夾中的檔案
-//       const link = document.createElement('a')
-//       link.href = fileUrl
-//       link.setAttribute('download', 'adoption-guide.pdf') // 設定下載的檔案名稱
-//       document.body.appendChild(link)
-//       link.click()
-//       document.body.removeChild(link)
-//     },
-//   },
-// }
+export default {
+  data: () => ({
+    tab: 'one', // 確保有設置預設的 tab
+  }),
+}
 </script>
 
 <style>
