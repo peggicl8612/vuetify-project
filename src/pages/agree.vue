@@ -1,5 +1,5 @@
 <template>
-  <h1>須知</h1>
+  <h1>領養須知</h1>
   <v-card class="card">
     <v-tabs v-model="tab" class="tabs">
       <div class="v">
@@ -25,23 +25,13 @@
             ．若違反認養條款(如遺棄、虐待、私自轉讓等)送養方有權依法追回貓咪<br />
             ．確認無重大動物過失紀錄，並承諾遵守《動物保護法》相關規定<br />
           </p>
-          <br />
-          <p>
-            領養程序：<br />
-            ．下載同意書 <br />
-            ．填寫相關資料、想領養的貓咪<br />
-            ．填寫完畢寄送至email：Meowu_19@gmail.com <br />
-            ．領養程序約 3-5 個工作天 (領養結果以email通知) <br />
-          </p>
         </v-tabs-window-item>
       </v-tabs-window>
 
       <!-- 下載檔案按鈕 -->
       <div class="download">
-        <v-btn color="rgb(231, 208, 208)" class="download">
-          <a href="/adoption-guide.pdf" download="adoption-guide.pdf" target="_blank">
-            下載同意書
-          </a>
+        <v-btn color="rgb(231, 208, 208)" class="download" @click="downloadFile">
+          下載同意書
         </v-btn>
       </div>
     </v-card-text>
@@ -49,28 +39,28 @@
 </template>
 
 <script>
-// export default {
-//   data: () => ({
-//     tab: null,
-//   }),
-//   methods: {
-//     downloadFile() {
-//       // 設定要下載的檔案路徑
-//       const fileUrl = '/vuetify-project-main/public/adoption-guide' // 放在 public 資料夾中的檔案
-//       const link = document.createElement('a')
-//       link.href = fileUrl
-//       link.setAttribute('download', 'adoption-guide.pdf') // 設定下載的檔案名稱
-//       document.body.appendChild(link)
-//       link.click()
-//       document.body.removeChild(link)
-//     },
-//   },
-// }
+export default {
+  data: () => ({
+    tab: null,
+  }),
+  methods: {
+    downloadFile() {
+      // 設定要下載的檔案路徑
+      const fileUrl = '/public/adoption-guide.pdf' // 放在 public 資料夾中的檔案
+      const link = document.createElement('a')
+      link.href = fileUrl
+      link.setAttribute('download', 'adoption-guide.pdf') // 設定下載的檔案名稱
+      document.body.appendChild(link)
+      link.click()
+      document.body.removeChild(link)
+    },
+  },
+}
 </script>
 
 <style>
 h1 {
-  font-size: 42px;
+  font-size: 48px;
   font-weight: bold;
   margin-bottom: 20px;
   margin-left: 100px;
