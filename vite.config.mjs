@@ -13,7 +13,7 @@ import { fileURLToPath, URL } from 'node:url'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: '/vuetify-project/',
+  base: '/vuetify-project',
   plugins: [
     VueRouter(),
     Layouts(),

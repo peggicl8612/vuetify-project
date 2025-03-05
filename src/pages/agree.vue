@@ -37,8 +37,8 @@
 
       <!-- 下載檔案按鈕 -->
       <div class="download">
-        <v-btn color="rgb(231, 208, 208)" class="download">
-          <a href="/adoption.pdf" download="adoption.pdf" target="_blank"> 下載同意書 </a>
+        <v-btn color="rgb(231, 208, 208)" class="download" @click="downloadFile">
+          下載同意書
         </v-btn>
       </div>
     </v-card-text>
@@ -46,20 +46,17 @@
 </template>
 
 <script>
+import pdf from '@/assets/adoption-guide.pdf'
 export default {
   data: () => ({
     tab: null,
   }),
   methods: {
     downloadFile() {
-      // 設定要下載的檔案路徑
-      const fileUrl = '/public/adoption-guide.pdf' // 放在 public 資料夾中的檔案
       const link = document.createElement('a')
-      link.href = fileUrl
-      link.setAttribute('download', 'adoption-guide.pdf') // 設定下載的檔案名稱
-      document.body.appendChild(link)
+      link.download = 'adoption-guide.pdf'
+      link.href = pdf
       link.click()
-      document.body.removeChild(link)
     },
   },
 }
