@@ -193,11 +193,7 @@ const formatTitle = (title) => {
   margin-bottom: 16px;
   color: #5a4a48;
   z-index: 1; /* 確保標題在圖片上層 */
-<<<<<<< HEAD
   white-space: pre-line;
-=======
-  margin-top: 30px;
->>>>>>> 007cf36338364a57680669ce528d7fd022eaef6d
 }
 
 .info-card {
