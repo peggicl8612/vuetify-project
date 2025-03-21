@@ -162,7 +162,7 @@ const formatTitle = (title) => {
 <style scoped>
 .disease-main {
   text-align: center;
-  padding: 20px;
+  padding: 30px;
   font-family: 'Zen Old Mincho', serif;
   position: relative;
   min-height: 100vh; /* 設定最小高度為 100% 視窗高度 */
@@ -193,16 +193,21 @@ const formatTitle = (title) => {
   margin-bottom: 16px;
   color: #5a4a48;
   z-index: 1; /* 確保標題在圖片上層 */
+<<<<<<< HEAD
   white-space: pre-line;
+=======
+  margin-top: 30px;
+>>>>>>> 007cf36338364a57680669ce528d7fd022eaef6d
 }
 
 .info-card {
-  padding: 80px;
+  padding: 100px;
   background-color: rgba(244, 237, 230, 0.9); /* 半透明背景以顯示背景圖片 */
   border-radius: 12px;
   text-align: center;
   position: relative;
   z-index: 2;
+  margin-top: 50px;
 }
 
 .info-title {

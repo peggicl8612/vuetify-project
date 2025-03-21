@@ -115,10 +115,12 @@ const schema = yup.object({
     // .ref(欄位名稱)      取得欄位的值
     // .ref('password')   password 欄位的值
     .oneOf([yup.ref('password')], t('api.userPasswordNotMatch')),
-  phone: yup
-    .string()
-    .nullable() // 讓 phone 欄位可以是 null
-    .notRequired(), // 使 phone 欄位成為可選
+  // phone: yup
+  //   .string()
+  //   .nullable() // 允許 `null`
+  //   .notRequired() // 讓 `phone` 可選
+  //   .transform((value) => (value === '' ? null : value))
+  //   .matches(/^09\d{8}$/, { message: '請輸入正確的台灣手機號碼', excludeEmptyString: true }),
 })
 
 // 此種寫法只能一個頁面使用一個 form 標籤

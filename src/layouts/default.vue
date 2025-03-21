@@ -174,7 +174,7 @@ const navs = computed(() => {
       isAdopt: true,
     },
 
-    { to: '/account', text: t('nav.account'), icon: 'mdi-account', show: true },
+    { to: '/account', text: t('nav.account'), icon: 'mdi-account', show: user.isLoggedIn },
     { to: '/register', text: t('nav.register'), icon: 'mdi-account-plus', show: !user.isLoggedIn },
     { to: '/login', text: t('nav.login'), icon: 'mdi-account-arrow-left', show: !user.isLoggedIn },
     // { to: '/cart', text: t('nav.cart'), icon: 'mdi-cart', show: user.isLoggedIn },

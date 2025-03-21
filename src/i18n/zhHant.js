@@ -158,8 +158,8 @@ export default {
     tiger: '虎斑',
   },
   catBreed: {
-    Male: '雄性',
-    Female: '雌性',
+    Male: '公貓',
+    Female: '母貓',
     black: '黑貓',
     orange: '橘貓',
     flower: '花貓',
@@ -168,10 +168,10 @@ export default {
     Persian: '波斯貓',
   },
   catGender: {
-    Male: '雄性',
-    male: '雄性',
-    Female: '雌性',
-    female: '雌性',
+    Male: '公貓',
+    male: '公貓',
+    Female: '母貓',
+    female: '母貓',
   },
   rehome: {
     formTitle: '送養表單',

@@ -319,13 +319,21 @@ meta:
 .user_user_container {
   width: 100%;
   background: #cae4ec75;
+  overflow: hidden;
+  padding: 30px;
 }
 .hover_table tbody tr:hover {
   background-color: #f0e9df;
   transition: background-color 0.2s ease-in-out;
 }
 .excel {
+<<<<<<< HEAD
   position: relative;
   left: 840px;
+=======
+  position: absolute;
+  bottom: 100px;
+  left: 1700px;
+>>>>>>> 007cf36338364a57680669ce528d7fd022eaef6d
 }
 </style>
