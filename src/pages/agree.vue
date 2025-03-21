@@ -11,7 +11,6 @@
             </div>
           </v-tabs>
 
-<<<<<<< HEAD
           <v-card-text>
             <v-tabs-window v-model="tab">
               <v-tabs-window-item value="one">
@@ -31,34 +30,6 @@
                 </p>
               </v-tabs-window-item>
             </v-tabs-window>
-=======
-    <v-card-text>
-      <v-tabs-window v-model="tab">
-        <v-tabs-window-item value="one">
-          <p>
-            領養人條件
-            <br />
-            <br />
-            ．年滿20歲 <br />
-            ．無動保法第三十三條之一第一項各款所定情形 <br />
-            ．理解飼主責任、動物福利及動物飼養管理教育 <br />
-            ．家中成員皆同意飼養 <br />
-            ．可提供適合及安全的居住環境 <br />
-            ．經濟能力得以應付長期的固定開銷及突發的醫療費用 <br />
-            ．對毛孩的終生負責絕不棄養 <br />
-            ．若違反認養條款(如遺棄、虐待、私自轉讓等)送養方有權依法追回貓咪<br />
-            ．確認無重大動物過失紀錄，並承諾遵守《動物保護法》相關規定<br />
-          </p>
-          <br />
-          <p>
-            領養流程 <br /><br />
-            ．下載同意書並填寫內容<br />
-            ．填寫完畢寄送至 email：Meowu_19@gmail.com<br />
-            ．審核約 3-5個工作日(領養結果以 mail 通知) <br />
-          </p>
-        </v-tabs-window-item>
-      </v-tabs-window>
->>>>>>> 007cf36338364a57680669ce528d7fd022eaef6d
 
             <!-- 下載檔案按鈕 -->
             <div class="download">
@@ -74,23 +45,21 @@
 </template>
 
 <script>
-import pdf from '@/assets/adoption-guide.pdf'
 export default {
   data: () => ({
     tab: null,
   }),
   methods: {
     downloadFile() {
-<<<<<<< HEAD
       // 設定要下載的檔案路徑
       const fileUrl = '/vuetify-project/adoption-guide.pdf' // 放在 public 資料夾中的檔案
       // const fileUrl = '/adoption-guide.pdf'，原本寫這樣會失敗，下載會顯示無法在網站上擷取檔案
-=======
->>>>>>> 007cf36338364a57680669ce528d7fd022eaef6d
       const link = document.createElement('a')
-      link.download = 'adoption-guide.pdf'
-      link.href = pdf
+      link.href = fileUrl
+      link.setAttribute('download', 'adoption-guide.pdf') // 設定下載的檔案名稱
+      document.body.appendChild(link)
       link.click()
+      document.body.removeChild(link)
     },
   },
 }
