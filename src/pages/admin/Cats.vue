@@ -388,13 +388,7 @@ const exportToExcel = () => {
 }
 
 .excel {
-<<<<<<< HEAD
   position: relative;
-=======
-  position: absolute;
-  top: 1100px;
-  left: 1725px;
->>>>>>> 007cf36338364a57680669ce528d7fd022eaef6d
 }
 </style>
 
