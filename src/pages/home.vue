@@ -18,17 +18,31 @@
       class="mySwiper2"
       @slide-change="onSlideChange"
     >
-      <swiper-slide v-for="(image, index) in images" :key="index">
+      <swiper-slide v-for="(item, index) in images" :key="index">
         <div class="image-container">
-          <img :src="image.src" />
-          <div class="image-text">{{ image.text }}</div>
-          <!-- 加入圖片對應的文字 -->
+          <!-- 當圖片的 src 是影片檔案時，顯示影片 -->
+          <template v-if="item.type === 'video'">
+            <iframe
+              :src="item.src"
+              frameborder="0"
+              allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+              width="100%"
+              height="500px"
+            ></iframe>
+          </template>
+
+          <!-- 當 src 是圖片檔案時，顯示圖片 -->
+          <template v-else>
+            <img :src="item.src" />
+          </template>
+          <div class="image-text">{{ item.text }}</div>
         </div>
       </swiper-slide>
     </swiper>
 
     <!-- 縮略圖輪播圖 -->
-    <swiper
+    <!-- <swiper
       v-if="!isLoading"
       :loop="true"
       :space-between="10"
@@ -46,7 +60,7 @@
       >
         <img :src="image.src" />
       </swiper-slide>
-    </swiper>
+    </swiper> -->
 
     <!-- 最新消息與活動資訊 -->
 
@@ -55,57 +69,21 @@
         <v-card class="cute-card">
           <div v-if="isLoaded" class="news-container animate__animated animate__fadeInLeft">
             <h1 class="news">最新消息</h1>
+
             <br />
             <ul>
-              <li>
-                114/01/13
-                <a
-                  href="https://animal.moa.gov.tw/Frontend/News/Detail/N0000000001552"
-                  target="_blank"
-                  >臺中市動保處與農業部合作，一同守護毛孩健康</a
-                >
+              <li v-for="(news, index) in visibleNews" :key="index">
+                {{ news.date }} <a :href="news.link" target="_blank">{{ news.title }}</a>
               </li>
-              <br />
-              <li>
-                114/02/11
-                <a
-                  href="https://animal.moa.gov.tw/Frontend/News/Detail/N0000000001630"
-                  target="_blank"
-                  >高雄市犬貓絕育(結紮)三合一活動【3月16日阿蓮場】</a
-                >
-              </li>
-              <br />
-              <li>
-                114/02/25
-                <a
-                  href="https://animal.moa.gov.tw/Frontend/News/Detail/N0000000001656"
-                  target="_blank"
-                  >南昌動保園區114年3月開辦動保講座</a
-                >
-              </li>
-              <br />
-              <li>
-                114/02/27
-                <a
-                  href="http://animal.moa.gov.tw/Frontend/News/Detail/N0000000001661"
-                  target="_blank"
-                  >中市開春迎新 大家快來參加犬貓狂犬病巡迴注射活動！</a
-                >
-              </li>
-              <br />
-              <li>
-                114/02/28
-                <a
-                  href="https://animal.moa.gov.tw/Frontend/News/Detail/N0000000001450"
-                  target="_blank"
-                  >「寵物食品檢驗不合格產品專區」不定期公布，請民眾可到寵物食品申報網瀏覽查詢</a
-                >
-              </li>
-              <br />
-              <br />
-              <br />
-              <div class="more"><a href="#">查看更多</a></div>
             </ul>
+            <br />
+            <br />
+            <br />
+            <div class="more">
+              <a href="#" @click.prevent="toggleMoreNews">{{
+                showMoreNews ? '顯示更少' : '查看更多'
+              }}</a>
+            </div>
           </div>
         </v-card>
       </v-col>
@@ -115,43 +93,18 @@
           <div v-if="isLoaded" class="info-container animate__animated animate__fadeInRight">
             <h1 class="info">活動資訊</h1>
             <br />
-            <ul>
-              <li>
-                114/02/01
-                <a href="https://pet-fair.top-link.com.tw/page/13593" target="_blank"
-                  >南港展覽館二館「給浪浪一個家」領養活動</a
-                >
-              </li>
-              <br />
-              <li>
-                114/02/05
-                <a href="https://www.doghome.org.tw/pages/single_page.php?ID=171" target="_blank"
-                  >高流浪動物花園送養活動</a
-                >
-              </li>
-              <br />
-              <li>
-                114/02/10
-                <a
-                  href="https://mypet-club.com/phpBB3/portal.php?fbclid=IwZXh0bgNhZW0CMTAAAR0xuvSaTv-y99ezRr2Z-ghV2fZDPJu9mJhuY6nBjIjjsK6GhVAeEfDS3_o_aem_bqiWOb8IrA9zQ_ealNPEUA"
-                  target="_blank"
-                  >臺北市流浪貓保護協會認養活動</a
-                >
-              </li>
-              <br />
-              <li>
-                114/02/25
-                <a
-                  href="https://www.facebook.com/twPetpark/posts/pfbid02EwM3Dbo5HTne2vR9MP9Et49W5b7183dtXCycxLHH2fyChdGQCdS3GVwbcCDCiX4vl?locale=zh_TW"
-                  target="_blank"
-                  >寵物公園毛孩領養會</a
-                >
-              </li>
-              <br />
-              <br />
-              <br />
-              <div class="more"><a href="#">查看更多</a></div>
-            </ul>
+
+            <li v-for="(event, index) in visibleEvents" :key="index">
+              {{ event.date }} <a :href="event.link" target="_blank">{{ event.title }}</a>
+            </li>
+            <br />
+            <br />
+            <br />
+            <div class="more">
+              <a href="#" @click.prevent="toggleMoreEvents">{{
+                showMoreEvents ? '顯示更少' : '查看更多'
+              }}</a>
+            </div>
           </div>
         </v-card>
       </v-col>
@@ -191,10 +144,15 @@ export default {
   },
   setup() {
     const images = ref([
-      { src: 'https://i.imgur.com/LjEbMqs.jpeg', text: '歡迎來到咪凹屋' },
-      { src: 'https://i.imgur.com/2scnSBL.jpeg', text: '' },
-      { src: 'https://i.imgur.com/hxAFsLi.jpeg', text: '' },
-      { src: 'https://i.imgur.com/f7FZqaU.jpeg', text: '' },
+      { src: 'https://i.imgur.com/LjEbMqs.jpeg', text: '歡迎來到咪凹屋', type: 'image' },
+      {
+        src: 'https://www.youtube.com/embed/r0NO3AyXieE?si=Srez-dR3hZTgDbOh',
+        text: '貓咪動畫',
+        type: 'video',
+      },
+      // { src: 'https://i.imgur.com/2scnSBL.jpeg', text: '', type:'image' },
+      { src: 'https://i.imgur.com/hxAFsLi.jpeg', text: '', type: 'image' },
+      { src: 'https://i.imgur.com/f7FZqaU.jpeg', text: '', type: 'image' },
     ])
 
     const thumbsSwiper = ref(null)
@@ -202,6 +160,73 @@ export default {
     const isLoading = ref(true)
     const isLoaded = ref(false)
     const showHoverMessage = ref(false)
+
+    // 記錄所有消息和活動資料
+    const allNews = ref([
+      {
+        date: '114/01/13',
+        title: '臺中市動保處與農業部合作，一同守護毛孩健康',
+        link: 'https://animal.moa.gov.tw/Frontend/News/Detail/N0000000001552',
+      },
+      {
+        date: '114/02/11',
+        title: '高雄市犬貓絕育(結紮)三合一活動【3月16日阿蓮場】',
+        link: 'https://animal.moa.gov.tw/Frontend/News/Detail/N0000000001630',
+      },
+      {
+        date: '114/02/25',
+        title: '南昌動保園區114年3月開辦動保講座',
+        link: 'https://animal.moa.gov.tw/Frontend/News/Detail/N0000000001656',
+      },
+      {
+        date: '114/02/27',
+        title: '中市開春迎新 大家快來參加犬貓狂犬病巡迴注射活動！',
+        link: 'http://animal.moa.gov.tw/Frontend/News/Detail/N0000000001661',
+      },
+      {
+        date: '114/02/28',
+        title: '寵物食品檢驗不合格產品專區不定期公布',
+        link: 'https://animal.moa.gov.tw/Frontend/News/Detail/N0000000001450',
+      },
+    ])
+    const allEvents = ref([
+      {
+        date: '114/02/01',
+        title: '南港展覽館二館「給浪浪一個家」領養活動',
+        link: 'https://pet-fair.top-link.com.tw/page/13593',
+      },
+      {
+        date: '114/02/05',
+        title: '高流浪動物花園送養活動',
+        link: 'https://www.doghome.org.tw/pages/single_page.php?ID=171',
+      },
+      {
+        date: '114/02/10',
+        title: '臺北市流浪貓保護協會認養活動',
+        link: 'https://mypet-club.com/phpBB3/portal.php?fbclid=IwZXh0bgNhZW0CMTAAAR0xuvSaTv-y99ezRr2Z-ghV2fZDPJu9mJhuY6nBjIjjsK6GhVAeEfDS3_o_aem_bqiWOb8IrA9zQ_ealNPEUA',
+      },
+      {
+        date: '114/02/25',
+        title: '寵物公園毛孩領養會',
+        link: 'https://www.facebook.com/twPetpark/posts/pfbid02EwM3Dbo5HTne2vR9MP9Et49W5b7183dtXCycxLHH2fyChdGQCdS3GVwbcCDCiX4vl?locale=zh_TW',
+      },
+    ])
+
+    const visibleNews = ref(allNews.value.slice(0, 3))
+    const visibleEvents = ref(allEvents.value.slice(0, 3))
+
+    const showMoreNews = ref(false)
+    const showMoreEvents = ref(false)
+
+    const toggleMoreNews = () => {
+      showMoreNews.value = !showMoreNews.value
+      visibleNews.value = showMoreNews.value ? allNews.value : allNews.value.slice(0, 3)
+    }
+
+    const toggleMoreEvents = () => {
+      showMoreEvents.value = !showMoreEvents.value
+      visibleEvents.value = showMoreEvents.value ? allEvents.value : allEvents.value.slice(0, 3)
+    }
 
     onMounted(() => {
       setTimeout(() => {
@@ -234,6 +259,12 @@ export default {
       isLoading,
       isLoaded,
       showHoverMessage,
+      visibleNews,
+      visibleEvents,
+      showMoreNews,
+      showMoreEvents,
+      toggleMoreNews,
+      toggleMoreEvents,
     }
   },
 }
@@ -260,6 +291,12 @@ export default {
 }
 
 /* 主要內容 */
+
+.carousel-video {
+  width: 100%;
+  height: 500px;
+  object-fit: cover;
+}
 
 /* 主圖 */
 .mySwiper2 {
@@ -350,12 +387,18 @@ export default {
   height: 500px;
 }
 
+.news-container li,
+.info-container li {
+  margin-bottom: 15px;
+  font-size: 16px;
+}
 .news,
 .info {
   color: #d63384;
-  font-size: 24px;
-  text-align: center;
+  font-size: 36px;
   font-weight: bold;
+  margin-left: 20px;
+  text-align: center;
 }
 
 /* WebM 動畫區域 */

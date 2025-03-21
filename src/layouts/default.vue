@@ -191,6 +191,7 @@ const navs = computed(() => {
 const langs = [
   { text: '繁體中文', value: 'zhHant' },
   { text: 'English', value: 'en' },
+  { text: 'Japanese', value: 'jp' },
 ]
 
 const logout = async () => {

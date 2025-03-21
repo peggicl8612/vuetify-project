@@ -1,5 +1,5 @@
 <template>
-  <v-main class="main">
+  <v-main class="main pa-1">
     <div class="background" :style="{ backgroundImage: `url(${currentImage})` }"></div>
     <h1>幼貓飼養</h1>
     <v-card class="card">
@@ -127,13 +127,6 @@ export default {
   }
 }
 
-.main {
-  background: linear-gradient(45deg, #e6c7a2, #ee962a, #dbd286b6, #cdd646);
-  background-size: 400% 400%; /* 減小背景的大小 */
-  animation: gradientAnimation 5s ease infinite; /* 背景動畫 */
-  height: 100vh;
-}
-
 .tabs_window {
   font-family: 'Comic Sans MS';
 }
@@ -154,16 +147,7 @@ export default {
   background: linear-gradient(45deg, #ffebcd, #ffd1dc, #ffe4b5, #fff7e6);
   background-size: 400% 400%;
   animation: gradientAnimation 8s ease infinite;
-}
-
-/* 卡片加上圓角，讓它更柔和 */
-.card {
-  margin: 20px auto;
-  width: 80%;
-  border-radius: 20px;
-  box-shadow: 0 0 10px rgba(255, 170, 170, 0.8);
-  background: rgba(255, 245, 238, 0.9); /* 柔和奶油色 */
-  padding: 10px;
+  min-height: 100vh;
 }
 
 .v-btn__content {
@@ -221,10 +205,10 @@ h1 {
 .card {
   margin: 20px auto;
   width: 80%;
-  /* padding: 20px; */
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(37, 46, 88, 0.76);
   background: #e8b4b865;
+  min-height: 60vh;
 }
 
 .v-tab {
@@ -256,7 +240,7 @@ h1 {
   width: 300px;
   height: auto;
   position: absolute;
-  bottom: 0;
+  bottom: 10px;
   right: 150px;
   opacity: 0.3;
 }

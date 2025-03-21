@@ -1,5 +1,5 @@
 <template>
-  <v-container class="user_bg py-6">
+  <v-container class="user_container py-6">
     <v-row>
       <v-col cols="12">
         <h1 class="text-center">{{ $t('nav.adminUsers') }}</h1>
@@ -316,8 +316,8 @@ meta:
 </route>
 
 <style>
-.user_bg {
-  height: 100vh;
+.user_user_container {
+  width: 100%;
   background: #cae4ec75;
 }
 .hover_table tbody tr:hover {
@@ -326,7 +326,6 @@ meta:
 }
 .excel {
   position: relative;
-  bottom: 50px;
-  left: 1100px;
+  left: 840px;
 }
 </style>

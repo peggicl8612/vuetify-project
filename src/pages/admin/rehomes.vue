@@ -1,5 +1,5 @@
 <template>
-  <v-main class="container">
+  <v-main class="main">
     <v-container>
       <v-row>
         <v-col cols="12">
@@ -141,8 +141,7 @@ meta:
 </route>
 
 <style scoped>
-.container {
-  height: 100vh;
+.main {
   background: rgba(255, 239, 213, 0.363);
   display: flex;
   justify-content: center;

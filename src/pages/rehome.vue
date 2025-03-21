@@ -4,7 +4,7 @@
       <v-row class="d-flex justify-center py-4">
         <v-col cols="12" md="8">
           <v-form ref="form" :disabled="isSubmitting" @submit.prevent="submitForm">
-            <v-card class="custom-card">
+            <v-card class="custom_card">
               <v-card-title class="text-h4 text-center">{{ $t('rehome.formTitle') }}</v-card-title>
               <v-card-text>
                 <v-card>
@@ -16,7 +16,7 @@
                       required
                       outlined
                       dense
-                      class="custom-input"
+                      class="keyin"
                     ></v-text-field>
 
                     <v-text-field
@@ -28,7 +28,7 @@
                       required
                       outlined
                       dense
-                      class="custom-input"
+                      class="keyin"
                     ></v-text-field>
 
                     <v-select
@@ -41,7 +41,7 @@
                       required
                       outlined
                       dense
-                      class="custom-input"
+                      class="keyin"
                     ></v-select>
 
                     <v-select
@@ -54,7 +54,7 @@
                       required
                       outlined
                       dense
-                      class="custom-input"
+                      class="keyin"
                     ></v-select>
 
                     <v-text-field
@@ -64,7 +64,7 @@
                       outlined
                       required
                       dense
-                      class="custom-input"
+                      class="keyin"
                     ></v-text-field>
 
                     <v-text-field
@@ -75,7 +75,7 @@
                       required
                       outlined
                       dense
-                      class="custom-input"
+                      class="keyin"
                     ></v-text-field>
 
                     <!-- 照片欄位 -->
@@ -255,17 +255,9 @@ v-main {
   z-index: 0;
 }
 
-.custom-card {
+.custom_card {
   background-color: #f0e9df;
   opacity: 0.8;
-  color: #757575;
-}
-
-.custom-input .v-input__control {
-  background-color: #ffffff;
-}
-
-.custom-input .v-input__label {
   color: #757575;
 }
 </style>

@@ -203,6 +203,9 @@ export default {
     errorType: '檔案類型錯誤',
     errorSize: '檔案大小超過限制',
   },
+  home: {
+    news: '最新消息',
+  },
   api: {
     userAccountRequired: '使用者帳號必填',
     userAccountTooShort: '使用者帳號太短',

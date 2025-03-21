@@ -14,7 +14,7 @@
         </v-col>
 
         <!-- 設定卡片等高並且並排 -->
-        <v-row justify="center" align="stretch">
+        <v-row justify="center" align="stretch" no-gutters>
           <v-col
             v-for="cat of filteredCats"
             :key="cat._id"
@@ -71,14 +71,28 @@ const cats = ref([]) // 用來儲存所有貓咪資料
 const search = ref('') // 搜尋框內容
 const userFavorites = ref([]) // 用來儲存使用者已經按過讚的貓咪 ID
 
+// const filteredCats = computed(() => {
+//   // 先過濾搜尋條件，再進行分頁
+//   const filtered = cats.value.filter((cat) =>
+//     cat.name.toLowerCase().includes(search.value.toLowerCase()),
+//   )
+//   return filtered.slice(
+//     (currentPage.value - 1) * ITEMS_PER_PAGE,
+//     currentPage.value * ITEMS_PER_PAGE,
+//   )
+// })
+
 const filteredCats = computed(() => {
-  // 先過濾搜尋條件，再進行分頁
-  const filtered = cats.value.filter((cat) =>
-    cat.name.toLowerCase().includes(search.value.toLowerCase()),
-  )
-  return filtered.slice(
-    (currentPage.value - 1) * ITEMS_PER_PAGE,
-    currentPage.value * ITEMS_PER_PAGE,
+  return (
+    cats.value
+      .filter((cat) => cat.name.toLowerCase().includes(search.value.toLowerCase()))
+      // 一頁 2 筆
+      // 第 1 頁 = 0 ~ 1
+      // 第 2 頁 = 2 ~ 3
+      // 第 3 頁 = 4 ~ 5
+      // .slice(開始索引, 結束索引)
+      // 不包含結束索引
+      .slice((currentPage.value - 1) * ITEMS_PER_PAGE, currentPage.value * ITEMS_PER_PAGE)
   )
 })
 
@@ -138,13 +152,14 @@ const toggleLike = async (cat) => {
 }
 
 // 初始化時執行
-computed(getCats)
+getCats()
+
+// computed(getCats)
 </script>
 
 <style>
 .container {
   width: 100vw;
-  height: 100vh;
   background: #ebd0ddde;
 }
 .cute-card {
@@ -157,6 +172,12 @@ computed(getCats)
   flex-direction: column;
   justify-content: space-between;
   width: 100%;
+  min-height: 350px;
+}
+.v-col {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .cute-card:hover {

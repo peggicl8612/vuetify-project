@@ -1,9 +1,9 @@
 <template>
   <v-container>
     <v-row>
-      <v-col cols="12">
-        <h1 class="text-center">收藏列表</h1>
-        <v-divider></v-divider>
+      <v-col cols="12" class="text-center">
+        <h1 class="title">收藏列表</h1>
+        <v-divider class="text-left ml-3"></v-divider>
       </v-col>
     </v-row>
 
@@ -80,8 +80,9 @@ onMounted(loadFavorites)
 </script>
 
 <style scoped>
-h1 {
-  font-size: 2.5rem;
+.title {
+  width: 200px;
+  font-size: 36px;
   font-weight: bold;
   color: #757575;
 }

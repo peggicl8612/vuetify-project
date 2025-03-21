@@ -5,7 +5,7 @@
       <v-col v-for="disease in diseases" :key="disease.id" cols="12" md="4">
         <v-card class="info-card">
           <v-card-text>
-            <p class="info-title">{{ disease.title }}</p>
+            <p class="info-title" v-html="formatTitle(disease.title)"></p>
             <v-btn class="read-btn" @click="openDialog(disease)">閱讀更多</v-btn>
           </v-card-text>
         </v-card>
@@ -50,7 +50,7 @@ const diseases = ref([
   },
   {
     id: 2,
-    title: '貓艾滋(FIV)',
+    title: '貓艾滋\n(FIV)',
     description: `
       病因：
       貓艾滋病由貓免疫缺陷病毒(FIV)引起，主要透過貓咪之間的咬傷傳播，尤其在戶外流浪貓族群中較為常見。
@@ -126,7 +126,7 @@ const diseases = ref([
   },
   {
     id: 6,
-    title: '牙周病(Dental Disease) ',
+    title: '牙周病\n(Dental Disease) ',
     description: `
       病因：
       當貓咪牙齒未經常清潔，牙菌斑與牙垢堆積，細菌繁殖後可能導致牙齦發炎、牙周病，甚至牙齒脫落。
@@ -153,6 +153,10 @@ const openDialog = (disease) => {
   selectedDisease.value = disease
   dialog.value = true
 }
+
+const formatTitle = (title) => {
+  return title.replace(/\n/g, '<br/>')
+}
 </script>
 
 <style scoped>
@@ -175,7 +179,7 @@ const openDialog = (disease) => {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  opacity: 0; /* 調整透明度 */
+  opacity: 0.6; /* 調整透明度 */
   z-index: 0; /* 保證它在最底層 */
 }
 
@@ -189,6 +193,7 @@ const openDialog = (disease) => {
   margin-bottom: 16px;
   color: #5a4a48;
   z-index: 1; /* 確保標題在圖片上層 */
+  white-space: pre-line;
 }
 
 .info-card {

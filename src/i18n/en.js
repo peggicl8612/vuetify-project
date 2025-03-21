@@ -81,6 +81,9 @@ export default {
     errorType: 'File type error',
     errorSize: 'File size exceeds limit',
   },
+  home: {
+    news: 'News',
+  },
   api: {
     userAccountRequired: 'User account required',
     userAccountTooShort: 'User account too short',

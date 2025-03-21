@@ -1,5 +1,5 @@
 <template>
-  <v-main class="container">
+  <v-main class="main">
     <v-container>
       <v-row>
         <v-col cols="12">
@@ -351,8 +351,7 @@ const exportToExcel = () => {
 </script>
 
 <style scoped>
-.container {
-  min-height: 100vh;
+.main {
   background: #f5eef4;
   font-family: 'Zen Old Mincho', serif;
   display: flex;
@@ -362,7 +361,6 @@ const exportToExcel = () => {
 
 .v-container {
   width: 100%;
-  height: 100%;
   margin-right: 220px;
 }
 :deep(.v-data-table tbody tr:hover) {
@@ -391,8 +389,6 @@ const exportToExcel = () => {
 
 .excel {
   position: relative;
-  top: 370px;
-  left: 190px;
 }
 </style>
 

@@ -3,7 +3,7 @@
     <v-row>
       <v-col cols="12" class="text-center">
         <h1 class="title">會員資料</h1>
-        <v-divider class="divider"></v-divider>
+        <v-divider class="text-left ml-3"></v-divider>
       </v-col>
     </v-row>
 
@@ -180,12 +180,12 @@ const submitForm = handleSubmit(async (values) => {
   height: 820px;
 }
 .title {
-  font-family: 'Zen Old Mincho', serif;
+  width: 200px;
+  font-size: 36px;
+  font-weight: bold;
   color: #757575;
 }
-.divider {
-  border-color: #757575;
-}
+
 .form-box {
   background: #f7f5ecaf;
   padding: 20px;

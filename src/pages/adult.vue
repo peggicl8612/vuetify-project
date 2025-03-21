@@ -1,5 +1,5 @@
 <template>
-  <v-main class="main">
+  <v-main class="main pa-1">
     <h1>成貓飼養</h1>
     <v-card class="card">
       <v-tabs v-model="tab" class="tabs">
@@ -71,7 +71,7 @@ export default {
   background: linear-gradient(90deg, #e8b4ce, #a6ccd6, #d54368b6, #5d6ca7);
   background-size: 400% 400%;
   animation: gradientAnimation 5s ease infinite;
-  height: 100vh;
+  min-height: 100vh;
 }
 h1 {
   font-size: 52px;
