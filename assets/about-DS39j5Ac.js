@@ -1,0 +1,1 @@
+import{_ as o,o as t,b as s,w as a,d as e,ai as c,aj as n,V as r}from"./index-BPkTZQ0a.js";const l={};function _(f,u){return t(),s(r,null,{default:a(()=>[e(c,null,{default:a(()=>[e(n,{cols:"12"})]),_:1})]),_:1})}const i=o(l,[["render",_]]);export{i as default};
