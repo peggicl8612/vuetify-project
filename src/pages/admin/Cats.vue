@@ -9,7 +9,13 @@
         </v-col>
         <v-divider></v-divider>
         <v-col cols="12">
-          <v-data-table :items="cats" :headers="headers" class="table" :search="search">
+          <v-data-table
+            :items="cats"
+            :headers="headers"
+            class="table"
+            :search="search"
+            :items-per-page="5"
+          >
             <template #top>
               <v-toolbar flat>
                 <v-btn color="brown" rounded @click="openDialog(null)"
@@ -376,6 +382,10 @@ const exportToExcel = () => {
   height: 60px;
   padding: 4px;
   text-align: center;
+}
+
+.table {
+  min-width: 1020px;
 }
 
 .text-primary {

@@ -149,12 +149,13 @@ meta:
 }
 .v-container {
   width: 100%;
-  margin-right: 220px;
+  margin-right: 400px;
 }
 .v-table {
   border: 1px solid #ccc;
   border-radius: 8px;
   margin-top: 20px;
+  min-width: 900px;
 }
 
 th {

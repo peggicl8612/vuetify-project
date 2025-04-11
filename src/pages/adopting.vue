@@ -14,14 +14,14 @@
         </v-col>
 
         <!-- 設定卡片等高並且並排 -->
-        <v-row justify="center" align="stretch" no-gutters>
+        <v-row justify="center" align="stretch">
           <v-col
             v-for="cat of filteredCats"
             :key="cat._id"
             cols="12"
             sm="6"
             md="4"
-            lg="3"
+            lg="4"
             class="d-flex"
           >
             <v-card class="cute-card" elevation="5">
