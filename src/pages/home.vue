@@ -68,7 +68,7 @@
       <v-col cols="12" md="6">
         <v-card class="cute-card">
           <div v-if="isLoaded" class="news-container animate__animated animate__fadeInLeft">
-            <h1 class="news">最新消息</h1>
+            <h1 class="news">最新息</h1>
 
             <br />
             <ul>
